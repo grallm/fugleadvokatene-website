@@ -44,109 +44,116 @@ const products = [
 	{ name: "Kort", price: "Price", description: "Product description" },
 	{ name: "Bærenett", price: "Price", description: "Product description" },
 ];
+
+const container = "max-w-[1100px] mx-auto px-6";
+const cardBase = "block border border-line p-[18px] bg-white text-ink";
 ---
 
 <Layout>
-	<header class="site-header">
-		<div class="container header-inner">
-			<a href="/" class="brand">
+	<header class="pt-6">
+		<div class={`${container} flex items-start justify-between gap-6 max-[760px]:flex-col`}>
+			<a href="/" class="flex items-center gap-3">
 				<Placeholder height="40px" width="40px" />
-				<span class="brand-name">FugleAdvokatene</span>
+				<span class="text-[22px] font-bold">FugleAdvokatene</span>
 			</a>
-			<div class="hero-image">
-				<Placeholder height="90px" width="240px" />
+			<div class="w-[240px] max-[760px]:w-full">
+				<Placeholder height="90px" width="100%" />
 			</div>
 		</div>
-		<nav class="site-nav">
-			<div class="container nav-inner">
-				{navLinks.map((label) => <a href="#">{label}</a>)}
+		<nav class="border-b border-line mt-[18px]">
+			<div class={`${container} flex justify-center gap-20 py-[14px] flex-wrap max-[760px]:gap-6`}>
+				{navLinks.map((label) => <a href="#" class="text-sm">{label}</a>)}
 			</div>
 		</nav>
 	</header>
 
-	<main>
-		<section class="container welcome">
-			<div class="welcome-text">
-				<h2>Welcome to FugleAdvokatene.</h2>
-				<p>
+	<main class="pb-15">
+		<section class={`${container} mt-8 grid grid-cols-2 gap-8 items-start max-[760px]:grid-cols-1`}>
+			<div>
+				<h2 class="text-[18px] font-bold leading-tight mb-2">Welcome to FugleAdvokatene.</h2>
+				<p class="text-sm">
 					We are a voluntary organisation who rescue and rehabilitate the
 					citybirds of Oslo and Bergen.
 				</p>
 			</div>
-			<div class="welcome-cards">
+			<div class="grid grid-cols-2 gap-4 max-[760px]:grid-cols-1">
 				{
 					welcomeCards.map((card) => (
-						<a class="card small" href="#">
-							<h3>{card.title}</h3>
-							<p>{card.body}</p>
+						<a class={`${cardBase} px-4 py-3.5`} href="#">
+							<h3 class="text-sm font-bold mb-2.5">{card.title}</h3>
+							<p class="text-xs text-muted">{card.body}</p>
 						</a>
 					))
 				}
 			</div>
 		</section>
 
-		<section class="container section">
-			<h2>Did you find a bird?</h2>
-			<p class="section-lead">
+		<section class={`${container} mt-14`}>
+			<h2 class="text-[18px] font-bold mb-1">Did you find a bird?</h2>
+			<p class="text-sm mb-5">
 				Here are some smart guides to best help you take care of the situation
 			</p>
-			<div class="grid-2">
+			<div class="grid grid-cols-2 gap-4.5 max-[760px]:grid-cols-1">
 				{
 					guides.map((g) => (
-						<a class="card" href="#">
-							<h3>{g.title}</h3>
-							<p>{g.body}</p>
+						<a class={cardBase} href="#">
+							<h3 class="text-sm font-bold mb-2.5">{g.title}</h3>
+							<p class="text-xs text-muted">{g.body}</p>
 						</a>
 					))
 				}
 			</div>
 		</section>
 
-		<section class="container section">
-			<h2>Blog</h2>
-			<div class="grid-2 blog-grid">
+		<section class={`${container} mt-14`}>
+			<h2 class="text-[18px] font-bold mb-1">Blog</h2>
+			<div class="grid grid-cols-2 gap-10 max-[760px]:grid-cols-1">
 				{
 					blogPosts.map((post) => (
-						<article class="blog-post">
-							<h3>{post.title}</h3>
+						<article>
+							<h3 class="text-[15px] font-bold mb-3.5">{post.title}</h3>
 							<Placeholder height="200px" />
-							<p class="caption">{post.caption}</p>
+							<p class="text-xs text-muted mt-2.5">{post.caption}</p>
 						</article>
 					))
 				}
 			</div>
 		</section>
 
-		<section class="container section">
-			<h2 class="centered">Meet our regulars</h2>
-			<div class="regulars">
-				<div class="regulars-stack">
+		<section class={`${container} mt-14`}>
+			<h2 class="text-[18px] font-bold mb-1 text-center">Meet our regulars</h2>
+			<div class="grid grid-cols-2 gap-10 items-start max-[760px]:grid-cols-1">
+				<div class="grid gap-4">
 					<Placeholder height="180px" />
 					<Placeholder height="180px" />
-					<p class="caption">
+					<p class="text-xs text-muted mt-2.5">
 						These birds don't need our help, but it is nice of you too keep an
 						eye out.
 					</p>
 				</div>
-				<div class="card nesting-card">
-					<h3>Known nesting places and other volnurable areas</h3>
+				<div class={cardBase}>
+					<h3 class="text-[15px] font-bold mb-[14px]">
+						Known nesting places and other volnurable areas
+					</h3>
 					<Placeholder height="180px" />
-					<p class="caption">Please be a bit more aware around these areas</p>
+					<p class="text-xs text-muted mt-[10px]">
+						Please be a bit more aware around these areas
+					</p>
 				</div>
 			</div>
 		</section>
 
-		<section class="container section">
-			<h2 class="centered">Online store</h2>
-			<h3 class="popular-title">Popular products</h3>
-			<div class="grid-3">
+		<section class={`${container} mt-14`}>
+			<h2 class="text-[18px] font-bold mb-1 text-center">Online store</h2>
+			<h3 class="text-sm font-bold mt-[18px] mb-[14px]">Popular products</h3>
+			<div class="grid grid-cols-3 gap-6 max-[760px]:grid-cols-1">
 				{
 					products.map((product) => (
-						<article class="product">
+						<article>
 							<Placeholder height="180px" />
-							<h4>{product.name}</h4>
-							<p class="price">{product.price}</p>
-							<p class="muted">{product.description}</p>
+							<h4 class="text-[13px] font-bold mt-3 mb-1">{product.name}</h4>
+							<p class="text-[13px] mb-0.5">{product.price}</p>
+							<p class="text-[13px]">{product.description}</p>
 						</article>
 					))
 				}
@@ -154,21 +161,26 @@ const products = [
 		</section>
 	</main>
 
-	<footer class="site-footer">
-		<div class="container footer-inner">
-			<div class="footer-contact">
-				<p class="footer-name">FugleAdvokatene</p>
-				<p>
-					<span class="label">mail:</span> kontakt@fugleadvokatene.no
+	<footer class="bg-surface-alt py-7">
+		<div class={`${container} grid grid-cols-2 gap-6 items-center max-[760px]:grid-cols-1`}>
+			<div>
+				<p class="text-[13px] font-bold mb-2">FugleAdvokatene</p>
+				<p class="text-[13px] mb-1">
+					<span class="inline-block min-w-[36px] text-muted">mail:</span>
+					kontakt@fugleadvokatene.no
 				</p>
-				<p>
-					<span class="label">tlf:</span> 99 99 99 99
+				<p class="text-[13px] mb-1">
+					<span class="inline-block min-w-[36px] text-muted">tlf:</span>
+					99 99 99 99
 				</p>
 			</div>
-			<div class="footer-social">
-				<p class="social-label">Sosiale medier</p>
-				<div class="social-icons" aria-label="Social media">
-					<a href="#" aria-label="Facebook">
+			<div class="text-center max-[760px]:text-left">
+				<p class="text-[13px] mb-3">Sosiale medier</p>
+				<div
+					class="flex justify-center gap-[18px] text-ink max-[760px]:justify-start"
+					aria-label="Social media"
+				>
+					<a href="#" aria-label="Facebook" class="inline-flex items-center justify-center">
 						<svg viewBox="0 0 24 24" width="22" height="22">
 							<path
 								fill="currentColor"
@@ -176,7 +188,7 @@ const products = [
 							></path>
 						</svg>
 					</a>
-					<a href="#" aria-label="Instagram">
+					<a href="#" aria-label="Instagram" class="inline-flex items-center justify-center">
 						<svg viewBox="0 0 24 24" width="22" height="22">
 							<path
 								fill="currentColor"
@@ -184,7 +196,7 @@ const products = [
 							></path>
 						</svg>
 					</a>
-					<a href="#" aria-label="Twitter">
+					<a href="#" aria-label="Twitter" class="inline-flex items-center justify-center">
 						<svg viewBox="0 0 24 24" width="22" height="22">
 							<path
 								fill="currentColor"
@@ -192,7 +204,7 @@ const products = [
 							></path>
 						</svg>
 					</a>
-					<a href="#" aria-label="TikTok">
+					<a href="#" aria-label="TikTok" class="inline-flex items-center justify-center">
 						<svg viewBox="0 0 24 24" width="22" height="22">
 							<path
 								fill="currentColor"
@@ -205,231 +217,3 @@ const products = [
 		</div>
 	</footer>
 </Layout>
-
-<style>
-	/* Header */
-	.site-header {
-		padding-top: 24px;
-	}
-	.header-inner {
-		display: flex;
-		align-items: flex-start;
-		justify-content: space-between;
-		gap: 24px;
-	}
-	.brand {
-		display: flex;
-		align-items: center;
-		gap: 12px;
-	}
-	.brand-name {
-		font-size: 22px;
-		font-weight: 700;
-	}
-	.hero-image {
-		width: 240px;
-	}
-	.site-nav {
-		border-bottom: 1px solid var(--border);
-		margin-top: 18px;
-	}
-	.nav-inner {
-		display: flex;
-		justify-content: center;
-		gap: 80px;
-		padding: 14px 24px;
-		flex-wrap: wrap;
-	}
-	.nav-inner a {
-		font-size: 14px;
-		color: var(--text);
-	}
-
-	/* Sections */
-	main {
-		padding-bottom: 60px;
-	}
-	.section {
-		margin-top: 56px;
-	}
-	.section h2 {
-		font-size: 18px;
-		margin-bottom: 4px;
-	}
-	.section-lead {
-		color: var(--text);
-		font-size: 14px;
-		margin-bottom: 20px;
-	}
-	.centered {
-		text-align: center;
-	}
-
-	/* Welcome */
-	.welcome {
-		margin-top: 32px;
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 32px;
-		align-items: start;
-	}
-	.welcome-text h2 {
-		font-size: 18px;
-	}
-	.welcome-text p {
-		font-size: 14px;
-	}
-	.welcome-cards {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 16px;
-	}
-
-	/* Cards */
-	.card {
-		display: block;
-		border: 1px solid var(--border);
-		padding: 18px;
-		color: inherit;
-		background: #fff;
-	}
-	.card h3 {
-		font-size: 14px;
-		margin-bottom: 10px;
-	}
-	.card p {
-		font-size: 12px;
-		color: var(--muted);
-	}
-	.card.small {
-		padding: 14px 16px;
-	}
-	.grid-2 {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 18px;
-	}
-	.grid-3 {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 24px;
-	}
-
-	/* Blog */
-	.blog-grid {
-		gap: 40px;
-	}
-	.blog-post h3 {
-		font-size: 15px;
-		margin-bottom: 14px;
-	}
-	.caption {
-		font-size: 12px;
-		color: var(--muted);
-		margin-top: 10px;
-	}
-
-	/* Regulars */
-	.regulars {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 40px;
-		align-items: start;
-	}
-	.regulars-stack {
-		display: grid;
-		gap: 16px;
-	}
-	.nesting-card h3 {
-		font-size: 15px;
-		margin-bottom: 14px;
-	}
-
-	/* Store */
-	.popular-title {
-		font-size: 14px;
-		margin: 18px 0 14px;
-	}
-	.product h4 {
-		font-size: 13px;
-		margin: 12px 0 4px;
-	}
-	.product .price {
-		font-size: 13px;
-		margin-bottom: 2px;
-	}
-	.product .muted {
-		font-size: 13px;
-		color: var(--text);
-	}
-
-	/* Footer */
-	.site-footer {
-		background: var(--footer-bg);
-		padding: 28px 0;
-	}
-	.footer-inner {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 24px;
-		align-items: center;
-	}
-	.footer-contact p {
-		font-size: 13px;
-		margin-bottom: 4px;
-	}
-	.footer-contact .label {
-		display: inline-block;
-		min-width: 36px;
-		color: var(--muted);
-	}
-	.footer-name {
-		font-weight: 700;
-		margin-bottom: 8px !important;
-	}
-	.footer-social {
-		text-align: center;
-	}
-	.social-label {
-		font-size: 13px;
-		margin-bottom: 12px;
-	}
-	.social-icons {
-		display: flex;
-		justify-content: center;
-		gap: 18px;
-		color: var(--text);
-	}
-	.social-icons a {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	/* Responsive */
-	@media (max-width: 760px) {
-		.header-inner {
-			flex-direction: column;
-		}
-		.hero-image {
-			width: 100%;
-		}
-		.nav-inner {
-			gap: 24px;
-		}
-		.welcome,
-		.welcome-cards,
-		.grid-2,
-		.grid-3,
-		.regulars,
-		.footer-inner {
-			grid-template-columns: 1fr;
-		}
-		.footer-social {
-			text-align: left;
-		}
-		.social-icons {
-			justify-content: flex-start;
-		}
-	}
-</style>
