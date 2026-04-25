@@ -11,10 +11,12 @@
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix && prettier --write .",
+    "prepare": "husky"
   },
   "lint-staged": {
-    "*": "prettier --write"
+    "*.{js,mjs,ts,astro}": "eslint --fix",
+    "*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.4",
@@ -25,6 +27,7 @@
     "@typescript-eslint/parser": "^8.59.0",
     "eslint": "^10.2.1",
     "eslint-plugin-astro": "^1.7.0",
+    "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "prettier": "3.8.3",
     "prettier-plugin-astro": "0.14.1",
