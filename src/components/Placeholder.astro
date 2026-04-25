@@ -1,23 +1,23 @@
 ---
 interface Props {
-	height?: string;
-	width?: string;
-	class?: string;
+  height?: string;
+  width?: string;
+  class?: string;
 }
 const { height = "180px", width = "100%", class: className = "" } = Astro.props;
 ---
 
 <div
-	class={`flex items-center justify-center overflow-hidden bg-placeholder-bg border border-line ${className}`}
-	style={`height:${height};width:${width};`}
+  class={`flex items-center justify-center overflow-hidden bg-placeholder-bg border border-line ${className}`}
+  style={`height:${height};width:${width};`}
 >
-	<svg
-		viewBox="0 0 100 60"
-		preserveAspectRatio="xMidYMid meet"
-		aria-hidden="true"
-		class="w-[70%] h-[70%] fill-placeholder-fg"
-	>
-		<circle cx="32" cy="22" r="6"></circle>
-		<polygon points="10,52 38,28 56,42 72,30 90,52"></polygon>
-	</svg>
+  <svg
+    viewBox="0 0 100 60"
+    preserveAspectRatio="xMidYMid meet"
+    aria-hidden="true"
+    class="fill-placeholder-fg h-[70%] w-[70%]"
+  >
+    <circle cx="32" cy="22" r="6"></circle>
+    <polygon points="10,52 38,28 56,42 72,30 90,52"></polygon>
+  </svg>
 </div>
