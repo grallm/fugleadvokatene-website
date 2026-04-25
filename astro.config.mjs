@@ -8,4 +8,11 @@ export default defineConfig({
   },
   site: "https://grallm.github.io",
   base: "/fugleadvokatene-website",
+  i18n: {
+    defaultLocale: "no",
+    locales: ["no", "en"],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
 });

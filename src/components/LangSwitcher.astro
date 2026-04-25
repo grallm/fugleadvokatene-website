@@ -1,0 +1,31 @@
+---
+import type { Lang } from "../i18n/ui";
+
+const lang = (Astro.currentLocale ?? "no") as Lang;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const links: { code: Lang; label: string; href: string }[] = [
+  { code: "no", label: "NO", href: `${base}/` },
+  { code: "en", label: "EN", href: `${base}/en/` },
+];
+---
+
+<div class="flex items-center gap-2 text-xs" aria-label="Language">
+  {
+    links.map((l, i) => (
+      <>
+        {i > 0 && <span class="text-muted">|</span>}
+        <a
+          href={l.href}
+          hreflang={l.code}
+          aria-current={l.code === lang ? "true" : undefined}
+          class:list={[
+            "uppercase",
+            l.code === lang ? "font-bold" : "text-muted hover:text-ink",
+          ]}
+        >
+          {l.label}
+        </a>
+      </>
+    ))
+  }
+</div>
