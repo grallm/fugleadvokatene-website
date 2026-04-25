@@ -1,6 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Placeholder from "../components/Placeholder.astro";
+import { Image } from "astro:assets";
+import logo from "../assets/logo.webp"; // Image is 1600x900
 
 const navLinks = ["Contact", "Store", "Blog", "Guides", "Who we are"];
 
@@ -54,9 +56,8 @@ const cardBase = "block border border-line p-4.5 bg-white text-ink";
     <div
       class={`${container} flex items-start justify-between gap-6 max-[760px]:flex-col`}
     >
-      <a href="/" class="flex items-center gap-3">
-        <Placeholder height="40px" width="40px" />
-        <span class="text-[22px] font-bold">FugleAdvokatene</span>
+      <a href={import.meta.env.BASE_URL} class="flex items-center gap-3">
+        <Image src={logo} alt="FugleAdvokatene logo" width="200" />
       </a>
       <div class="w-60 max-[760px]:w-full">
         <Placeholder height="90px" width="100%" />
