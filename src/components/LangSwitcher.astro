@@ -9,7 +9,11 @@ const links: { code: Lang; label: string; href: string }[] = [
 ];
 ---
 
-<div class="flex items-center gap-2 text-xs" aria-label="Language">
+<div
+  class="flex items-center gap-2 text-xs"
+  aria-label="Language"
+  data-lang-switcher
+>
   {
     links.map((l, i) => (
       <>
@@ -17,6 +21,7 @@ const links: { code: Lang; label: string; href: string }[] = [
         <a
           href={l.href}
           hreflang={l.code}
+          data-lang={l.code}
           aria-current={l.code === lang ? "true" : undefined}
           class:list={[
             "uppercase",
@@ -29,3 +34,19 @@ const links: { code: Lang; label: string; href: string }[] = [
     ))
   }
 </div>
+
+<script is:inline>
+  (function () {
+    try {
+      document
+        .querySelectorAll("[data-lang-switcher] a[data-lang]")
+        .forEach(function (a) {
+          a.addEventListener("click", function () {
+            try {
+              localStorage.setItem("lang", a.getAttribute("data-lang"));
+            } catch (e) {}
+          });
+        });
+    } catch (e) {}
+  })();
+</script>

@@ -2,6 +2,10 @@
 import "../styles/global.css";
 
 const lang = Astro.currentLocale ?? "no";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const enHref = `${base}/en/`;
+const isDefault = lang === "no";
+const detectScript = `(function(){try{var s=localStorage.getItem("lang");if(s==="en"){location.replace(${JSON.stringify(enHref)});return;}if(s)return;if(/^en/i.test(navigator.language||"")){location.replace(${JSON.stringify(enHref)});}}catch(e){}})();`;
 ---
 
 <!doctype html>
@@ -12,6 +16,7 @@ const lang = Astro.currentLocale ?? "no";
     <link rel="icon" href={`${import.meta.env.BASE_URL}/favicon.ico`} />
     <meta name="generator" content={Astro.generator} />
     <title>FugleAdvokatene</title>
+    {isDefault && <script is:inline set:html={detectScript} />}
   </head>
   <body>
     <slot />
