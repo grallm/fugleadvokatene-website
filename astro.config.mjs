@@ -1,4 +1,4 @@
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 
 import tailwindcss from "@tailwindcss/vite";
 
@@ -15,4 +15,11 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
+  fonts: [
+    {
+      provider: fontProviders.fontsource(),
+      name: "Gabarito",
+      cssVariable: "--font-gabarito",
+    },
+  ],
 });
