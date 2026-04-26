@@ -1,46 +1,29 @@
-# Astro Starter Kit: Basics
+# FugleAdvokatene Website
 
-```sh
-pnpm create astro@latest -- --template basics
-```
+New website for the [FugleAdvokatene](https://www.fugleadvokatene.no/) bird protection and rehabilitation organisation based in Norway.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Description
 
-## 🚀 Project Structure
+Static site created with [Astro](https://astro.build/). The goal is to have a SEO friendly webfront with basic information on the organisation and on what should be done with birds needing help.
 
-Inside of your Astro project, you'll see the following folders and files:
+### Blog
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+The website will also have a blog where posts can be added.
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+We use [Keystatic](https://keystatic.com/) for this.
 
-## 🧞 Commands
+### Store
 
-All commands are run from the root of the project, from a terminal:
+A basic store is a nice to have.
 
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `pnpm install`         | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+We will probably use [Snipcart](https://docs.astro.build/en/guides/ecommerce/#snipcart) to allow easy sells without too much of a backend.
 
-## 👀 Want to learn more?
+## Setup
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+1. Install dependencies `pnpm i`
+
+2. Start the app `pnpm dev`
+
+### Comments
+
+As Keystatic doesn't baseURL in Astro, when the env var `KEYSTATIC=1` is set, there are no baseURL and Keystatic works

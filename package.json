@@ -19,8 +19,16 @@
     "*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
+    "@astrojs/markdoc": "^1.0.4",
+    "@astrojs/react": "^5.0.4",
+    "@keystatic/astro": "^5.0.6",
+    "@keystatic/core": "^0.5.50",
     "@tailwindcss/vite": "^4.2.4",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "astro": "^6.1.9",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
     "sharp": "^0.34.5",
     "tailwindcss": "^4.2.4"
   },
@@ -32,6 +40,7 @@
     "lint-staged": "^16.4.0",
     "prettier": "3.8.3",
     "prettier-plugin-astro": "0.14.1",
-    "prettier-plugin-tailwindcss": "^0.7.3"
+    "prettier-plugin-tailwindcss": "^0.7.3",
+    "vite": "^8.0.10"
   }
 }
