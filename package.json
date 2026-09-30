@@ -1,46 +1,32 @@
 {
-  "name": "fugleadvokatene-website",
+  "name": "fugleadvokatene",
+  "version": "1.0.0",
+  "private": true,
   "type": "module",
-  "version": "0.0.1",
   "engines": {
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "lint": "eslint . && prettier --check .",
-    "lint:fix": "eslint . --fix && prettier --write .",
-    "prepare": "husky"
-  },
-  "lint-staged": {
-    "*.{js,mjs,ts,astro}": "eslint --fix",
-    "*": "prettier --write --ignore-unknown"
+    "dev": "astro dev --host 0.0.0.0",
+    "check": "astro check",
+    "build": "astro build && node scripts/package.mjs",
+    "preview": "astro preview --host 0.0.0.0",
+    "test": "node --test tests/*.test.mjs",
+    "test:php": "php backend/tests/run.php",
+    "test:http": "node backend/tests/http.mjs",
+    "serve:php": "php -S 127.0.0.1:8080 -t build/public scripts/router.php",
+    "deploy": "node scripts/deploy.mjs"
   },
   "dependencies": {
-    "@astrojs/markdoc": "^1.0.4",
-    "@astrojs/react": "^5.0.4",
-    "@keystatic/astro": "^5.0.6",
-    "@keystatic/core": "^0.5.50",
-    "@tailwindcss/vite": "^4.2.4",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "astro": "^6.1.9",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
-    "sharp": "^0.34.5",
-    "tailwindcss": "^4.2.4"
+    "@astrojs/markdown-remark": "^7.3.1",
+    "@fontsource-variable/gabarito": "^5.2.8",
+    "@toast-ui/editor": "^3.2.2",
+    "astro": "7.3.5",
+    "rehype-sanitize": "^6.0.0"
   },
   "devDependencies": {
-    "@typescript-eslint/parser": "^8.59.0",
-    "eslint": "^10.2.1",
-    "eslint-plugin-astro": "^1.7.0",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.4.0",
-    "prettier": "3.8.3",
-    "prettier-plugin-astro": "0.14.1",
-    "prettier-plugin-tailwindcss": "^0.7.3",
-    "vite": "^8.0.10"
+    "@astrojs/check": "^0.9.9",
+    "basic-ftp": "^5.0.5",
+    "typescript": "^5.9.3"
   }
 }

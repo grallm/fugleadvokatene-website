@@ -1,0 +1,4 @@
+---
+import Layout from '../layouts/Layout.astro';import ContactForm from '../components/ContactForm.astro';import {site} from '../data/site';
+---
+<Layout title="Kontakt"><div class="container page"><h1>Kontakt oss</h1><div class="two-columns"><div><p class="lead">Har du spørsmål eller ønsker å komme i kontakt med oss?</p><ContactForm/></div><aside><h2>Fugl i nød?</h2><p>Akutte henvendelser skal til hjelpegruppen på Facebook. Vi bemanner ikke et telefonnummer, og e-post er ikke en akuttkanal.</p><a class="button" href={site.helpGroup}>Til hjelpegruppen</a><p style="margin-top:30px">E-post: <a href={`mailto:${site.email}`}>{site.email}</a></p></aside></div></div></Layout>

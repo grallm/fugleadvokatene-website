@@ -1,29 +1,84 @@
-# FugleAdvokatene Website
+# FugleAdvokatene
 
-New website for the [FugleAdvokatene](https://www.fugleadvokatene.no/) bird protection and rehabilitation organisation based in Norway.
+Astro static website + PHP admin/API + GitHub Actions + hosted checkout links. Designed for the existing Domene.no PHP webhotel, without a Node server or database in production.
 
-## Description
+**Status: source implementation created and buildable; not yet ready to publish.** The supplied Figma desktop/mobile layouts were inspected. Figma's asset endpoints returned unavailable HTML pages, then the account's Starter MCP quota blocked further export. The original image/logo files are not included. Temporary SVG illustrations, icons and text branding are included at the user’s request so all image slots render in the preview. See `docs/FIGMA.md`. Account configuration and editorial review also remain. Nothing has been deployed or pushed to GitHub.
 
-Static site created with [Astro](https://astro.build/). The goal is to have a SEO friendly webfront with basic information on the organisation and on what should be done with birds needing help.
+## Start locally
 
-### Blog
+Requirements: Node 24 (22.12+ works), npm, and PHP 8.3+ with `curl`, `mbstring`, `gd`, `fileinfo`, sessions and outbound HTTPS.
 
-The website will also have a blog where posts can be added.
+```sh
+npm ci
+npm run dev
+```
 
-We use [Keystatic](https://keystatic.com/) for this.
+Astro serves at `http://localhost:4321`. Demo illustrations fill the image slots, including the hero, volunteer cards and temporary branding. For PHP functionality:
 
-### Store
+```sh
+cp backend/config.example.php backend/config.php
+php backend/hash-password.php
+# Set config values; local origin http://localhost:4321, secure_cookies false,
+# mail_transport log. Keep the GitHub token empty until intentional publishing.
+npm run build
+npm run serve:php
+# In another terminal: npm run dev
+```
 
-A basic store is a nice to have.
+Astro proxies `/api` to PHP on port 8080. Or open the built site on `http://127.0.0.1:8080` and use that exact `origin` in PHP config. Always use the same hostname; `localhost` and `127.0.0.1` are different origins. `serve:php` copies your ignored local config into the private build directory. Rebuilding clears that copy; source config stays safe.
 
-We will probably use [Snipcart](https://docs.astro.build/en/guides/ecommerce/#snipcart) to allow easy sells without too much of a backend.
+## Included
 
-## Setup
+- Norwegian responsive homepage based on the supplied Figma, with a manual three-slide hero and mobile navigation.
+- About, bird-help guidance, contact, volunteering, donations, news, volunteer profiles, store, privacy/terms drafts and 404 pages.
+- Password-protected `/admin/` with a locally bundled TOAST UI Markdown editor. Edit pages, posts, volunteer profiles and products; upload JPEG/PNG/WebP; publish or unpublish by toggling draft.
+- PHP session authentication, CSRF and origin checks, idle expiry, rate limits, server validation, safe image re-encoding and version-conflict handling.
+- GitHub-backed content: saves use the Contents API with the file SHA; the server-held token never reaches the browser. Commits trigger Actions.
+- PHP contact and volunteer forms; production uses the host's mail transport, local mode writes only local test logs.
+- Optional Facebook + connected Instagram feed: server-side tokens, cached JSON and local image copies, last successful feed retained on failure.
+- Product cards with external hosted checkout links. No payment credentials in the website, no custom checkout, cart or order database.
+- CI and gated FTPS deployment; scheduled feed refresh; setup and rollback instructions.
 
-1. Install dependencies `pnpm i`
+## How content gets published
 
-2. Start the app `pnpm dev`
+1. Editor signs in to `/admin/`.
+2. PHP validates the edit and commits Markdown to `src/content/` in GitHub.
+3. Actions checks PHP and Astro, builds static HTML, and publishes to the webhotel when deployment is enabled.
+4. The editor gets a commit ID. "Saved" means committed, **not** deployed; check the Actions run before assuming the live site changed.
 
-### Comments
+All Markdown uses JSON inside YAML frontmatter delimiters. JSON is a YAML subset and avoids quoting/injection problems. Manually authored YAML frontmatter is readable by Astro but must be converted to JSON for this small admin. Blog content HTML is sanitized during the build.
 
-As Keystatic doesn't baseURL in Astro, when the env var `KEYSTATIC=1` is set, there are no baseURL and Keystatic works
+## Store choice
+
+Use **Stripe Payment Links** as the default simplest checkout, or paste another trusted hosted HTTPS payment link. Create the real product, price, shipping/address requirements and payment link in the provider, then add its display details in the admin. Transactions and fulfilment are managed in that provider's dashboard. There is no extra commerce server; provider fees still apply.
+
+Existing Vipps/PayPal donation links are kept separately. A Vipps donation number is not a product checkout integration. No products or live payment links have been invented. See `docs/STORE.md`.
+
+## Main files
+
+| Path | Purpose |
+| --- | --- |
+| `src/pages/`, `src/components/`, `src/styles/` | Astro website and admin UI |
+| `src/content/{posts,pages,volunteers,products}/` | Editable Markdown content |
+| `src/data/site.ts` | Contact, donation and navigation settings |
+| `public/api/index.php` | Public API entry point |
+| `backend/src/` | Private PHP services, outside document root |
+| `backend/config.example.php` | Template for server-only credentials |
+| `scripts/` | Packaging, FTPS publishing, Figma asset verification |
+| `.github/workflows/` | Build/deployment and social-feed jobs |
+| `docs/SETUP.md` | Complete launch instructions |
+| `docs/PLAN.md` | Architecture, scope and remaining work |
+
+## Checks
+
+```sh
+npm run check
+npm test
+npm run test:php
+npm run build
+node scripts/check-assets.mjs
+```
+
+The final command currently fails deliberately because the Figma assets are missing. Production CI requires it when `SITE_READY=true`. Preview builds remain possible and default to `noindex`. See `docs/VERIFICATION.md` for the checks actually run and their limits.
+
+Content derived from the Figma mockup is marked draft. Privacy and sales terms are clearly marked review drafts. `PUBLIC_PREVIEW=false` excludes draft posts/profiles; products always require `draft=false` to appear. Publishing a new custom page creates its route, but does not automatically add it to the navigation.

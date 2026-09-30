@@ -1,0 +1,5 @@
+---
+import Layout from '../layouts/Layout.astro';import {getCollection} from 'astro:content';
+const products=await getCollection('products',({data})=>!data.draft);
+---
+<Layout title="Nettbutikk"><div class="container page"><h1>Nettbutikk</h1><p class="lead">Støtt arbeidet vårt gjennom et kjøp.</p><div class="grid">{products.map(p=><article class="empty"><img src={p.data.image} alt={p.data.title}/><h2 style="font-size:32px;margin-top:24px">{p.data.title}</h2><p>{p.data.description}</p><p class="price">{new Intl.NumberFormat('nb-NO',{style:'currency',currency:'NOK'}).format(p.data.price)}</p>{p.data.available&&p.data.checkoutUrl?<a class="button" href={p.data.checkoutUrl} rel="noopener">Kjøp nå</a>:<p>Ikke tilgjengelig akkurat nå</p>}</article>)}</div>{!products.length&&<div class="empty"><h2>Butikken åpner snart</h2><p>I mellomtiden kan du <a href="/stott-oss/">støtte oss her</a>.</p></div>}<p style="margin-top:32px">Betaling skjer hos betalingsleverandøren. Se frakt og endelig beløp før du betaler. <a href="/vilkar/">Les vilkårene</a>.</p></div></Layout>

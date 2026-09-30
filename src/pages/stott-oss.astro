@@ -1,0 +1,4 @@
+---
+import Layout from '../layouts/Layout.astro';import {site} from '../data/site';
+---
+<Layout title="Støtt oss"><div class="container page"><h1>Gi fuglene en ny sjanse</h1><p class="lead">Arbeidet vårt er drevet av frivillige. Din støtte hjelper oss å fortsette.</p><div class="grid"><section class="empty"><h2>Vipps</h2><p>Vippsnummer: <strong>{site.vipps}</strong></p><a class="button" href={site.monthly}>Bli månedsgiver</a></section><section class="empty"><h2>PayPal</h2><p>Du kan gi et bidrag gjennom PayPal.</p><a class="button" href={site.paypal}>Gi et bidrag</a></section><section class="empty"><h2>Bank</h2><p>Kontonummer<br/><strong>{site.bank}</strong></p><p>Grasrotandelen<br/>Org. nr {site.organisation}</p></section></div><p class="section"><a href="/bli-frivillig/">Vil du heller bidra med tid? Bli frivillig →</a></p></div></Layout>

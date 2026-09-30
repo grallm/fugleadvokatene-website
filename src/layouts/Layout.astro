@@ -1,27 +1,24 @@
 ---
-import "../styles/global.css";
-import { Font } from "astro:assets";
-
-const lang = Astro.currentLocale ?? "no";
-const base = import.meta.env.BASE_URL.replace(/\/$/, "");
-const enHref = `${base}/en/`;
-const isDefault = lang === "no";
-const detectScript = `(function(){try{var s=localStorage.getItem("lang");if(s==="en"){location.replace(${JSON.stringify(enHref)});return;}if(s)return;if(/^en/i.test(navigator.language||"")){location.replace(${JSON.stringify(enHref)});}}catch(e){}})();`;
+import '@fontsource-variable/gabarito';
+import '../styles/global.css';
+import {site,navigation,isPreview} from '../data/site';
+interface Props {title:string;description?:string;image?:string;noindex?:boolean}
+const {title,description='Redning og rehabilitering av byfugler i Oslo og Bergen. Finn hjelp, bli frivillig eller støtt FugleAdvokatene.',image='/images/demo/e8f31.svg',noindex=false}=Astro.props;
+const canonical=new URL(Astro.url.pathname,Astro.site);
 ---
-
-<!doctype html>
-<html lang={lang}>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" href={`${import.meta.env.BASE_URL}/favicon.ico`} />
-    <meta name="generator" content={Astro.generator} />
-    <title>FugleAdvokatene</title>
-    {isDefault && <script is:inline set:html={detectScript} />}
-
-    <Font cssVariable="--font-gabarito" />
-  </head>
-  <body>
-    <slot />
-  </body>
-</html>
+<!doctype html><html lang="nb"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>{title} · {site.name}</title><meta name="description" content={description}/><link rel="canonical" href={canonical}/>
+<meta property="og:title" content={`${title} · ${site.name}`}/><meta property="og:description" content={description}/><meta property="og:type" content="website"/><meta property="og:url" content={canonical}/><meta property="og:image" content={new URL(image,Astro.site)}/>
+{(isPreview||noindex)&&<meta name="robots" content="noindex, nofollow"/>}<link rel="icon" type="image/svg+xml" href="/images/demo/0c385.svg"/>
+</head><body>
+<a class="skip" href="#main">Hopp til innhold</a>
+<header class="header"><a href="/" aria-label="FugleAdvokatene, forsiden" class="brand"><img class="brand-bird" src="/images/demo/0c385.svg" alt=""/><img class="brand-word" src="/images/demo/14065.svg" alt="FugleAdvokatene"/></a>
+<button class="menu-toggle" aria-controls="navigation" aria-expanded="false" aria-label="Åpne meny"><span></span><span></span><span></span></button>
+<nav id="navigation" aria-label="Hovedmeny">{navigation.map(([label,href])=><a href={href} aria-current={Astro.url.pathname===href?'page':undefined}>{label}</a>)}<a class="button" href="/stott-oss/">Støtt oss</a></nav></header>
+<main id="main"><slot/></main>
+<footer class="footer"><div class="container"><div class="footer-top"><a href="/"><img src="/images/demo/35530.svg" width="307" height="107" alt="FugleAdvokatene"/></a><a class="button" href="/stott-oss/">Støtt oss</a></div>
+<div class="footer-columns"><nav aria-label="Bunnmeny"><a href="/om-oss/">Om oss</a><a href="/bli-frivillig/">Bli frivillig</a><a href="/nettbutikk/">Nettbutikk</a><a href="/veiledning/">Ofte stilte spørsmål</a><a href="/kontakt/">Kontakt</a></nav><div><strong>E-post</strong><a href={`mailto:${site.email}`}>{site.email}</a><strong>Org. nr</strong><span>{site.organisation}</span></div></div>
+<div class="social-links"><a href={site.facebook} aria-label="Facebook"><img src="/images/demo/1b83b.svg" alt=""/></a><a href={site.instagram} aria-label="Instagram"><img src="/images/demo/d858a.svg" alt=""/></a></div>
+<div class="footer-bottom"><a href="/personvern/">Personvern</a> <a href="/vilkar/">Vilkår</a> <a href="/personvern/#informasjonskapsler">Informasjonskapsler</a><p>© {new Date().getFullYear()} FugleAdvokatene. Alle rettigheter reservert.</p></div></div></footer>
+<script>const toggle=document.querySelector<HTMLButtonElement>('.menu-toggle');const nav=document.querySelector('#navigation');toggle?.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'Lukk meny':'Åpne meny');nav?.classList.toggle('open',open);});document.addEventListener('keydown',e=>{if(e.key==='Escape'){toggle?.setAttribute('aria-expanded','false');nav?.classList.remove('open');}});</script>
+</body></html>

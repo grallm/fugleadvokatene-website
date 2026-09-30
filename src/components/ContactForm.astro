@@ -1,0 +1,15 @@
+---
+const {volunteer=false}=Astro.props;
+---
+<form class="form" data-contact-form>
+<input type="hidden" name="kind" value={volunteer?'volunteer':'contact'}/>
+<label>Navn<input name="name" required maxlength="100" autocomplete="name"/></label>
+<label>E-post<input name="email" type="email" required maxlength="254" autocomplete="email"/></label>
+{volunteer&&<label>Hvor bor du?<input name="city" required maxlength="100" autocomplete="address-level2"/></label>}
+<label>{volunteer?'Fortell litt om deg selv og hvordan du ønsker å bidra':'Hva gjelder henvendelsen?'}<textarea name="message" required minlength="10" maxlength="5000"></textarea></label>
+<div class="honeypot" aria-hidden="true"><label>Nettside<input name="website" tabindex="-1" autocomplete="off"/></label></div>
+<label class="checkbox"><input type="checkbox" name="consent" required/><span>Jeg har lest <a href="/personvern/">personvernerklæringen</a> og godtar at dere bruker opplysningene til å svare på henvendelsen.</span></label>
+<button class="button" type="submit">{volunteer?'Send interesse':'Send melding'}</button><p class="form-status" role="status" aria-live="polite"></p>
+<noscript>Skjemaet trenger JavaScript. Send en e-post til kontakt@fugleadvokatene.no.</noscript>
+</form>
+<script>document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach(form=>{const status=form.querySelector<HTMLElement>('.form-status')!;const button=form.querySelector<HTMLButtonElement>('button')!;form.addEventListener('submit',async e=>{e.preventDefault();button.disabled=true;status.textContent='Sender …';try{const session=await fetch('/api/index.php?action=session',{credentials:'same-origin'});if(!session.ok)throw Error('Skjemaet er ikke tilgjengelig. Prøv igjen senere eller send oss en e-post.');const {csrf}=await session.json();const data=Object.fromEntries(new FormData(form));const response=await fetch('/api/index.php?action=contact',{method:'POST',headers:{'Content-Type':'application/json','X-CSRF-Token':csrf},body:JSON.stringify(data)});const result=await response.json();if(!response.ok)throw Error(result.error||'Meldingen kunne ikke sendes.');form.reset();status.textContent='Takk! Meldingen er mottatt. Vi svarer så snart vi kan.';}catch(error){status.textContent=error instanceof Error?error.message:'Noe gikk galt.';}finally{button.disabled=false;}});});</script>
