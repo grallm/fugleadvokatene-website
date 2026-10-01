@@ -31,7 +31,9 @@ Astro proxies `/api` to PHP on port 8080. Or open the built site on `http://127.
 
 ## Languages
 
-Norwegian Bokmål is the default at `/`. English is available at `/en/`. The navigation language switcher opens the corresponding translated page, or that language’s homepage when no translation has been published.
+Norwegian Bokmål is the default at `/`. English is available at `/en/`. The homepage opens English for browsers that prefer English, and defaults to Norwegian otherwise. It uses the first supported language in the browser’s preference list (English or Norwegian). An explicit choice in the language switcher is remembered in browser storage and takes priority on future homepage visits. Direct page links retain their language. Without JavaScript, the root homepage stays Norwegian.
+
+The navigation language switcher opens the corresponding translated page, or that language’s homepage when no translation has been published.
 
 Navigation, forms, accessibility labels, dates and prices follow the selected language. Facebook and Instagram posts remain in their original language. Each page has a language attribute, canonical URL and links to available translations; the sitemap contains both languages.
 

@@ -18,6 +18,7 @@ const navigation = ['contact', 'volunteer', 'shop', 'news', 'help', 'about'] as 
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline src="/scripts/site-language.js"></script>
     <title>{title} · {site.name}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
@@ -44,9 +45,9 @@ const navigation = ['contact', 'volunteer', 'shop', 'news', 'help', 'about'] as 
         {navigation.map(key => <a href={href(language, key)} aria-current={Astro.url.pathname === href(language, key) ? 'page' : undefined}>{text[key]}</a>)}
         <a class="button" href={href(language, 'support')}>{text.support}</a>
         <div class="language-switcher" role="group" aria-label={text.languageNav}>
-          <a href={alternates.nb ?? href('nb', 'home')} lang="nb" hreflang="nb" aria-current={language === 'nb' ? 'true' : undefined}>Norsk</a>
+          <a href={alternates.nb ?? href('nb', 'home')} lang="nb" hreflang="nb" data-site-language="nb" aria-current={language === 'nb' ? 'true' : undefined}>Norsk</a>
           <span aria-hidden="true">/</span>
-          <a href={alternates.en ?? href('en', 'home')} lang="en" hreflang="en" aria-current={language === 'en' ? 'true' : undefined}>English</a>
+          <a href={alternates.en ?? href('en', 'home')} lang="en" hreflang="en" data-site-language="en" aria-current={language === 'en' ? 'true' : undefined}>English</a>
         </div>
       </nav>
     </header>
