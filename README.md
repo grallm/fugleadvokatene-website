@@ -69,9 +69,21 @@ Existing Vipps/PayPal donation links are kept separately. A Vipps donation numbe
 | `docs/SETUP.md` | Complete launch instructions |
 | `docs/PLAN.md` | Architecture, scope and remaining work |
 
+## PHP formatting
+
+PHP formatting uses Prettier and `@prettier/plugin-php`, installed by `npm ci`. The project configuration targets PHP 8.3, uses four-space indentation and wraps long expressions.
+
+```sh
+npm run format:php        # Format PHP source and tests
+npm run format:php:check  # Check without changing files; also runs in CI
+```
+
+In VS Code, install the recommended **Prettier - Code formatter** extension. Workspace settings enable format on save for PHP. Generated output and private `backend/config.php` are excluded from the formatting commands. After formatting backend source, run `npm run build` to refresh the packaged copy used by the local PHP server.
+
 ## Checks
 
 ```sh
+npm run format:php:check
 npm run check
 npm test
 npm run test:php

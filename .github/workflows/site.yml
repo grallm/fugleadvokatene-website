@@ -24,6 +24,7 @@ jobs:
           extensions: curl, mbstring, gd, fileinfo
           coverage: none
       - run: npm ci
+      - run: npm run format:php:check
       - run: npm run check
       - name: Lint PHP
         run: find backend public/api scripts -name '*.php' -print0 | xargs -0 -n1 php -l
