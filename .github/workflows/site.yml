@@ -37,6 +37,9 @@ jobs:
         env:
           SITE_URL: ${{ vars.SITE_URL || 'https://www.fugleadvokatene.no' }}
           PUBLIC_PREVIEW: ${{ vars.SITE_READY == 'true' && 'false' || 'true' }}
+      - run: npm run test:site
+        env:
+          PUBLIC_PREVIEW: ${{ vars.SITE_READY == 'true' && 'false' || 'true' }}
       - run: npm run test:http
       - uses: actions/upload-artifact@v4
         with:

@@ -1,6 +1,10 @@
 ---
-import {getCollection,render} from 'astro:content';import Layout from '../../layouts/Layout.astro';import {isPreview} from '../../data/site';
-export async function getStaticPaths(){return (await getCollection('posts',({data})=>!data.draft||isPreview)).map(post=>({params:{slug:post.id},props:{post}}));}
-const {post}=Astro.props;const {Content}=await render(post);
+import { getCollection } from 'astro:content';
+import PostPage from '../../components/PostPage.astro';
+import { isPreview } from '../../data/site';
+export async function getStaticPaths() {
+  return (await getCollection('posts', ({ data }) => !data.draft || isPreview)).map(post => ({ params: { slug: post.id }, props: { post } }));
+}
+const { post } = Astro.props;
 ---
-<Layout title={post.data.title} description={post.data.description} image={post.data.image} noindex={post.data.draft}><article class="container page"><p><a href="/nyheter/">← Siste nytt</a></p><h1>{post.data.title}</h1><p>{post.data.date.toLocaleDateString('nb-NO')}</p>{post.data.draft&&<p class="notice">Redaksjonelt utkast – vises ikke i produksjon.</p>}<div class="prose"><img src={post.data.image} alt=""/><Content/></div></article></Layout>
+<PostPage post={post} />

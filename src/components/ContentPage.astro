@@ -1,0 +1,9 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import type { Language } from '../i18n/routes';
+interface Props { page: CollectionEntry<'pages' | 'pagesEn'>; language?: Language }
+const { page, language = 'nb' } = Astro.props;
+const { Content } = await render(page);
+---
+<Layout title={page.data.title} description={page.data.description} language={language}><article class="container page"><h1>{page.data.title}</h1><div class="prose"><Content /></div></article></Layout>

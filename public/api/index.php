@@ -1,5 +1,8 @@
 <?php
 declare(strict_types=1);
+// API responses must remain JSON, including when local PHP displays warnings.
+ini_set('display_errors', '0');
+ini_set('log_errors', '1');
 header('X-Content-Type-Options: nosniff');
 header('Cache-Control: no-store');
 header('X-Frame-Options: DENY');
@@ -7,7 +10,11 @@ $private = dirname(__DIR__, 2) . '/fugle-private';
 if (!is_file($private . '/config.php')) {
     http_response_code(503);
     header('Content-Type: application/json');
-    echo '{"error":"Tjenesten er ikke konfigurert ennå."}';
+    $message =
+        ($_SERVER['HTTP_X_SITE_LANGUAGE'] ?? 'nb') === 'en'
+            ? 'The service is not configured yet.'
+            : 'Tjenesten er ikke konfigurert ennå.';
+    echo json_encode(['error' => $message], JSON_THROW_ON_ERROR);
     exit();
 }
 require $private . '/src/core.php';
@@ -18,7 +25,7 @@ set_exception_handler(static function (Throwable $e): never {
     error_log('Fugle API failure: ' . get_class($e)); // Never log form content, tokens or upstream bodies.
     respond(['error' => 'En intern feil oppstod. Prøv igjen senere.'], 500);
 });
-$config = require $private . '/config.php';
+$config = load_config($private . '/config.php');
 $storage = $private . '/storage';
 ensure_storage($storage);
 require $private . '/src/github.php';
@@ -76,7 +83,12 @@ if ($action === 'login' && $method === 'POST') {
     $data = body();
     $username = text_value($data, 'username', 100, 1);
     $password = text_value($data, 'password', 1024, 1);
-    if (empty($config['admin_password_hash'])) {
+    if (
+        !is_string($config['admin_username'] ?? null) ||
+        $config['admin_username'] === '' ||
+        !is_string($config['admin_password_hash'] ?? null) ||
+        $config['admin_password_hash'] === ''
+    ) {
         fail(503, 'Admin er ikke konfigurert.');
     }
     $valid = password_verify($password, $config['admin_password_hash']);
@@ -110,8 +122,9 @@ if ($action === 'list' && $method === 'GET') {
     if (!is_string($collection)) {
         fail(422, 'Ugyldig samling.');
     }
-    content_path($collection, 'validation');
-    $entries = github($config, 'GET', 'src/content/' . $collection);
+    $language = content_language($_GET['language'] ?? 'nb');
+    $directory = dirname(content_path($collection, 'validation', $language));
+    $entries = github($config, 'GET', $directory);
     respond([
         'entries' => array_values(
             array_map(
@@ -130,7 +143,8 @@ if ($action === 'read' && $method === 'GET') {
     if (!is_string($collection) || !is_string($slug)) {
         fail(422, 'Ugyldig fil.');
     }
-    $file = github($config, 'GET', content_path($collection, $slug));
+    $language = content_language($_GET['language'] ?? 'nb');
+    $file = github($config, 'GET', content_path($collection, $slug, $language));
     $content = base64_decode($file['content'], true);
     if ($content === false) {
         fail(502, 'Ugyldig fil fra GitHub.');
@@ -139,6 +153,7 @@ if ($action === 'read' && $method === 'GET') {
         'sha' => $file['sha'],
         'slug' => $slug,
         'collection' => $collection,
+        'language' => $language,
         ...parse_content($content),
     ]);
 }

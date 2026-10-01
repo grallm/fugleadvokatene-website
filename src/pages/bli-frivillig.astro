@@ -1,4 +1,10 @@
 ---
-import Layout from '../layouts/Layout.astro';import ContactForm from '../components/ContactForm.astro';
+import Layout from '../layouts/Layout.astro';
+import { t } from '../i18n/ui';
+import type { Language } from '../i18n/routes';
+interface Props { language?: Language }
+const { language = 'nb' } = Astro.props;
+const text = t(language);
+import ContactForm from '../components/ContactForm.astro';
 ---
-<Layout title="Bli frivillig"><div class="container page"><h1>Ønsker du å bli frivillig?</h1><div class="two-columns"><div><p class="lead">Vi trenger flere som vil bidra til å hjelpe byens fugler.</p><p>Fortell oss hvor du bor og hva du kan bidra med. Vi tar kontakt for å snakke om muligheter, opplæring og hva som passer for deg.</p><ContactForm volunteer/></div><aside><img src="/images/demo/2ae5f.svg" alt="Demoillustrasjon av en frivillig med en due"/><h2 class="section">En liten innsats kan bety mye</h2><p>Rehabilitering, transport, informasjonsarbeid eller praktisk hjelp – det finnes flere måter å bidra på.</p></aside></div></div></Layout>
+<Layout title={text.volunteer} language={language}><div class="container page"><h1>{text.volunteerQuestion}</h1><div class="two-columns"><div><p class="lead">{text.volunteerLead}</p><p>{text.volunteerIntro}</p><ContactForm volunteer language={language} /></div><aside><img src="/images/demo/2ae5f.svg" alt={text.volunteerAlt} /><h2 class="section">{text.volunteerAsideTitle}</h2><p>{text.volunteerAside}</p></aside></div></div></Layout>

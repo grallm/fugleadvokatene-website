@@ -1,5 +1,12 @@
 ---
-import Layout from '../layouts/Layout.astro';import {getCollection} from 'astro:content';
-const products=await getCollection('products',({data})=>!data.draft);
+import Layout from '../layouts/Layout.astro';
+import { t } from '../i18n/ui';
+import { href, type Language } from '../i18n/routes';
+interface Props { language?: Language }
+const { language = 'nb' } = Astro.props;
+const text = t(language);
+import { getCollection } from 'astro:content';
+import { locale } from '../i18n/routes';
+const products = await getCollection(language === 'en' ? 'productsEn' : 'products', ({ data }) => !data.draft);
 ---
-<Layout title="Nettbutikk"><div class="container page"><h1>Nettbutikk</h1><p class="lead">Støtt arbeidet vårt gjennom et kjøp.</p><div class="grid">{products.map(p=><article class="empty"><img src={p.data.image} alt={p.data.title}/><h2 style="font-size:32px;margin-top:24px">{p.data.title}</h2><p>{p.data.description}</p><p class="price">{new Intl.NumberFormat('nb-NO',{style:'currency',currency:'NOK'}).format(p.data.price)}</p>{p.data.available&&p.data.checkoutUrl?<a class="button" href={p.data.checkoutUrl} rel="noopener">Kjøp nå</a>:<p>Ikke tilgjengelig akkurat nå</p>}</article>)}</div>{!products.length&&<div class="empty"><h2>Butikken åpner snart</h2><p>I mellomtiden kan du <a href="/stott-oss/">støtte oss her</a>.</p></div>}<p style="margin-top:32px">Betaling skjer hos betalingsleverandøren. Se frakt og endelig beløp før du betaler. <a href="/vilkar/">Les vilkårene</a>.</p></div></Layout>
+<Layout title={text.shop} language={language}><div class="container page"><h1>{text.shop}</h1><p class="lead">{text.shopLead}</p><div class="grid">{products.map(product => <article class="empty"><img src={product.data.image} alt={product.data.title} /><h2 style="font-size:32px;margin-top:24px">{product.data.title}</h2><p>{product.data.description}</p><p class="price">{new Intl.NumberFormat(locale[language], { style: 'currency', currency: 'NOK' }).format(product.data.price)}</p>{product.data.available && product.data.checkoutUrl ? <a class="button" href={product.data.checkoutUrl} rel="noopener">{text.buy}</a> : <p>{text.unavailable}</p>}</article>)}</div>{!products.length && <div class="empty"><h2>{text.shopSoon}</h2><p>{text.meanwhile} <a href={href(language, 'support')}>{text.supportHere}</a>.</p></div>}<p style="margin-top:32px">{text.paymentInfo} <a href={href(language, 'terms')}>{text.readTerms}</a>.</p></div></Layout>

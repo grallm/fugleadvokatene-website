@@ -1,4 +1,10 @@
 ---
-import Layout from '../layouts/Layout.astro';import {site} from '../data/site';
+import Layout from '../layouts/Layout.astro';
+import { t } from '../i18n/ui';
+import { href, type Language } from '../i18n/routes';
+interface Props { language?: Language }
+const { language = 'nb' } = Astro.props;
+const text = t(language);
+import { site } from '../data/site';
 ---
-<Layout title="Hjelp en fugl i nød"><div class="container page"><h1>Funnet en skadet fugl?</h1><div class="prose"><p class="lead">Ta kontakt med FugleAdvokatenes hjelpegruppe på Facebook for veiledning.</p><ol><li>Ta bilder eller video av fuglen.</li><li>Beskriv hva du ser og hvor fuglen befinner seg.</li><li>Be om veiledning i hjelpegruppen. Ikke utsett deg selv eller fuglen for fare.</li></ol><a class="button" href={site.helpGroup}>Åpne hjelpegruppen</a><h2 id="hjelp-naer-deg">Hjelp nær deg</h2><p>Vi arbeider i Oslo og Bergen. Hjelpegruppen kan veilede deg om hvem du kan kontakte der du er.</p><p>En liste over veterinærer publiseres først når kontaktinformasjon og tilbud er kontrollert.</p><h2>Ofte stilte spørsmål</h2><details><summary>Kan jeg ringe dere?</summary><p>Vi bemanner ikke et telefonnummer. Bruk hjelpegruppen på Facebook.</p></details><details><summary>Kan jeg sende en e-post om en akutt situasjon?</summary><p>E-post er ikke en akuttkanal. Henvend deg i hjelpegruppen, der frivillige svarer så snart de kan.</p></details><details><summary>Hvordan kan jeg bidra?</summary><p>Du kan <a href="/bli-frivillig/">melde interesse som frivillig</a> eller <a href="/stott-oss/">støtte arbeidet økonomisk</a>.</p></details></div></div></Layout>
+<Layout title={text.helpTitle} language={language}><div class="container page"><h1>{text.injuredBird}</h1><div class="prose"><p class="lead">{text.helpLead}</p><ol>{text.helpSteps.map(step => <li>{step}</li>)}</ol><a class="button" href={site.helpGroup}>{text.openHelpGroup}</a><h2 id={language === 'en' ? 'help-near-you' : 'hjelp-naer-deg'}>{text.nearbyHeading}</h2><p>{text.nearbyText}</p><p>{text.vetsText}</p><h2>{text.faq}</h2><details><summary>{text.faqPhone}</summary><p>{text.faqPhoneAnswer}</p></details><details><summary>{text.faqEmail}</summary><p>{text.faqEmailAnswer}</p></details><details><summary>{text.faqContribute}</summary><p>{text.contributePrefix} <a href={href(language, 'volunteer')}>{text.contributeVolunteer}</a> {text.or} <a href={href(language, 'support')}>{text.contributeSupport}</a>.</p></details></div></div></Layout>

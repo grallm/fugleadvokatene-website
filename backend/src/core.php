@@ -14,11 +14,70 @@ function fail(int $status, string $message): never
 }
 function respond(array $data, int $status = 200): never
 {
+    if (isset($data['error']) && is_string($data['error'])) {
+        $data['error'] = public_error($data['error']);
+    }
     http_response_code($status);
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
     exit();
 }
+function public_error(string $message): string
+{
+    if (($_SERVER['HTTP_X_SITE_LANGUAGE'] ?? 'nb') !== 'en') {
+        return $message;
+    }
+    $translations = [
+        'En intern feil oppstod. Prøv igjen senere.' =>
+            'An internal error occurred. Please try again later.',
+        'Tjenesten er ikke konfigurert riktig.' => 'The service is not configured correctly.',
+        'Admin er ikke konfigurert.' => 'Admin login is not configured.',
+        'Feil brukernavn eller passord.' => 'Incorrect username or password.',
+        'Ugyldig e-postadresse.' => 'Enter a valid email address.',
+        'Bekreft at du har lest personvernerklæringen.' =>
+            'Confirm that you have read the privacy statement.',
+        'For mange forsøk. Prøv igjen senere.' => 'Too many requests. Please try again later.',
+        'Ugyldig opprinnelse.' => 'The request came from an invalid origin.',
+        'Økten er utløpt. Last siden på nytt.' =>
+            'Your session has expired. Reload the page and try again.',
+        'Loggtransport er kun for lokal utvikling.' =>
+            'Local mail logging is only available during local development.',
+        'E-posttjenesten er ikke konfigurert.' => 'The email service is not configured.',
+        'Meldingen kunne ikke sendes. Prøv igjen senere eller send oss en e-post.' =>
+            'Your message could not be sent. Please try again later or email us.',
+        'JSON er påkrevd.' => 'The request must use JSON.',
+        'Ugyldig JSON.' => 'The request contains invalid JSON.',
+        'Forespørselen er for stor.' => 'The request is too large.',
+        'Forventet et JSON-objekt.' => 'The request must contain a JSON object.',
+    ];
+    foreach (
+        ['Ugyldig felt: ' => 'Invalid field: ', 'Ugyldig lengde: ' => 'Invalid length: ']
+        as $prefix => $translation
+    ) {
+        if (str_starts_with($message, $prefix)) {
+            return $translation . substr($message, strlen($prefix));
+        }
+    }
+    return $translations[$message] ?? $message;
+}
+
+function load_config(string $path): array
+{
+    // Including a file without PHP tags prints its contents. Never send config output to a client.
+    ob_start();
+    try {
+        $config = require $path;
+        if (ob_get_length() !== 0 || !is_array($config)) {
+            fail(503, 'Tjenesten er ikke konfigurert riktig.');
+        }
+        return $config;
+    } catch (ParseError) {
+        fail(503, 'Tjenesten er ikke konfigurert riktig.');
+    } finally {
+        ob_end_clean();
+    }
+}
+
 function text_value(array $data, string $key, int $max, int $min = 0): string
 {
     if (!isset($data[$key]) || !is_string($data[$key])) {
@@ -129,8 +188,17 @@ function require_admin(): void
         fail(401, 'Logg inn først.');
     }
 }
-function content_path(string $collection, string $slug): string
+function content_language(mixed $language): string
 {
+    if (!is_string($language) || !in_array($language, ['nb', 'en'], true)) {
+        fail(422, 'Ugyldig språk.');
+    }
+    return $language;
+}
+
+function content_path(string $collection, string $slug, string $language = 'nb'): string
+{
+    $language = content_language($language);
     if (!in_array($collection, ['posts', 'pages', 'volunteers', 'products'], true)) {
         fail(422, 'Ukjent samling.');
     }
@@ -143,6 +211,18 @@ function content_path(string $collection, string $slug): string
             $slug,
             [
                 'index',
+                'en',
+                'contact',
+                'volunteer',
+                'volunteers',
+                'support',
+                'bird-help',
+                'shop',
+                'news',
+                'thank-you',
+                'about',
+                'privacy',
+                'terms',
                 'admin',
                 'api',
                 'kontakt',
@@ -162,7 +242,8 @@ function content_path(string $collection, string $slug): string
     ) {
         fail(422, 'Denne adressen er reservert.');
     }
-    return "src/content/$collection/$slug.md";
+    $directory = $language === 'en' ? "$collection/en" : $collection;
+    return "src/content/$directory/$slug.md";
 }
 function image_path(string $value): string
 {

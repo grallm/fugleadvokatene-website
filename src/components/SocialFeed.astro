@@ -1,6 +1,44 @@
 ---
-import {site} from '../data/site';
+import { site } from '../data/site';
+import { t } from '../i18n/ui';
+import { locale, type Language } from '../i18n/routes';
+interface Props { language?: Language }
+const { language = 'nb' } = Astro.props;
+const text = t(language);
 ---
-<div data-social-feed class="social-feed"><p>Følg hverdagen vår på <a href={site.facebook}>Facebook</a> og <a href={site.instagram}>Instagram</a>.</p></div>
-<script>const root=document.querySelector<HTMLElement>('[data-social-feed]');if(root)fetch('/api/index.php?action=feed').then(r=>r.ok?r.json():null).then(data=>{if(!data?.posts?.length)return;const grid=document.createElement('div');grid.className='feed-grid';for(const post of data.posts.slice(0,4)){const url=new URL(post.url);if(url.protocol!=='https:'||!['www.facebook.com','www.instagram.com','facebook.com','instagram.com'].includes(url.hostname))continue;const card=document.createElement('article');if(post.image&&/^\/api\/index.php\?action=media&id=[a-f0-9]{40}$/.test(post.image)){const image=document.createElement('img');image.src=post.image;image.alt='';image.loading='lazy';card.append(image);}const date=document.createElement('time');date.dateTime=post.date;date.textContent=new Date(post.date).toLocaleDateString('nb-NO');const text=document.createElement('p');text.textContent=post.text;const link=document.createElement('a');link.className='button secondary';link.href=url.href;link.textContent='Les mer';card.append(date,text,link);grid.append(card);}if(grid.childElementCount)root.replaceChildren(grid);}).catch(()=>{});</script>
+<div data-social-feed data-locale={locale[language]} data-read-more={text.readMore} class="social-feed"><p>{text.follow} <a href={site.facebook}>Facebook</a> {text.and} <a href={site.instagram}>Instagram</a>.</p></div>
+{language === 'en' && <p class="muted">{text.socialOriginal}</p>}
+<script>
+  const root = document.querySelector<HTMLElement>('[data-social-feed]');
+  if (root) fetch('/api/index.php?action=feed').then(response => response.ok ? response.json() : null).then(data => {
+    if (!data?.posts?.length) return;
+    const grid = document.createElement('div');
+    grid.className = 'feed-grid';
+    for (const post of data.posts.slice(0, 4)) {
+      const url = new URL(post.url);
+      if (url.protocol !== 'https:' || !['www.facebook.com', 'www.instagram.com', 'facebook.com', 'instagram.com'].includes(url.hostname)) continue;
+      const card = document.createElement('article');
+      if (post.image && /^\/api\/index.php\?action=media&id=[a-f0-9]{40}$/.test(post.image)) {
+        const image = document.createElement('img');
+        image.src = post.image;
+        image.alt = '';
+        image.loading = 'lazy';
+        card.append(image);
+      }
+      const date = document.createElement('time');
+      date.dateTime = post.date;
+      date.textContent = new Date(post.date).toLocaleDateString(root.dataset.locale);
+      const text = document.createElement('p');
+      text.textContent = post.text;
+      const link = document.createElement('a');
+      link.className = 'button secondary';
+      link.href = url.href;
+      link.textContent = root.dataset.readMore ?? '';
+      card.append(date, text, link);
+      grid.append(card);
+    }
+    if (grid.childElementCount) root.replaceChildren(grid);
+  }).catch(() => {});
+</script>
+
 <style is:global>.feed-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:34px}.feed-grid article>img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:20px}.feed-grid time{display:block;color:var(--ink);margin:15px 0;font-weight:700}.feed-grid p{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}@media(max-width:900px){.feed-grid{grid-template-columns:1fr 1fr}}@media(max-width:600px){.feed-grid{grid-template-columns:1fr}.feed-grid article>img{aspect-ratio:319/182}}</style>

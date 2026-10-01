@@ -1,24 +1,84 @@
 ---
 import '@fontsource-variable/gabarito';
 import '../styles/global.css';
-import {site,navigation,isPreview} from '../data/site';
-interface Props {title:string;description?:string;image?:string;noindex?:boolean}
-const {title,description='Redning og rehabilitering av byfugler i Oslo og Bergen. Finn hjelp, bli frivillig eller støtt FugleAdvokatene.',image='/images/demo/e8f31.svg',noindex=false}=Astro.props;
-const canonical=new URL(Astro.url.pathname,Astro.site);
+import { site, isPreview } from '../data/site';
+import { t } from '../i18n/ui';
+import { href, type Language } from '../i18n/routes';
+import { languageLinks } from '../i18n/content';
+interface Props { title: string; description?: string; image?: string; noindex?: boolean; language?: Language }
+const { title, image = '/images/demo/e8f31.svg', noindex = false, language = 'nb' } = Astro.props;
+const text = t(language);
+const description = Astro.props.description ?? text.defaultDescription;
+const canonical = new URL(['/404', '/404/', '/404.html'].includes(Astro.url.pathname) ? '/404.html' : Astro.url.pathname, Astro.site);
+const alternates = await languageLinks(Astro.url.pathname);
+const navigation = ['contact', 'volunteer', 'shop', 'news', 'help', 'about'] as const;
 ---
-<!doctype html><html lang="nb"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>{title} · {site.name}</title><meta name="description" content={description}/><link rel="canonical" href={canonical}/>
-<meta property="og:title" content={`${title} · ${site.name}`}/><meta property="og:description" content={description}/><meta property="og:type" content="website"/><meta property="og:url" content={canonical}/><meta property="og:image" content={new URL(image,Astro.site)}/>
-{(isPreview||noindex)&&<meta name="robots" content="noindex, nofollow"/>}<link rel="icon" type="image/svg+xml" href="/images/demo/0c385.svg"/>
-</head><body>
-<a class="skip" href="#main">Hopp til innhold</a>
-<header class="header"><a href="/" aria-label="FugleAdvokatene, forsiden" class="brand"><img class="brand-bird" src="/images/demo/0c385.svg" alt=""/><img class="brand-word" src="/images/demo/14065.svg" alt="FugleAdvokatene"/></a>
-<button class="menu-toggle" aria-controls="navigation" aria-expanded="false" aria-label="Åpne meny"><span></span><span></span><span></span></button>
-<nav id="navigation" aria-label="Hovedmeny">{navigation.map(([label,href])=><a href={href} aria-current={Astro.url.pathname===href?'page':undefined}>{label}</a>)}<a class="button" href="/stott-oss/">Støtt oss</a></nav></header>
-<main id="main"><slot/></main>
-<footer class="footer"><div class="container"><div class="footer-top"><a href="/"><img src="/images/demo/35530.svg" width="307" height="107" alt="FugleAdvokatene"/></a><a class="button" href="/stott-oss/">Støtt oss</a></div>
-<div class="footer-columns"><nav aria-label="Bunnmeny"><a href="/om-oss/">Om oss</a><a href="/bli-frivillig/">Bli frivillig</a><a href="/nettbutikk/">Nettbutikk</a><a href="/veiledning/">Ofte stilte spørsmål</a><a href="/kontakt/">Kontakt</a></nav><div><strong>E-post</strong><a href={`mailto:${site.email}`}>{site.email}</a><strong>Org. nr</strong><span>{site.organisation}</span></div></div>
-<div class="social-links"><a href={site.facebook} aria-label="Facebook"><img src="/images/demo/1b83b.svg" alt=""/></a><a href={site.instagram} aria-label="Instagram"><img src="/images/demo/d858a.svg" alt=""/></a></div>
-<div class="footer-bottom"><a href="/personvern/">Personvern</a> <a href="/vilkar/">Vilkår</a> <a href="/personvern/#informasjonskapsler">Informasjonskapsler</a><p>© {new Date().getFullYear()} FugleAdvokatene. Alle rettigheter reservert.</p></div></div></footer>
-<script>const toggle=document.querySelector<HTMLButtonElement>('.menu-toggle');const nav=document.querySelector('#navigation');toggle?.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'Lukk meny':'Åpne meny');nav?.classList.toggle('open',open);});document.addEventListener('keydown',e=>{if(e.key==='Escape'){toggle?.setAttribute('aria-expanded','false');nav?.classList.remove('open');}});</script>
-</body></html>
+<!doctype html>
+<html lang={language}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} · {site.name}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {Object.entries(alternates).map(([lang, path]) => <link rel="alternate" hreflang={lang} href={new URL(path!, Astro.site)} />)}
+    {alternates.nb && <link rel="alternate" hreflang="x-default" href={new URL(alternates.nb, Astro.site)} />}
+    <meta property="og:title" content={`${title} · ${site.name}`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={language === 'en' ? 'en_GB' : 'nb_NO'} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    {(isPreview || noindex) && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="icon" type="image/svg+xml" href="/images/demo/0c385.svg" />
+  </head>
+  <body>
+    <a class="skip" href="#main">{text.skip}</a>
+    <header class="header">
+      <a href={href(language, 'home')} aria-label={text.homeLabel} class="brand">
+        <img class="brand-bird" src="/images/demo/0c385.svg" alt="" />
+        <img class="brand-word" src="/images/demo/14065.svg" alt="FugleAdvokatene" />
+      </a>
+      <button class="menu-toggle" aria-controls="navigation" aria-expanded="false" aria-label={text.openMenu} data-open-label={text.openMenu} data-close-label={text.closeMenu}><span></span><span></span><span></span></button>
+      <nav id="navigation" aria-label={text.mainNav}>
+        {navigation.map(key => <a href={href(language, key)} aria-current={Astro.url.pathname === href(language, key) ? 'page' : undefined}>{text[key]}</a>)}
+        <a class="button" href={href(language, 'support')}>{text.support}</a>
+        <div class="language-switcher" role="group" aria-label={text.languageNav}>
+          <a href={alternates.nb ?? href('nb', 'home')} lang="nb" hreflang="nb" aria-current={language === 'nb' ? 'true' : undefined}>Norsk</a>
+          <span aria-hidden="true">/</span>
+          <a href={alternates.en ?? href('en', 'home')} lang="en" hreflang="en" aria-current={language === 'en' ? 'true' : undefined}>English</a>
+        </div>
+      </nav>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-top"><a href={href(language, 'home')}><img src="/images/demo/35530.svg" width="307" height="107" alt="FugleAdvokatene" /></a><a class="button" href={href(language, 'support')}>{text.support}</a></div>
+        <div class="footer-columns">
+          <nav aria-label={text.footerNav}>
+            {(['about', 'volunteer', 'shop', 'help', 'contact'] as const).map(key => <a href={href(language, key)}>{key === 'help' ? text.faq : text[key]}</a>)}
+          </nav>
+          <div><strong>{text.email}</strong><a href={`mailto:${site.email}`}>{site.email}</a><strong>{text.organisation}</strong><span>{site.organisation}</span></div>
+        </div>
+        <div class="social-links"><a href={site.facebook} aria-label="Facebook"><img src="/images/demo/1b83b.svg" alt="" /></a><a href={site.instagram} aria-label="Instagram"><img src="/images/demo/d858a.svg" alt="" /></a></div>
+        <div class="footer-bottom"><a href={href(language, 'privacy')}>{text.privacy}</a><a href={href(language, 'terms')}>{text.terms}</a><a href={`${href(language, 'privacy')}#${language === 'en' ? 'cookies' : 'informasjonskapsler'}`}>{text.cookies}</a><p>© {new Date().getFullYear()} FugleAdvokatene. {text.copyright}</p></div>
+      </div>
+    </footer>
+    <script>
+      const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+      const nav = document.querySelector('#navigation');
+      function closeMenu() {
+        toggle?.setAttribute('aria-expanded', 'false');
+        toggle?.setAttribute('aria-label', toggle.dataset.openLabel ?? '');
+        nav?.classList.remove('open');
+      }
+      toggle?.addEventListener('click', () => {
+        const open = toggle.getAttribute('aria-expanded') !== 'true';
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', (open ? toggle.dataset.closeLabel : toggle.dataset.openLabel) ?? '');
+        nav?.classList.toggle('open', open);
+      });
+      document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
+    </script>
+  </body>
+</html>

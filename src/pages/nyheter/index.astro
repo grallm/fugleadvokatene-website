@@ -1,5 +1,13 @@
 ---
-import {getCollection} from 'astro:content';import Layout from '../../layouts/Layout.astro';import SocialFeed from '../../components/SocialFeed.astro';import {isPreview} from '../../data/site';
-const posts=(await getCollection('posts',({data})=>!data.draft||isPreview)).sort((a,b)=>b.data.date.getTime()-a.data.date.getTime());
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import SocialFeed from '../../components/SocialFeed.astro';
+import { isPreview } from '../../data/site';
+import { t } from '../../i18n/ui';
+import { locale, contentHref, type Language } from '../../i18n/routes';
+interface Props { language?: Language }
+const { language = 'nb' } = Astro.props;
+const text = t(language);
+const posts = (await getCollection(language === 'en' ? 'postsEn' : 'posts', ({ data }) => !data.draft || isPreview)).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
-<Layout title="Siste nytt"><div class="container page"><h1>Siste nytt</h1><SocialFeed/><h2 class="section">Fra FugleAdvokatene</h2><div class="grid">{posts.map(p=><a class="card" href={`/nyheter/${p.id}/`}><img src={p.data.image} alt="" loading="lazy"/><div class="card-body"><p>{p.data.date.toLocaleDateString('nb-NO')}{p.data.draft&&' · Utkast'}</p><h3>{p.data.title}</h3><p>{p.data.description}</p></div></a>)}</div>{!posts.length&&<p>Det er ingen publiserte artikler ennå.</p>}</div></Layout>
+<Layout title={text.news} language={language}><div class="container page"><h1>{text.news}</h1><SocialFeed language={language} /><h2 class="section">{text.newsHeading}</h2><div class="grid">{posts.map(post => <a class="card" href={contentHref(language, 'post', post.id)}><img src={post.data.image} alt="" loading="lazy" /><div class="card-body"><p>{post.data.date.toLocaleDateString(locale[language])}{post.data.draft && ` · ${text.draft}`}</p><h3>{post.data.title}</h3><p>{post.data.description}</p></div></a>)}</div>{!posts.length && <p>{text.noNews}</p>}</div></Layout>

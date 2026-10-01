@@ -33,6 +33,18 @@ check(
     content_path('posts', 'a-new-bird') === 'src/content/posts/a-new-bird.md',
     'valid content path',
 );
+check(
+    content_path('posts', 'a-new-bird', 'en') === 'src/content/posts/en/a-new-bird.md',
+    'English content has a separate path',
+);
+rejects(
+    fn() => content_path('posts', 'a-new-bird', '../en'),
+    422,
+    'reject invalid content language',
+);
+rejects(fn() => content_language(['en']), 422, 'reject array content language');
+rejects(fn() => content_path('pages', 'en'), 422, 'reserve the English route prefix');
+rejects(fn() => content_path('pages', 'contact', 'en'), 422, 'reserve English static routes');
 rejects(fn() => content_path('posts', '../../config'), 422, 'reject path traversal');
 rejects(fn() => content_path('workflows', 'attack'), 422, 'reject arbitrary collection');
 rejects(fn() => content_path('pages', 'admin'), 422, 'reject reserved route');

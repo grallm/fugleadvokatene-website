@@ -1,2 +1,12 @@
-import type { APIRoute } from 'astro';import {getCollection} from 'astro:content';
-export const GET:APIRoute=async({site})=>{const routes=['','kontakt/','bli-frivillig/','stott-oss/','veiledning/','nettbutikk/','nyheter/'];for(const page of await getCollection('pages',({data})=>!data.draft))routes.push(page.id+'/');for(const post of await getCollection('posts',({data})=>!data.draft))routes.push('nyheter/'+post.id+'/');for(const person of await getCollection('volunteers',({data})=>!data.draft))routes.push('frivillige/'+person.id+'/');const escape=(v:string)=>v.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;');return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${routes.map(route=>`<url><loc>${escape(new URL(route,site).href)}</loc></url>`).join('')}</urlset>`,{headers:{'Content-Type':'application/xml; charset=utf-8'}});};
+import type { APIRoute } from 'astro';
+import { getSiteRoutes } from '../i18n/content';
+export const GET: APIRoute = async ({ site }) => {
+  const routes = (await getSiteRoutes()).filter(route => route.indexable);
+  const escape = (value: string) => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('"', '&quot;');
+  const urls = routes.map(route => {
+    const alternates = routes.filter(other => other.key === route.key);
+    const links = alternates.map(other => `<xhtml:link rel="alternate" hreflang="${other.language}" href="${escape(new URL(other.path, site).href)}"/>`).join('');
+    return `<url><loc>${escape(new URL(route.path, site).href)}</loc>${links}</url>`;
+  }).join('');
+  return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">${urls}</urlset>`, { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
+};

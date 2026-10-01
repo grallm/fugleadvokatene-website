@@ -25,7 +25,23 @@ npm run serve:php
 # In another terminal: npm run dev
 ```
 
+Edit settings inside the existing `return [ ... ];` array in `backend/config.php`; keep its opening `<?php` tag and the complete array wrapper. Open the admin at `http://localhost:4321/admin/`. Paths under `/api/` serve API responses.
+
 Astro proxies `/api` to PHP on port 8080. Or open the built site on `http://127.0.0.1:8080` and use that exact `origin` in PHP config. Always use the same hostname; `localhost` and `127.0.0.1` are different origins. `serve:php` copies your ignored local config into the private build directory. Rebuilding clears that copy; source config stays safe.
+
+## Languages
+
+Norwegian Bokmål is the default at `/`. English is available at `/en/`. The navigation language switcher opens the corresponding translated page, or that language’s homepage when no translation has been published.
+
+Navigation, forms, accessibility labels, dates and prices follow the selected language. Facebook and Instagram posts remain in their original language. Each page has a language attribute, canonical URL and links to available translations; the sitemap contains both languages.
+
+Editable English content lives in `src/content/{pages,posts,volunteers,products}/en/`. In `/admin/`, select **Norsk** or **English** before loading or saving content. Use the same slug for both translations to pair them. Each translation has its own draft status and must be published separately. English static UI text lives in `src/i18n/ui.ts`.
+
+## Content editor
+
+The admin uses TOAST UI Editor and opens in visual (WYSIWYG) mode. Its toolbar supports headings, emphasis, lists, quotes, links, images, tables and code. Switch between **WYSIWYG** and **Markdown** at the bottom of the editor; saving either mode writes Markdown to the existing content files.
+
+Images inserted or pasted into the editor use the same PHP/GitHub upload endpoint as cover images: JPEG, PNG or WebP, up to 4 MB. Uploaded images become available after the next successful publication.
 
 ## Included
 
@@ -88,6 +104,8 @@ npm run check
 npm test
 npm run test:php
 npm run build
+npm run test:site
+npm run test:http
 node scripts/check-assets.mjs
 ```
 

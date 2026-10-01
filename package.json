@@ -17,7 +17,8 @@
     "serve:php": "php -S 127.0.0.1:8080 -t build/public scripts/router.php",
     "deploy": "node scripts/deploy.mjs",
     "format:php": "prettier --write \"{backend,public/api,scripts}/**/*.php\"",
-    "format:php:check": "prettier --check \"{backend,public/api,scripts}/**/*.php\""
+    "format:php:check": "prettier --check \"{backend,public/api,scripts}/**/*.php\"",
+    "test:site": "node --test tests/site/*.test.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.1",

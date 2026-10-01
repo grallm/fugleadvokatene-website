@@ -49,14 +49,15 @@ function save_content(array $config, array $data): array
 {
     $collection = text_value($data, 'collection', 20, 1);
     $slug = text_value($data, 'slug', 80, 1);
-    $path = content_path($collection, $slug);
+    $language = content_language($data['language'] ?? 'nb');
+    $path = content_path($collection, $slug, $language);
     $content = serialize_content($collection, $data);
     $sha = text_value($data, 'sha', 40);
     if ($sha !== '' && !preg_match('/^[a-f0-9]{40}$/D', $sha)) {
         fail(422, 'Ugyldig versjon.');
     }
     $payload = [
-        'message' => "content: update $collection/$slug",
+        'message' => "content: update $language/$collection/$slug",
         'content' => base64_encode($content),
         'branch' => $config['github_branch'],
     ];
