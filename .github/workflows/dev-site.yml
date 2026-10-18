@@ -1,0 +1,65 @@
+name: Deploy Astro dev site
+on:
+  push:
+    branches: [codex/replace-with-downloaded-project]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: astro-dev-deployment
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm test
+      - name: Build static preview
+        run: npx --no-install astro build
+        env:
+          SITE_URL: https://dev.fugleadvokatene.no
+          PUBLIC_PREVIEW: 'true'
+      - name: Prepare static files only
+        run: |
+          rm -rf dist/api dist/admin
+          find dist -type f \( -name '.*' -o -iname '*.php' -o -iname '*.ini' \) -delete
+          node scripts/deploy-static.mjs --dry-run
+      - uses: actions/upload-artifact@v4
+        with:
+          name: astro-dev-${{ github.sha }}
+          path: dist/
+          retention-days: 14
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/codex/replace-with-downloaded-project' && vars.DEV_DEPLOY_ENABLED == 'true'
+    environment:
+      name: development
+      url: https://dev.fugleadvokatene.no
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          name: astro-dev-${{ github.sha }}
+          path: dist/
+      - name: Upload static files through verified FTPS
+        run: node scripts/deploy-static.mjs
+        env:
+          FTP_HOST: ${{ secrets.DEV_FTP_HOST }}
+          FTP_USER: ${{ secrets.DEV_FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.DEV_FTP_PASSWORD }}
+          FTP_PUBLIC_DIR: /
+          FTP_PORT: '21'
