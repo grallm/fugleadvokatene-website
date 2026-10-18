@@ -13,7 +13,12 @@ const name = src.split('/').pop()?.replace(/\.webp$/, '') ?? '';
 const ratio = src.startsWith('/images/photos/') ? photos[name] : undefined;
 const srcset = (format: string) => [480, 960, 1600].map(width => `/images/photos/${name}-${width}.${format} ${width}w`).join(', ');
 ---
-{ratio ? <picture style="display:contents">
+{ratio ? <picture class="photo">
   <source type="image/avif" srcset={srcset('avif')} sizes={sizes} />
   <img src={src} srcset={srcset('webp')} sizes={sizes} width={1600} height={Math.round(1600 * ratio)} class={className} alt={alt} loading={loading} fetchpriority={fetchpriority} decoding="async" />
 </picture> : <img src={src} class={className} alt={alt} loading={loading} fetchpriority={fetchpriority} decoding="async" />}
+
+<style>
+  .photo { display: block; min-width: 0; }
+  .photo > source { display: none; }
+</style>
