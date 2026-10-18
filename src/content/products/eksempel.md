@@ -3,7 +3,7 @@
   "title": "Eksempelprodukt",
   "description": "Bytt ut med et ekte produkt, bilde og betalingslenke.",
   "draft": true,
-  "image": "/images/demo/eb9b4.svg",
+  "image": "/images/photos/flying-pigeon.webp",
   "price": 0,
   "checkoutUrl": "",
   "available": false

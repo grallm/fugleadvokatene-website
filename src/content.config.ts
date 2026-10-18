@@ -4,7 +4,7 @@ import { glob } from "astro/loaders";
 const image = z
   .string()
   .regex(/^\/images\/[a-zA-Z0-9/_\-.]+$/)
-  .default("/images/demo/eb9b4.svg");
+  .default("/images/photos/flying-pigeon.webp");
 const common = {
   title: z.string(),
   description: z.string(),

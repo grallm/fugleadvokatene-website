@@ -4,7 +4,7 @@
   "description": "Bli kjent med arbeidet til FugleAdvokatene.",
   "draft": true,
   "date": "2026-09-30",
-  "image": "/images/demo/eb9b4.svg"
+  "image": "/images/photos/flying-pigeon.webp"
 }
 ---
 

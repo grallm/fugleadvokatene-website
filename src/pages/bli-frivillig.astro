@@ -1,4 +1,5 @@
 ---
+import Photo from '../components/Photo.astro';
 import Layout from '../layouts/Layout.astro';
 import { t } from '../i18n/ui';
 import type { Language } from '../i18n/routes';
@@ -7,4 +8,4 @@ const { language = 'nb' } = Astro.props;
 const text = t(language);
 import ContactForm from '../components/ContactForm.astro';
 ---
-<Layout title={text.volunteer} language={language}><div class="container page"><h1>{text.volunteerQuestion}</h1><div class="two-columns"><div><p class="lead">{text.volunteerLead}</p><p>{text.volunteerIntro}</p><ContactForm volunteer language={language} /></div><aside><img src="/images/demo/2ae5f.svg" alt={text.volunteerAlt} /><h2 class="section">{text.volunteerAsideTitle}</h2><p>{text.volunteerAside}</p></aside></div></div></Layout>
+<Layout title={text.volunteer} language={language}><div class="container page"><h1>{text.volunteerQuestion}</h1><div class="two-columns"><div><p class="lead">{text.volunteerLead}</p><p>{text.volunteerIntro}</p><ContactForm volunteer language={language} /></div><aside><Photo src="/images/photos/volunteer-pigeon.webp" alt={text.volunteerAlt} /><h2 class="section">{text.volunteerAsideTitle}</h2><p>{text.volunteerAside}</p></aside></div></div></Layout>

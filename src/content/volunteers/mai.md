@@ -3,7 +3,7 @@
   "title": "Mai",
   "description": "Mitt navn er Mai og jeg sitter i styret til Fugleadvokatene, og jeg har vært frivillig rehabhjem i mange år.",
   "draft": true,
-  "image": "/images/demo/2ae5f.svg",
+  "image": "/images/photos/volunteer-pigeon.webp",
   "city": "",
   "role": "Frivillig",
   "order": 0

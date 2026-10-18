@@ -3,7 +3,7 @@
   "title": "Terms",
   "description": "Information about purchases and donations.",
   "draft": false,
-  "image": "/images/demo/e8f31.svg"
+  "image": "/images/photos/baby-bird.webp"
 }
 ---
 

@@ -6,7 +6,7 @@ import { t } from '../i18n/ui';
 import { href, type Language } from '../i18n/routes';
 import { languageLinks } from '../i18n/content';
 interface Props { title: string; description?: string; image?: string; noindex?: boolean; language?: Language }
-const { title, image = '/images/demo/e8f31.svg', noindex = false, language = 'nb' } = Astro.props;
+const { title, image = '/images/photos/baby-bird.webp', noindex = false, language = 'nb' } = Astro.props;
 const text = t(language);
 const description = Astro.props.description ?? text.defaultDescription;
 const canonical = new URL(['/404', '/404/', '/404.html'].includes(Astro.url.pathname) ? '/404.html' : Astro.url.pathname, Astro.site);

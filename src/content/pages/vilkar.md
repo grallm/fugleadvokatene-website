@@ -3,7 +3,7 @@
   "title": "Vilkår",
   "description": "Informasjon om kjøp og støtte.",
   "draft": false,
-  "image": "/images/demo/e8f31.svg"
+  "image": "/images/photos/baby-bird.webp"
 }
 ---
 

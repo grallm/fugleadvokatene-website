@@ -3,7 +3,7 @@
   "title": "Mia",
   "description": "Hei! Jeg heter Mia, og i dag feirer jeg ett år som rehabhjem for FugleAdvokatene.",
   "draft": true,
-  "image": "/images/demo/2ae5f.svg",
+  "image": "/images/photos/volunteer-pigeon.webp",
   "city": "",
   "role": "Frivillig",
   "order": 1

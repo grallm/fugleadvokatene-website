@@ -111,6 +111,10 @@ npm run test:http
 node scripts/check-assets.mjs
 ```
 
-The final command currently fails deliberately because the Figma assets are missing. Production CI requires it when `SITE_READY=true`. Preview builds remain possible and default to `noindex`. See `docs/VERIFICATION.md` for the checks actually run and their limits.
+The final command currently fails deliberately because the original logos and icons are still missing (the four photos are now included). Production CI requires it when `SITE_READY=true`. Preview builds remain possible and default to `noindex`. See `docs/VERIFICATION.md` for the checks actually run and their limits.
 
 Content derived from the Figma mockup is marked draft. Privacy and sales terms are clearly marked review drafts. `PUBLIC_PREVIEW=false` excludes draft posts/profiles; products always require `draft=false` to appear. Publishing a new custom page creates its route, but does not automatically add it to the navigation.
+
+## Optimized photographs
+
+The four supplied photographs are integrated in both languages. `Photo.astro` serves AVIF with WebP fallback at 480, 960 and 1600 pixels, using responsive `srcset` and lazy loading (the first hero is prioritized). Files in `public/images/photos/` are already compressed; Astro copies them unchanged. No image service or PHP extension is needed on the host. See `docs/IMAGES.md` for the source mapping and compression settings. Logos and icons still use the temporary SVGs.

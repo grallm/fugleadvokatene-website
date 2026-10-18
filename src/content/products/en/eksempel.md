@@ -3,7 +3,7 @@
   "title": "Example product",
   "description": "Replace this with a real product, photo and payment link.",
   "draft": true,
-  "image": "/images/demo/eb9b4.svg",
+  "image": "/images/photos/flying-pigeon.webp",
   "price": 0,
   "checkoutUrl": "",
   "available": false

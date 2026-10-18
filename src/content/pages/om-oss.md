@@ -3,7 +3,7 @@
   "title": "Om FugleAdvokatene",
   "description": "Vi gir byfugler en ny sjanse.",
   "draft": false,
-  "image": "/images/demo/e8f31.svg"
+  "image": "/images/photos/baby-bird.webp"
 }
 ---
 

@@ -3,7 +3,7 @@
   "title": "Agnes",
   "description": "Hi! I’m Agnes, and today marks one year as a rehabilitation volunteer with FugleAdvokatene.",
   "draft": true,
-  "image": "/images/demo/2ae5f.svg",
+  "image": "/images/photos/volunteer-pigeon.webp",
   "city": "",
   "role": "Volunteer",
   "order": 2

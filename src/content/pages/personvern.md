@@ -3,7 +3,7 @@
   "title": "Personvern",
   "description": "Om opplysningene du deler med oss.",
   "draft": false,
-  "image": "/images/demo/e8f31.svg"
+  "image": "/images/photos/baby-bird.webp"
 }
 ---
 

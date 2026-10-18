@@ -3,7 +3,7 @@
   "title": "Privacy",
   "description": "About the information you share with us.",
   "draft": false,
-  "image": "/images/demo/e8f31.svg"
+  "image": "/images/photos/baby-bird.webp"
 }
 ---
 

@@ -1,0 +1,19 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+  sizes?: string;
+  loading?: 'eager' | 'lazy';
+  fetchpriority?: 'high' | 'low' | 'auto';
+}
+const { src, alt, class: className, sizes = '(max-width: 1000px) 100vw, 50vw', loading = 'lazy', fetchpriority = 'auto' } = Astro.props;
+const photos: Record<string, number> = { 'baby-bird': 2433 / 2620, 'pigeon-closeup': 924 / 1728, 'volunteer-pigeon': 1080 / 1920, 'flying-pigeon': 2777 / 3722 };
+const name = src.split('/').pop()?.replace(/\.webp$/, '') ?? '';
+const ratio = src.startsWith('/images/photos/') ? photos[name] : undefined;
+const srcset = (format: string) => [480, 960, 1600].map(width => `/images/photos/${name}-${width}.${format} ${width}w`).join(', ');
+---
+{ratio ? <picture style="display:contents">
+  <source type="image/avif" srcset={srcset('avif')} sizes={sizes} />
+  <img src={src} srcset={srcset('webp')} sizes={sizes} width={1600} height={Math.round(1600 * ratio)} class={className} alt={alt} loading={loading} fetchpriority={fetchpriority} decoding="async" />
+</picture> : <img src={src} class={className} alt={alt} loading={loading} fetchpriority={fetchpriority} decoding="async" />}

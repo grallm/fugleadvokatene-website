@@ -3,7 +3,7 @@
   "title": "Mai",
   "description": "My name is Mai. I’m on the board of FugleAdvokatene and have provided a rehabilitation home for birds for many years.",
   "draft": true,
-  "image": "/images/demo/2ae5f.svg",
+  "image": "/images/photos/volunteer-pigeon.webp",
   "city": "",
   "role": "Volunteer",
   "order": 0
