@@ -32,7 +32,7 @@ const navigation = ['contact', 'volunteer', 'shop', 'news', 'help', 'about'] as 
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={new URL(image, Astro.site)} />
     {(isPreview || noindex) && <meta name="robots" content="noindex, nofollow" />}
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
   </head>
   <body>
     <a class="skip" href="#main">{text.skip}</a>
