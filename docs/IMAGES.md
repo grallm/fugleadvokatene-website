@@ -1,6 +1,6 @@
 # Photographs
 
-The four supplied JPEGs have replaced the temporary photo illustrations in both Norwegian and English pages. Temporary logos and icons are still separate.
+The four supplied JPEGs have replaced the temporary photo illustrations in both Norwegian and English pages. Official logos from `main` are in `public/images/brand/`. The favicon derives from the emblem. Font Awesome replaces temporary social and CTA icons.
 
 | Supplied file | Website name | Placement |
 | --- | --- | --- |

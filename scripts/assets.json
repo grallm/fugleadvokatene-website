@@ -24,38 +24,19 @@
     "optimized": "flying-pigeon"
   },
   {
-    "file": "329c2.png",
-    "node": "741:1309",
-    "purpose": "Help CTA icon"
+    "path": "public/images/brand/logo-notext.webp",
+    "purpose": "Official emblem from main"
   },
   {
-    "file": "56f49.png",
-    "node": "739:1307",
-    "purpose": "Donation CTA icon"
+    "path": "public/images/brand/logo.webp",
+    "purpose": "Official stacked logo from main"
   },
   {
-    "file": "0c385.svg",
-    "node": "312:465",
-    "purpose": "Header bird mark"
+    "path": "public/favicon.png",
+    "purpose": "Favicon derived from official emblem"
   },
   {
-    "file": "14065.svg",
-    "node": "312:652",
-    "purpose": "Header wordmark"
-  },
-  {
-    "file": "35530.png",
-    "node": "870:1727",
-    "purpose": "Footer logo"
-  },
-  {
-    "file": "1b83b.svg",
-    "node": "870:1715",
-    "purpose": "Facebook icon"
-  },
-  {
-    "file": "d858a.svg",
-    "node": "870:1717",
-    "purpose": "Instagram icon"
+    "path": "src/components/Icon.astro",
+    "purpose": "Font Awesome icons approved as replacements"
   }
 ]

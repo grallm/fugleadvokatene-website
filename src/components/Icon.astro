@@ -1,0 +1,9 @@
+---
+import { faFacebookF, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faLocationDot, faHandHoldingHeart } from '@fortawesome/free-solid-svg-icons';
+interface Props { name: 'facebook' | 'instagram' | 'location' | 'donate' }
+const icons = { facebook: faFacebookF, instagram: faInstagram, location: faLocationDot, donate: faHandHoldingHeart };
+const [width, height, , , paths] = icons[Astro.props.name].icon;
+---
+<svg class="icon" viewBox={`0 0 ${width} ${height}`} fill="currentColor" aria-hidden="true" focusable="false">{(Array.isArray(paths) ? paths : [paths]).map(d => <path d={d} />)}</svg>
+<style>.icon{display:block;width:1em;height:1em;flex-shrink:0}</style>

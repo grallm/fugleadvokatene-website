@@ -2,7 +2,7 @@
 
 Astro static website + PHP admin/API + GitHub Actions + hosted checkout links. Designed for the existing Domene.no PHP webhotel, without a Node server or database in production.
 
-**Status: source implementation created and buildable; not yet ready to publish.** The supplied Figma desktop/mobile layouts were inspected. Figma's asset endpoints returned unavailable HTML pages, then the account's Starter MCP quota blocked further export. The original image/logo files are not included. Temporary SVG illustrations, icons and text branding are included at the user’s request so all image slots render in the preview. See `docs/FIGMA.md`. Account configuration and editorial review also remain. Nothing has been deployed or pushed to GitHub.
+**Status: buildable implementation on the development branch; editorial and account configuration review remain before publishing.** Supplied photos and official logos from `main` are integrated, with Font Awesome icons replacing the demo icons. See `docs/FIGMA.md`.
 
 ## Start locally
 
@@ -111,10 +111,10 @@ npm run test:http
 node scripts/check-assets.mjs
 ```
 
-The final command currently fails deliberately because the original logos and icons are still missing (the four photos are now included). Production CI requires it when `SITE_READY=true`. Preview builds remain possible and default to `noindex`. See `docs/VERIFICATION.md` for the checks actually run and their limits.
+The final command verifies the supplied photos, official logos and approved icon component. Production CI requires it when `SITE_READY=true`. Preview builds remain possible and default to `noindex`. See `docs/VERIFICATION.md` for the checks actually run and their limits.
 
 Content derived from the Figma mockup is marked draft. Privacy and sales terms are clearly marked review drafts. `PUBLIC_PREVIEW=false` excludes draft posts/profiles; products always require `draft=false` to appear. Publishing a new custom page creates its route, but does not automatically add it to the navigation.
 
 ## Optimized photographs
 
-The four supplied photographs are integrated in both languages. `Photo.astro` serves AVIF with WebP fallback at 480, 960 and 1600 pixels, using responsive `srcset` and lazy loading (the first hero is prioritized). Files in `public/images/photos/` are already compressed; Astro copies them unchanged. No image service or PHP extension is needed on the host. See `docs/IMAGES.md` for the source mapping and compression settings. Logos and icons still use the temporary SVGs.
+The four supplied photographs are integrated in both languages. `Photo.astro` serves AVIF with WebP fallback at 480, 960 and 1600 pixels, using responsive `srcset` and lazy loading (the first hero is prioritized). Files in `public/images/photos/` are already compressed; Astro copies them unchanged. No image service or PHP extension is needed on the host. See `docs/IMAGES.md` for the source mapping and compression settings. The official emblem and full logo are copied from `main`; UI and social icons use Font Awesome, rendered as inline SVG without client JavaScript.

@@ -30,3 +30,7 @@ Exact visual verification still requires the remaining logo and icon assets. The
 ## Replacing the demo images
 
 Export the original assets using the manifest above, then replace `/images/demo/` references under `src/` with `/images/figma/` and restore original `.png` filenames from `scripts/assets.json` (including the image names in `Hero.astro`). The production asset check continues to require the originals.
+
+## Approved asset replacements (18 October 2026)
+
+The user approved the official `main` branch logos and an icon library in place of the missing exports above. `public/images/brand/` contains both official WebP files. The header and footer pair the emblem with a horizontal text wordmark. Font Awesome supplies Facebook, Instagram, location and donation icons via `Icon.astro`. The asset manifest now checks these approved replacements. Historical missing-export notes above no longer block production asset checks. Carousel controls use the reference bottom arrows and dots with invisible clickable image edges, mobile swipe, and a seven-second timer that pauses on hover/focus and respects reduced motion.

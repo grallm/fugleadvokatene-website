@@ -1,4 +1,5 @@
 ---
+import Icon from '../components/Icon.astro';
 import '@fontsource-variable/gabarito';
 import '../styles/global.css';
 import { site, isPreview } from '../data/site';
@@ -31,14 +32,14 @@ const navigation = ['contact', 'volunteer', 'shop', 'news', 'help', 'about'] as 
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={new URL(image, Astro.site)} />
     {(isPreview || noindex) && <meta name="robots" content="noindex, nofollow" />}
-    <link rel="icon" type="image/svg+xml" href="/images/demo/0c385.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
   </head>
   <body>
     <a class="skip" href="#main">{text.skip}</a>
     <header class="header">
       <a href={href(language, 'home')} aria-label={text.homeLabel} class="brand">
-        <img class="brand-bird" src="/images/demo/0c385.svg" alt="" />
-        <img class="brand-word" src="/images/demo/14065.svg" alt="FugleAdvokatene" />
+        <img class="brand-bird" src="/images/brand/logo-notext.webp" width="521" height="519" alt="" />
+        <span class="brand-word">Fugleadvokatene</span>
       </a>
       <button class="menu-toggle" aria-controls="navigation" aria-expanded="false" aria-label={text.openMenu} data-open-label={text.openMenu} data-close-label={text.closeMenu}><span></span><span></span><span></span></button>
       <nav id="navigation" aria-label={text.mainNav}>
@@ -54,14 +55,14 @@ const navigation = ['contact', 'volunteer', 'shop', 'news', 'help', 'about'] as 
     <main id="main"><slot /></main>
     <footer class="footer">
       <div class="container">
-        <div class="footer-top"><a href={href(language, 'home')}><img src="/images/demo/35530.svg" width="307" height="107" alt="FugleAdvokatene" /></a><a class="button" href={href(language, 'support')}>{text.support}</a></div>
+        <div class="footer-top"><a class="footer-brand" href={href(language, 'home')}><img src="/images/brand/logo-notext.webp" width="521" height="519" alt="" /><span>Fugleadvokatene</span></a><a class="button" href={href(language, 'support')}>{text.support}</a></div>
         <div class="footer-columns">
           <nav aria-label={text.footerNav}>
             {(['about', 'volunteer', 'shop', 'help', 'contact'] as const).map(key => <a href={href(language, key)}>{key === 'help' ? text.faq : text[key]}</a>)}
           </nav>
           <div><strong>{text.email}</strong><a href={`mailto:${site.email}`}>{site.email}</a><strong>{text.organisation}</strong><span>{site.organisation}</span></div>
         </div>
-        <div class="social-links"><a href={site.facebook} aria-label="Facebook"><img src="/images/demo/1b83b.svg" alt="" /></a><a href={site.instagram} aria-label="Instagram"><img src="/images/demo/d858a.svg" alt="" /></a></div>
+        <div class="social-links"><a href={site.facebook} aria-label="Facebook"><Icon name="facebook" /></a><a href={site.instagram} aria-label="Instagram"><Icon name="instagram" /></a></div>
         <div class="footer-bottom"><a href={href(language, 'privacy')}>{text.privacy}</a><a href={href(language, 'terms')}>{text.terms}</a><a href={`${href(language, 'privacy')}#${language === 'en' ? 'cookies' : 'informasjonskapsler'}`}>{text.cookies}</a><p>© {new Date().getFullYear()} FugleAdvokatene. {text.copyright}</p></div>
       </div>
     </footer>
