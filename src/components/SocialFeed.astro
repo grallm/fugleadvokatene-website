@@ -7,7 +7,6 @@ const { language = 'nb' } = Astro.props;
 const text = t(language);
 ---
 <div data-social-feed data-locale={locale[language]} data-read-more={text.readMore} class="social-feed"><p>{text.follow} <a href={site.facebook}>Facebook</a> {text.and} <a href={site.instagram}>Instagram</a>.</p></div>
-{language === 'en' && <p class="muted">{text.socialOriginal}</p>}
 <script>
   const root = document.querySelector<HTMLElement>('[data-social-feed]');
   if (root) fetch('/api/index.php?action=feed').then(response => response.ok ? response.json() : null).then(data => {
