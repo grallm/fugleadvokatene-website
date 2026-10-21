@@ -7,8 +7,8 @@ interface Props { language?: Language }
 const { language = 'nb' } = Astro.props;
 const text = t(language);
 const slides = [
-  { title: text.injuredBird, image: 'baby-bird.webp', alt: text.birdAlt, href: site.helpGroup, label: text.clickHere, steps: text.heroSteps },
-  { title: text.heroSupportTitle, image: 'pigeon-closeup.webp', alt: text.pigeonAlt, href: href(language, 'support'), label: text.support, text: text.heroSupportText },
+  { title: text.injuredBird, image: 'pigeon-closeup.webp', alt: text.pigeonAlt, href: site.helpGroup, label: text.clickHere, steps: text.heroSteps },
+  { title: text.heroSupportTitle, image: 'baby-bird.webp', alt: text.birdAlt, href: href(language, 'support'), label: text.support, text: text.heroSupportText },
   { title: text.volunteerQuestion, image: 'volunteer-pigeon.webp', alt: text.volunteerAlt, href: href(language, 'volunteer'), label: text.readMore, text: text.heroVolunteerText },
 ];
 ---
