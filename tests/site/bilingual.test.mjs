@@ -25,8 +25,8 @@ function outputFile(url) {
   const relative = decodeURIComponent(url.pathname).replace(/^\//, "");
   return path.join(
     root,
-    relative.endsWith(".html") ? relative : relative,
-    url.pathname.endsWith(".html") ? "" : "index.html",
+    relative,
+    path.extname(relative) ? "" : "index.html",
   );
 }
 function attributes(tag) {

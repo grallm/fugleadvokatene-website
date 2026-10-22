@@ -14,7 +14,6 @@ export const routes = {
   notFound: { nb: "/404.html", en: "/en/404/" },
   about: { nb: "/om-oss/", en: "/en/about/" },
   privacy: { nb: "/personvern/", en: "/en/privacy/" },
-  terms: { nb: "/vilkar/", en: "/en/terms/" },
 } as const;
 export type RouteKey = keyof typeof routes;
 export function href(language: Language, key: RouteKey): string {
@@ -29,7 +28,6 @@ export function contentHref(
     const known = {
       "om-oss": "about",
       personvern: "privacy",
-      vilkar: "terms",
     } as const;
     const key = known[id as keyof typeof known];
     return key

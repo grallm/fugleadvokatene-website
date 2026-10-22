@@ -26,6 +26,7 @@ jobs:
         env:
           SITE_URL: https://dev.fugleadvokatene.no
           PUBLIC_PREVIEW: 'true'
+      - run: npm run test:site
       - name: Prepare static files only
         run: |
           rm -rf dist/api dist/admin
@@ -34,7 +35,10 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: astro-dev-${{ github.sha }}
-          path: dist/
+          path: |
+            dist/
+            node_modules/basic-ftp/
+          compression-level: 0
           retention-days: 14
   deploy:
     needs: build
@@ -50,11 +54,10 @@ jobs:
         with:
           node-version: '24'
           cache: npm
-      - run: npm ci
       - uses: actions/download-artifact@v4
         with:
           name: astro-dev-${{ github.sha }}
-          path: dist/
+          path: .
       - name: Upload static files through verified FTPS
         run: node scripts/deploy-static.mjs
         env:

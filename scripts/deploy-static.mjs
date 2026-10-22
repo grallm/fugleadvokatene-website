@@ -1,5 +1,8 @@
-import { readdir, access } from 'node:fs/promises';
+import { readdir, access, readFile } from 'node:fs/promises';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
+import { Readable, Writable } from 'node:stream';
+import { parseManifest, planDeployment } from './static-deploy-plan.mjs';
 
 const localRoot = path.resolve('dist');
 const allowed = /\.(?:html|css|js|mjs|json|xml|txt|svg|png|jpe?g|gif|webp|avif|ico|woff2?|ttf|otf|pdf|map|webmanifest)$/i;
@@ -37,15 +40,45 @@ if (process.argv.includes('--dry-run')) {
       secure: true,
       secureOptions: { rejectUnauthorized: true },
     });
-    for (const file of files) {
-      await client.cd('/');
-      const directory = path.posix.dirname(file);
-      if (directory !== '.') await client.ensureDir(directory);
-      const name = path.posix.basename(file);
-      await client.uploadFrom(path.join(localRoot, file), name + '.uploading');
-      await client.rename(name + '.uploading', name);
+    const started = Date.now();
+    const manifestPath = '/.static-deploy-manifest.json';
+    let previous = null;
+    const chunks = [];
+    try {
+      await client.downloadTo(new Writable({ write(chunk, _encoding, callback) { chunks.push(chunk); callback(); } }), manifestPath);
+      previous = parseManifest(Buffer.concat(chunks).toString('utf8'));
+    } catch (error) {
+      if (error.code !== 550) throw error;
+      console.log('No previous manifest; uploading the complete site.');
     }
-    console.log('Published ' + files.length + ' static files. Existing remote files were not deleted.');
+    const hashes = Object.fromEntries(await Promise.all(files.map(async file => [file, createHash('sha256').update(await readFile(path.join(localRoot, file))).digest('hex')])));
+    const { changed, removed } = planDeployment(hashes, previous, process.env.FTP_FORCE_FULL === 'true');
+    // One-time migration: these pages were deployed before manifests existed.
+    for (const file of ['vilkar/index.html', 'en/terms/index.html']) {
+      if (!(file in hashes) && !removed.includes(file)) removed.push(file);
+    }
+    async function writeManifest(data) {
+      await client.uploadFrom(Readable.from([JSON.stringify(data)]), manifestPath + '.uploading');
+      await client.rename(manifestPath + '.uploading', manifestPath);
+    }
+    // Invalidate the old hashes before changes. After an interrupted upload, even
+    // a rollback must reupload files rather than trust the last successful state.
+    await writeManifest({ version: 1, complete: false, files: { ...previous?.files, ...hashes } });
+    const directories = new Set(['/']);
+    for (const file of changed) {
+      const directory = '/' + path.posix.dirname(file);
+      if (directory !== '/.' && !directories.has(directory)) {
+        await client.ensureDir(directory);
+        directories.add(directory);
+      }
+      const remote = '/' + file;
+      await client.uploadFrom(path.join(localRoot, file), remote + '.uploading');
+      await client.rename(remote + '.uploading', remote);
+    }
+    for (const file of removed) await client.remove('/' + file, true);
+    await writeManifest({ version: 1, complete: true, files: hashes });
+    console.log(`Published ${changed.length} files; skipped ${files.length - changed.length} unchanged files; retired ${removed.length} page paths in ${((Date.now() - started) / 1000).toFixed(1)}s. Old assets retained.`);
+
   } finally {
     client.close();
   }

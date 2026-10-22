@@ -20,8 +20,6 @@ const nb = {
   email: "E-post",
   organisation: "Org. nr",
   privacy: "Personvern",
-  terms: "Vilkår",
-  cookies: "Informasjonskapsler",
   copyright: "Alle rettigheter reservert.",
   homeTitle: "Hvert fugleliv er verdt å redde",
   welcome: "Velkommen til FugleAdvokatene",
@@ -118,7 +116,6 @@ const nb = {
   supportHere: "støtte oss her",
   paymentInfo:
     "Betaling skjer hos betalingsleverandøren. Se frakt og endelig beløp før du betaler.",
-  readTerms: "Les vilkårene",
   thanksTitle: "Takk",
   thanksHeading: "Takk for at du støtter fuglene",
   thanksText:
@@ -175,8 +172,6 @@ const en: typeof nb = {
   email: "Email",
   organisation: "Organisation no.",
   privacy: "Privacy",
-  terms: "Terms",
-  cookies: "Cookies",
   copyright: "All rights reserved.",
   homeTitle: "Every bird deserves a chance",
   welcome: "Welcome to FugleAdvokatene",
@@ -272,7 +267,6 @@ const en: typeof nb = {
   supportHere: "support us here",
   paymentInfo:
     "Payment takes place with the payment provider. Check shipping and the final total before paying.",
-  readTerms: "Read the terms",
   thanksTitle: "Thank you",
   thanksHeading: "Thank you for supporting the birds",
   thanksText:

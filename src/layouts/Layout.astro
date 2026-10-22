@@ -52,7 +52,7 @@ const navigation = ['contact', 'volunteer', 'volunteers', 'shop', 'news', 'help'
         </div>
       </nav>
     </header>
-    <a class="calendar-banner" href="https://kalendar.fugleadvokatene.no/"><span>{language === 'en' ? 'Our 2027 calendar — hand-painted birds we have rescued' : 'Kalenderen vår for 2027 – håndmalte fugler vi har reddet'}</span><strong>{language === 'en' ? 'Buy the calendar →' : 'Kjøp kalenderen →'}</strong></a>
+    <a class="calendar-banner" href="https://kalendar.fugleadvokatene.no/"><span>{language === 'en' ? "Buy our 2027 calendar featuring hand-painted portraits of birds we’ve rescued" : 'Kjøp kalenderen vår for 2027 med håndmalte portretter av fugler vi har reddet'}</span><strong>{language === 'en' ? 'See the calendar →' : 'Se kalenderen →'}</strong></a>
     <main id="main"><slot /></main>
     <footer class="footer">
       <div class="container">
@@ -64,7 +64,7 @@ const navigation = ['contact', 'volunteer', 'volunteers', 'shop', 'news', 'help'
           <div><strong>{text.email}</strong><a href={`mailto:${site.email}`}>{site.email}</a><strong>{text.organisation}</strong><span>{site.organisation}</span></div>
         </div>
         <div class="social-links"><a href={site.facebook} aria-label="Facebook"><Icon name="facebook" /></a><a href={site.instagram} aria-label="Instagram"><Icon name="instagram" /></a></div>
-        <div class="footer-bottom"><a href={href(language, 'privacy')}>{text.privacy}</a><a href={href(language, 'terms')}>{text.terms}</a><a href={`${href(language, 'privacy')}#${language === 'en' ? 'cookies' : 'informasjonskapsler'}`}>{text.cookies}</a><p>© {new Date().getFullYear()} FugleAdvokatene. {text.copyright}</p><p class="credits">Designed by <a href="https://aggieampersand.com/">Agnetha</a> and developed by <a href="https://www.linkedin.com/in/malo-grall/">Malo</a></p></div>
+        <div class="footer-bottom"><a href={href(language, 'privacy')}>{text.privacy}</a><p>© {new Date().getFullYear()} FugleAdvokatene. {text.copyright}</p><p class="credits">Designed by <a href="https://aggieampersand.com/">Agnetha</a> and developed by <a href="https://www.linkedin.com/in/malo-grall/">Malo</a></p></div>
       </div>
     </footer>
     <script>

@@ -1,24 +1,22 @@
 ---
 {
   "title": "Privacy",
-  "description": "About the information you share with us.",
+  "description": "About privacy on this website.",
   "draft": false,
   "image": "/images/photos/baby-bird.webp"
 }
 ---
 
-**Draft for review before launch.**
+This website has no contact forms, user accounts or on-site payments. We have not added analytics or marketing tools.
 
-When you use the contact form, your name, email address and message are sent to FugleAdvokatene. Volunteer enquiries also include your location. We use this information to handle and respond to your enquiry.
+## Language preference
 
-Before launch, the organisation must establish the legal basis for processing, retention periods, the responsible contact and data processors, and replace this draft with approved text.
+When you choose a language, your browser stores your preference so the website can remember it next time. The preference is not sent to us. You can remove it by clearing this website’s stored data in your browser.
 
-## Cookies
+## External services
 
-The website’s forms and administration use an essential session cookie for security. No analytics or marketing tools have been added.
-
-When you visit Facebook, Instagram or a payment service, their privacy information also applies.
+Links to social networks, donations and the calendar take you to other websites. The relevant service’s privacy information applies there.
 
 ## Contact
 
-Send questions to kontakt@fugleadvokatene.no.
+For privacy questions, email [kontakt@fugleadvokatene.no](mailto:kontakt@fugleadvokatene.no).

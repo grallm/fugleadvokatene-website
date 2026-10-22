@@ -1,24 +1,22 @@
 ---
 {
   "title": "Personvern",
-  "description": "Om opplysningene du deler med oss.",
+  "description": "Om personvern på nettstedet.",
   "draft": false,
   "image": "/images/photos/baby-bird.webp"
 }
 ---
 
-**Utkast til gjennomgang før lansering.**
+Nettstedet har ingen kontaktskjemaer, brukerkontoer eller betaling i selve nettstedet. Vi har ikke lagt inn analyse- eller markedsføringsverktøy.
 
-Når du bruker kontaktskjemaet, sendes navn, e-postadresse og melding til FugleAdvokatene. Ved frivillighenvendelser sendes også sted. Opplysningene brukes til å behandle og besvare henvendelsen.
+## Språkvalg
 
-Før lansering skal organisasjonen fastsette behandlingsgrunnlag, oppbevaringstid, ansvarlig kontakt og databehandlere, og erstatte dette utkastet med godkjent tekst.
+Når du velger språk, lagres valget i nettleseren din slik at nettstedet husker det neste gang. Språkvalget sendes ikke til oss. Du kan fjerne det ved å slette nettstedets lagrede data i nettleseren.
 
-## Informasjonskapsler
+## Eksterne tjenester
 
-Nettstedets skjema og administrasjon bruker en nødvendig øktinformasjonskapsel for sikkerhet. Ingen analyse- eller markedsføringsverktøy er lagt inn.
-
-Når du går videre til Facebook, Instagram eller en betalingstjeneste, gjelder også deres personverninformasjon.
+Lenker til sosiale medier, donasjoner og kalenderen fører til andre nettsteder. Der gjelder personverninformasjonen til den aktuelle tjenesten.
 
 ## Kontakt
 
-Spørsmål kan sendes til kontakt@fugleadvokatene.no.
+Har du spørsmål om personvern, kan du skrive til [kontakt@fugleadvokatene.no](mailto:kontakt@fugleadvokatene.no).
