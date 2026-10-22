@@ -37,7 +37,7 @@ function attributes(tag) {
     ]),
   );
 }
-test("English pages contain translated navigation, forms and document metadata", async () => {
+test("English pages contain translated navigation, contact links and document metadata", async () => {
   const home = await readFile(path.join(root, "en/index.html"), "utf8");
   assert.match(home, /<html lang="en"/);
   assert.match(home, /Welcome to FugleAdvokatene/);
@@ -48,8 +48,10 @@ test("English pages contain translated navigation, forms and document metadata",
     "utf8",
   );
   assert.match(contact, /Contact us/);
-  assert.match(contact, /data-language="en"/);
-  assert.match(contact, /Send message/);
+  assert.doesNotMatch(contact, /<form\b/);
+  assert.match(contact, /mailto:kontakt@fugleadvokatene.no/);
+  assert.match(contact, /https:\/\/www.facebook.com\/groups\/2050465221850483/);
+  assert.match(contact, /https:\/\/www.instagram.com\/fugleadvokatene\//);
   assert.match(contact, /href="\/en\/privacy\/"/);
   const norwegian = await readFile(
     path.join(root, "kontakt/index.html"),

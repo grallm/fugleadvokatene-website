@@ -6,6 +6,7 @@ import type { Language } from '../i18n/routes';
 interface Props { language?: Language }
 const { language = 'nb' } = Astro.props;
 const text = t(language);
-import ContactForm from '../components/ContactForm.astro';
+import ContactLinks from '../components/ContactLinks.astro';
+import { site } from '../data/site';
 ---
-<Layout title={text.volunteer} language={language}><div class="container page"><h1>{text.volunteerQuestion}</h1><div class="two-columns"><div><p class="lead">{text.volunteerLead}</p><p>{text.volunteerIntro}</p><ContactForm volunteer language={language} /></div><aside><Photo src="/images/photos/volunteer-pigeon.webp" alt={text.volunteerAlt} /><h2 class="section">{text.volunteerAsideTitle}</h2><p>{text.volunteerAside}</p></aside></div></div></Layout>
+<Layout title={text.volunteer} language={language}><div class="container page"><h1>{text.volunteerQuestion}</h1><div class="two-columns"><div><p class="lead">{text.volunteerLead}</p><p>{text.volunteerIntro}</p><ContactLinks language={language} /><p><a href={site.helpGroup}>{text.helpGroup}</a></p></div><aside><Photo src="/images/photos/volunteer-pigeon.webp" alt={text.volunteerAlt} /><h2 class="section">{text.volunteerAsideTitle}</h2><p>{text.volunteerAside}</p></aside></div></div></Layout>

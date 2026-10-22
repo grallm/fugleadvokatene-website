@@ -5,7 +5,7 @@ import type { Language } from '../i18n/routes';
 interface Props { language?: Language }
 const { language = 'nb' } = Astro.props;
 const text = t(language);
-import ContactForm from '../components/ContactForm.astro';
+import ContactLinks from '../components/ContactLinks.astro';
 import { site } from '../data/site';
 ---
-<Layout title={text.contact} language={language}><div class="container page"><h1>{text.contactHeading}</h1><div class="two-columns"><div><p class="lead">{text.contactLead}</p><ContactForm language={language} /></div><aside><h2>{text.urgentHeading}</h2><p>{text.urgentText}</p><a class="button" href={site.helpGroup}>{text.helpGroup}</a><p style="margin-top:30px">{text.email}: <a href={`mailto:${site.email}`}>{site.email}</a></p></aside></div></div></Layout>
+<Layout title={text.contact} language={language}><div class="container page"><h1>{text.contactHeading}</h1><div class="two-columns"><div><p class="lead">{text.contactLead}</p><ContactLinks language={language} /></div><aside><h2>{text.urgentHeading}</h2><p>{text.urgentText}</p><a class="button" href={site.helpGroup}>{text.helpGroup}</a></aside></div></div></Layout>

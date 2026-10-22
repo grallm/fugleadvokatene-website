@@ -1,6 +1,7 @@
 ---
 import Icon from '../components/Icon.astro';
 import '@fontsource-variable/gabarito';
+import '@fontsource/lato/700.css';
 import '../styles/global.css';
 import { site, isPreview } from '../data/site';
 import { t } from '../i18n/ui';
@@ -62,7 +63,7 @@ const navigation = ['contact', 'volunteer', 'shop', 'news', 'help', 'about'] as 
           <div><strong>{text.email}</strong><a href={`mailto:${site.email}`}>{site.email}</a><strong>{text.organisation}</strong><span>{site.organisation}</span></div>
         </div>
         <div class="social-links"><a href={site.facebook} aria-label="Facebook"><Icon name="facebook" /></a><a href={site.instagram} aria-label="Instagram"><Icon name="instagram" /></a></div>
-        <div class="footer-bottom"><a href={href(language, 'privacy')}>{text.privacy}</a><a href={href(language, 'terms')}>{text.terms}</a><a href={`${href(language, 'privacy')}#${language === 'en' ? 'cookies' : 'informasjonskapsler'}`}>{text.cookies}</a><p>© {new Date().getFullYear()} FugleAdvokatene. {text.copyright}</p></div>
+        <div class="footer-bottom"><a href={href(language, 'privacy')}>{text.privacy}</a><a href={href(language, 'terms')}>{text.terms}</a><a href={`${href(language, 'privacy')}#${language === 'en' ? 'cookies' : 'informasjonskapsler'}`}>{text.cookies}</a><p>© {new Date().getFullYear()} FugleAdvokatene. {text.copyright}</p><p class="credits">Designed by <a href="https://aggieampersand.com/">Agnetha</a> and developed by <a href="https://www.linkedin.com/in/malo-grall/">Malo</a></p></div>
       </div>
     </footer>
     <script>
