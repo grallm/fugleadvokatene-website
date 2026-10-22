@@ -23,3 +23,9 @@
 .footer-bottom .credits{margin-top:14px}.footer-bottom .credits a{text-decoration:underline}.footer-bottom .credits a:hover{text-decoration-thickness:2px}
 
 .header nav>a{font-family:'Lato',sans-serif;font-weight:700}
+
+/* Collapse the expanded navigation before its links become crowded. */
+@media(min-width:1001px) and (max-width:1450px){
+.header{position:relative}.menu-toggle{display:grid;align-content:center;gap:5px;width:52px;height:52px;border:0;border-radius:50%;background:var(--ink);padding:13px;flex-shrink:0}.menu-toggle span{height:2px;background:white;width:25px}
+.header nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--header);z-index:10;padding:24px}.header nav.open{display:flex;flex-direction:column;align-items:stretch}.header nav>a{padding:10px}.language-switcher{justify-content:center;border-top:1px solid #8cb7af;padding-top:12px}
+}

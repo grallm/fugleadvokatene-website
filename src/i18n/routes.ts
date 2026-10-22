@@ -5,6 +5,7 @@ export const routes = {
   home: { nb: "/", en: "/en/" },
   contact: { nb: "/kontakt/", en: "/en/contact/" },
   volunteer: { nb: "/bli-frivillig/", en: "/en/volunteer/" },
+  volunteers: { nb: "/frivillige/", en: "/en/volunteers/" },
   support: { nb: "/stott-oss/", en: "/en/support/" },
   help: { nb: "/veiledning/", en: "/en/bird-help/" },
   shop: { nb: "/nettbutikk/", en: "/en/shop/" },

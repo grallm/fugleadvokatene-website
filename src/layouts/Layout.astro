@@ -13,7 +13,7 @@ const text = t(language);
 const description = Astro.props.description ?? text.defaultDescription;
 const canonical = new URL(['/404', '/404/', '/404.html'].includes(Astro.url.pathname) ? '/404.html' : Astro.url.pathname, Astro.site);
 const alternates = await languageLinks(Astro.url.pathname);
-const navigation = ['contact', 'volunteer', 'shop', 'news', 'help', 'about'] as const;
+const navigation = ['contact', 'volunteer', 'volunteers', 'shop', 'news', 'help', 'about'] as const;
 ---
 <!doctype html>
 <html lang={language}>

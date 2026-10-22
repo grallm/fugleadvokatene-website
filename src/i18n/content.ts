@@ -17,6 +17,7 @@ async function buildRoutes(): Promise<SiteRoute[]> {
       "home",
       "contact",
       "volunteer",
+      "volunteers",
       "support",
       "help",
       "shop",

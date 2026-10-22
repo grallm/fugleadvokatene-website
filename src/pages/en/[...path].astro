@@ -3,6 +3,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import Home from '../index.astro';
 import Contact from '../kontakt.astro';
 import Volunteer from '../bli-frivillig.astro';
+import Volunteers from '../frivillige/index.astro';
 import Support from '../stott-oss.astro';
 import Help from '../veiledning.astro';
 import Shop from '../nettbutikk.astro';
@@ -15,7 +16,7 @@ import VolunteerPage from '../../components/VolunteerPage.astro';
 import { isPreview } from '../../data/site';
 import { routes, contentHref } from '../../i18n/routes';
 export async function getStaticPaths() {
-  const staticKeys = ['home', 'contact', 'volunteer', 'support', 'help', 'shop', 'news', 'thanks', 'notFound'] as const;
+  const staticKeys = ['home', 'contact', 'volunteer', 'volunteers', 'support', 'help', 'shop', 'news', 'thanks', 'notFound'] as const;
   const result: { params: { path: string | undefined }; props: { kind: string; entry?: CollectionEntry<'pagesEn' | 'postsEn' | 'volunteersEn'> } }[] = staticKeys.map(kind => ({ params: { path: routes[kind].en.slice(4).replace(/\/$/, '') || undefined }, props: { kind } }));
   for (const entry of await getCollection('pagesEn', ({ data }) => !data.draft)) {
     result.push({ params: { path: contentHref('en', 'page', entry.id).slice(4).replace(/\/$/, '') }, props: { kind: 'page', entry } });
@@ -29,7 +30,7 @@ export async function getStaticPaths() {
   return result;
 }
 const { kind, entry } = Astro.props;
-const components = { home: Home, contact: Contact, volunteer: Volunteer, support: Support, help: Help, shop: Shop, news: News, thanks: Thanks, notFound: NotFound };
+const components = { home: Home, contact: Contact, volunteer: Volunteer, volunteers: Volunteers, support: Support, help: Help, shop: Shop, news: News, thanks: Thanks, notFound: NotFound };
 const Page = components[kind as keyof typeof components];
 ---
 {Page && <Page language="en" />}

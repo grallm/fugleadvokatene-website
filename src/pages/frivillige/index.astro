@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Photo from '../../components/Photo.astro';
+import { t } from '../../i18n/ui';
+import { contentHref, href, type Language } from '../../i18n/routes';
+import { isPreview } from '../../data/site';
+interface Props { language?: Language }
+const { language = 'nb' } = Astro.props;
+const text = t(language);
+const volunteers = (await getCollection(language === 'en' ? 'volunteersEn' : 'volunteers', ({ data }) => !data.draft || isPreview)).sort((a, b) => a.data.order - b.data.order);
+---
+<Layout title={text.meetVolunteers} language={language}>
+  <div class="container page">
+    <h1>{text.meetVolunteers}</h1>
+    <div class="grid volunteer-list">
+      {volunteers.map(person => <a class="card" href={contentHref(language, 'volunteer', person.id)}><Photo src={person.data.image} alt={person.data.title} sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw" /><div class="card-body"><h2>{person.data.title}</h2><p>{person.data.description}</p></div></a>)}
+    </div>
+    <p class="join"><a class="button" href={href(language, 'volunteer')}>{text.joinTeam}</a></p>
+  </div>
+</Layout>
+<style>.volunteer-list{margin-top:36px}.card h2{color:white;font-size:26px;margin-bottom:18px}.join{margin-top:36px}</style>
