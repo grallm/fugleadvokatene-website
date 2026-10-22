@@ -135,8 +135,6 @@ test("Drafts obey preview settings in both languages and stay out of the sitemap
   for (const route of [
     "nyheter/velkommen",
     "en/news/velkommen",
-    "frivillige/agnes",
-    "en/volunteers/agnes",
   ]) {
     assert.equal(
       await exists(path.join(root, route, "index.html")),
@@ -153,4 +151,21 @@ test("Drafts obey preview settings in both languages and stay out of the sitemap
   assert.match(sitemap, /hreflang="en"/);
   assert.ok(!sitemap.includes("velkommen"));
   assert.ok(!sitemap.includes("agnes"));
+});
+
+test("All supplied volunteers have bilingual profiles, photos and directory links", async () => {
+  for (const prefix of ["frivillige", "en/volunteers"]) {
+    const directory = await readFile(path.join(root, prefix, "index.html"), "utf8");
+    for (const slug of ["jenny", "mai", "madelen", "ida-mathilde", "mia"]) {
+      assert.ok(directory.includes(`/${prefix}/${slug}/`));
+      const profile = await readFile(path.join(root, prefix, slug, "index.html"), "utf8");
+      assert.ok(profile.includes(`href="/${prefix}/"`));
+      for (const [, image] of profile.matchAll(/src="(\/images\/volunteers\/[^\"]+)"/g)) {
+        assert.ok(await exists(path.join(root, image)), `Missing photo ${image}`);
+      }
+      if (slug === "jenny") assert.doesNotMatch(profile, /styreleder|chairperson|chairwoman|chair of|leader of/i);
+    }
+    assert.ok(!directory.includes("frivillig-4"));
+    assert.ok(!directory.includes("/agnes/"));
+  }
 });

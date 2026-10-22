@@ -29,3 +29,5 @@
 .header{position:relative}.menu-toggle{display:grid;align-content:center;gap:5px;width:52px;height:52px;border:0;border-radius:50%;background:var(--ink);padding:13px;flex-shrink:0}.menu-toggle span{height:2px;background:white;width:25px}
 .header nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--header);z-index:10;padding:24px}.header nav.open{display:flex;flex-direction:column;align-items:stretch}.header nav>a{padding:10px}.language-switcher{justify-content:center;border-top:1px solid #8cb7af;padding-top:12px}
 }
+
+.calendar-banner{display:flex;align-items:center;justify-content:center;gap:12px 28px;padding:12px 24px;background:var(--ink);color:white;text-decoration:none;text-align:center;font-size:16px;line-height:1.4}.calendar-banner strong{white-space:nowrap;text-decoration:underline;text-underline-offset:4px}.calendar-banner:hover strong{text-decoration-thickness:2px}.calendar-banner:focus-visible{outline-offset:-4px;outline-color:white}@media(max-width:600px){.calendar-banner{flex-wrap:wrap;gap:4px;padding:10px 16px;font-size:14px}}

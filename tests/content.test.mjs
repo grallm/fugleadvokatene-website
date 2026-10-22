@@ -17,7 +17,7 @@ test("Seed content uses CMS-compatible JSON frontmatter and valid metadata", asy
         assert.ok(data.title && data.description);
         assert.equal(typeof data.draft, "boolean");
         assert.match(data.image, /^\/images\//);
-        if (["posts", "volunteers", "products"].includes(collection))
+        if (["posts", "products"].includes(collection))
           assert.equal(
             data.draft,
             true,

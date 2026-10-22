@@ -18,6 +18,9 @@ const volunteerSchema = z.object({
   city: z.string().default(""),
   role: z.string().default("Frivillig"),
   order: z.number().default(0),
+  sourceDate: z.string().optional(),
+  sourceUrl: z.string().url().optional(),
+  gallery: z.array(image).default([]),
 });
 const productSchema = z.object({
   ...common,
