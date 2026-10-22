@@ -27,6 +27,9 @@ jobs:
           SITE_URL: https://dev.fugleadvokatene.no
           PUBLIC_PREVIEW: 'true'
       - run: npm run test:site
+        env:
+          SITE_URL: https://dev.fugleadvokatene.no
+          PUBLIC_PREVIEW: 'true'
       - name: Prepare static files only
         run: |
           rm -rf dist/api dist/admin

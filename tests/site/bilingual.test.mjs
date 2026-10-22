@@ -143,10 +143,8 @@ test("Drafts obey preview settings in both languages and stay out of the sitemap
     );
   }
   const sitemap = await readFile(path.join(root, "sitemap.xml"), "utf8");
-  assert.match(
-    sitemap,
-    /<loc>https:\/\/www\.fugleadvokatene\.no\/en\/contact\/<\/loc>/,
-  );
+  const siteUrl = process.env.SITE_URL || 'https://www.fugleadvokatene.no';
+  assert.ok(sitemap.includes(`<loc>${new URL('/en/contact/', siteUrl).href}</loc>`));
   assert.match(sitemap, /hreflang="nb"/);
   assert.match(sitemap, /hreflang="en"/);
   assert.ok(!sitemap.includes("velkommen"));
