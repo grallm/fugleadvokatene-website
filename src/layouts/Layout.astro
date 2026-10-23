@@ -13,7 +13,7 @@ const text = t(language);
 const description = Astro.props.description ?? text.defaultDescription;
 const canonical = new URL(['/404', '/404/', '/404.html'].includes(Astro.url.pathname) ? '/404.html' : Astro.url.pathname, Astro.site);
 const alternates = await languageLinks(Astro.url.pathname);
-const navigation = ['contact', 'volunteer', 'volunteers', 'shop', 'news', 'help', 'about'] as const;
+const navigation = ['contact', 'volunteer', 'shop', 'news', 'help'] as const;
 ---
 <!doctype html>
 <html lang={language}>
@@ -44,6 +44,13 @@ const navigation = ['contact', 'volunteer', 'volunteers', 'shop', 'news', 'help'
       <button class="menu-toggle" aria-controls="navigation" aria-expanded="false" aria-label={text.openMenu} data-open-label={text.openMenu} data-close-label={text.closeMenu}><span></span><span></span><span></span></button>
       <nav id="navigation" aria-label={text.mainNav}>
         {navigation.map(key => <a href={href(language, key)} aria-current={Astro.url.pathname === href(language, key) ? 'page' : undefined}>{text[key]}</a>)}
+        <details class="about-dropdown">
+          <summary>{text.about}<svg aria-hidden="true" viewBox="0 0 12 8" width="12" height="8"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5" /></svg></summary>
+          <div class="about-links">
+            <a href={href(language, 'volunteers')} aria-current={Astro.url.pathname === href(language, 'volunteers') ? 'page' : undefined}>{text.meetVolunteers}</a>
+            <a href={href(language, 'about')} aria-current={Astro.url.pathname === href(language, 'about') ? 'page' : undefined}>{language === 'en' ? 'About Fugleadvokatene' : 'Om Fugleadvokatene'}</a>
+          </div>
+        </details>
         <a class="button" href={href(language, 'support')}>{text.support}</a>
         <div class="language-switcher" role="group" aria-label={text.languageNav}>
           <a href={alternates.nb ?? href('nb', 'home')} lang="nb" hreflang="nb" data-site-language="nb" aria-current={language === 'nb' ? 'true' : undefined}>Norsk</a>
@@ -56,7 +63,7 @@ const navigation = ['contact', 'volunteer', 'volunteers', 'shop', 'news', 'help'
     <main id="main"><slot /></main>
     <footer class="footer">
       <div class="container">
-        <div class="footer-top"><a class="footer-brand" href={href(language, 'home')}><img src="/images/brand/logo-notext.webp" width="521" height="519" alt="" /><span>Fugleadvokatene</span></a><a class="button" href={href(language, 'support')}>{text.support}</a></div>
+        <div class="footer-top"><a class="footer-brand" href={href(language, 'home')}><img src="/images/brand/logo-horizontal-white.png" width="2000" height="696" alt="Fugleadvokatene" loading="lazy" /></a><a class="button" href={href(language, 'support')}>{text.support}</a></div>
         <div class="footer-columns">
           <nav aria-label={text.footerNav}>
             {(['about', 'volunteer', 'shop', 'help', 'contact'] as const).map(key => <a href={href(language, key)}>{key === 'help' ? text.faq : text[key]}</a>)}
@@ -70,7 +77,9 @@ const navigation = ['contact', 'volunteer', 'volunteers', 'shop', 'news', 'help'
     <script>
       const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
       const nav = document.querySelector('#navigation');
+      const about = document.querySelector<HTMLDetailsElement>('.about-dropdown');
       function closeMenu() {
+        if (about) about.open = false;
         toggle?.setAttribute('aria-expanded', 'false');
         toggle?.setAttribute('aria-label', toggle.dataset.openLabel ?? '');
         nav?.classList.remove('open');
@@ -81,7 +90,23 @@ const navigation = ['contact', 'volunteer', 'volunteers', 'shop', 'news', 'help'
         toggle.setAttribute('aria-label', (open ? toggle.dataset.closeLabel : toggle.dataset.openLabel) ?? '');
         nav?.classList.toggle('open', open);
       });
-      document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
+      document.addEventListener('keydown', event => {
+        if (event.key !== 'Escape') return;
+        if (about?.open) {
+          about.open = false;
+          about.querySelector('summary')?.focus();
+        } else {
+          const wasOpen = toggle?.getAttribute('aria-expanded') === 'true';
+          closeMenu();
+          if (wasOpen) toggle?.focus();
+        }
+      });
+      document.addEventListener('click', event => {
+        if (about?.open && event.target instanceof Node && !about.contains(event.target)) about.open = false;
+      });
+      about?.addEventListener('focusout', event => {
+        if (event.relatedTarget instanceof Node && !about.contains(event.relatedTarget)) about.open = false;
+      });
     </script>
   </body>
 </html>
