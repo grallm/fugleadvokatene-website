@@ -23,4 +23,3 @@ Helping birds in distress is so rewarding, and there is so much to learn! FugleA
 
 Perhaps you would like to help us save birds' lives? If so, please get in touch! 🙋‍♀️🙋‍♂️
 
-The photo shows Mia with her beloved domestic pigeon, Pidgey.

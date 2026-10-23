@@ -23,4 +23,3 @@ Det er så givende og lærerikt å hjelpe fugler i nød! FugleAdvokatene er en f
 
 Kanskje akkurat du har lyst til å redde fugleliv sammen med oss? Ta i så fall kontakt! 🙋‍♀️🙋‍♂️
 
-På bildet ser dere Mia med sin kjære husdue Pidgey.

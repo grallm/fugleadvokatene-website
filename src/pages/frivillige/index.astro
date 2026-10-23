@@ -13,10 +13,11 @@ const volunteers = (await getCollection(language === 'en' ? 'volunteersEn' : 'vo
 <Layout title={text.meetVolunteers} language={language}>
   <div class="container page">
     <h1>{text.meetVolunteers}</h1>
+    <p class="lead">{language === 'en' ? 'Behind Fugleadvokatene is a large group of committed people who give their time, energy and heart to making life better for birds. Some rescue and rehabilitate injured birds, while others contribute expertise or practical help. Here you can get to know some of the volunteers who make our work possible.' : "Bak Fugleadvokatene står en stor gjeng engasjerte mennesker som bruker tid, krefter og hjerte på å gi fugler en bedre hverdag. Noen redder og rehabiliterer skadde fugler, andre bidrar med fagkunnskap eller praktisk hjelp. Her kan du bli kjent med noen av de frivillige som gjør arbeidet vårt mulig."}</p>
     <div class="grid volunteer-list">
       {volunteers.map(person => <a class="card" href={contentHref(language, 'volunteer', person.id)}><Photo src={person.data.image} alt={person.data.title} sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw" /><div class="card-body"><h2>{person.data.title}</h2><p>{person.data.description}</p></div></a>)}
     </div>
-    <p class="join"><a class="button" href={href(language, 'volunteer')}>{text.joinTeam}</a></p>
+    <div class="join"><h2>{text.volunteerQuestion}</h2><a class="button" href={href(language, 'contact')}>{language === 'en' ? 'Get in touch' : 'Ta kontakt'}</a><p>{language === 'en' ? 'Together, we can save even more birds in need of a helping hand.' : 'Sammen kan vi redde enda flere fugler som trenger en hjelpende hånd.'}</p></div>
   </div>
 </Layout>
-<style>.volunteer-list{margin-top:36px}.card h2{color:white;font-size:26px;margin-bottom:18px}.join{margin-top:36px}</style>
+<style>.volunteer-list{margin-top:36px}.card h2{color:white;font-size:26px;margin-bottom:18px}.join{margin-top:36px}.join h2{font-size:26px}.join p{margin-top:20px}</style>

@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import VetContacts from '../components/VetContacts.astro';
 import { t } from '../i18n/ui';
 import { href, type Language } from '../i18n/routes';
 interface Props { language?: Language }
@@ -7,4 +8,4 @@ const { language = 'nb' } = Astro.props;
 const text = t(language);
 import { site } from '../data/site';
 ---
-<Layout title={text.helpTitle} language={language}><div class="container page"><h1>{text.injuredBird}</h1><div class="prose"><p class="lead">{text.helpLead}</p><ol>{text.helpSteps.map(step => <li>{step}</li>)}</ol><a class="button" href={site.helpGroup}>{text.openHelpGroup}</a><h2 id={language === 'en' ? 'help-near-you' : 'hjelp-naer-deg'}>{text.nearbyHeading}</h2><p>{text.nearbyText}</p><p>{text.vetsText}</p><h2>{text.faq}</h2><details><summary>{text.faqPhone}</summary><p>{text.faqPhoneAnswer}</p></details><details><summary>{text.faqEmail}</summary><p>{text.faqEmailAnswer}</p></details><details><summary>{text.faqContribute}</summary><p>{text.contributePrefix} <a href={href(language, 'volunteer')}>{text.contributeVolunteer}</a> {text.or} <a href={href(language, 'support')}>{text.contributeSupport}</a>.</p></details></div></div></Layout>
+<Layout title={text.helpTitle} language={language}><div class="container page"><h1>{text.injuredBird}</h1><div class="prose"><p class="lead">{text.helpLead}</p><ol>{text.helpSteps.map(step => <li>{step}</li>)}</ol><a class="button" href={site.helpGroup}>{text.openHelpGroup}</a><h2 id={language === 'en' ? 'help-near-you' : 'hjelp-naer-deg'}>{text.nearbyHeading}</h2><p>{text.nearbyText}</p><VetContacts language={language} /><h2>{text.faq}</h2><details><summary>{text.faqPhone}</summary><p>{text.faqPhoneAnswer}</p></details><details><summary>{text.faqEmail}</summary><p>{text.faqEmailAnswer}</p></details><details><summary>{text.faqContribute}</summary><p>{text.contributePrefix} <a href={href(language, 'volunteer')}>{text.contributeVolunteer}</a> {text.or} <a href={href(language, 'support')}>{text.contributeSupport}</a>.</p></details></div></div></Layout>
