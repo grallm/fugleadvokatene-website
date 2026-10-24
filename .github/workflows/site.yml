@@ -1,4 +1,4 @@
-name: Check, build and deploy
+name: Deploy Astro production site
 on:
   push:
     branches: [main]
@@ -7,69 +7,66 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: site-${{ github.ref }}
+  group: astro-production-deployment
   cancel-in-progress: false
 jobs:
-  check:
+  build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
           cache: npm
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'
-          extensions: curl, mbstring, gd, fileinfo
-          coverage: none
       - run: npm ci
-      - run: npm run format:php:check
       - run: npm run check
-      - name: Lint PHP
-        run: find backend public/api scripts -name '*.php' -print0 | xargs -0 -n1 php -l
-      - run: npm run test:php
       - run: npm test
-      - name: Require complete assets before a live build
-        if: vars.SITE_READY == 'true'
-        run: node scripts/check-assets.mjs
-      - run: npm run build
+      - name: Build static production site
+        run: npx --no-install astro build
         env:
-          SITE_URL: ${{ vars.SITE_URL || 'https://www.fugleadvokatene.no' }}
-          PUBLIC_PREVIEW: ${{ vars.SITE_READY == 'true' && 'false' || 'true' }}
+          SITE_URL: https://www.fugleadvokatene.no
+          PUBLIC_PREVIEW: 'false'
       - run: npm run test:site
         env:
-          PUBLIC_PREVIEW: ${{ vars.SITE_READY == 'true' && 'false' || 'true' }}
-      - run: npm run test:http
+          SITE_URL: https://www.fugleadvokatene.no
+          PUBLIC_PREVIEW: 'false'
+      - name: Prepare static files only
+        run: |
+          rm -rf dist/api dist/admin
+          find dist -type f \( -name '.*' -o -iname '*.php' -o -iname '*.ini' \) -delete
+          node scripts/deploy-static.mjs --dry-run
       - uses: actions/upload-artifact@v4
         with:
-          name: website
-          path: build/
-          include-hidden-files: true
+          name: astro-production-${{ github.sha }}
+          path: |
+            dist/
+            node_modules/basic-ftp/
+          compression-level: 0
           retention-days: 14
   deploy:
-    needs: check
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.DEPLOY_ENABLED == 'true'
-    environment: production
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    environment:
+      name: production
+      url: https://www.fugleadvokatene.no
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
           cache: npm
-      - run: npm ci
       - uses: actions/download-artifact@v4
         with:
-          name: website
-          path: build
-      - name: Publish using FTPS
-        run: npm run deploy
+          name: astro-production-${{ github.sha }}
+          path: .
+      - name: Upload static files through verified FTPS
+        run: node scripts/deploy-static.mjs
         env:
-          DEPLOY_CONFIRM: 'true'
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USER }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          FTP_PUBLIC_DIR: ${{ vars.FTP_PUBLIC_DIR }}
-          FTP_PRIVATE_DIR: ${{ vars.FTP_PRIVATE_DIR }}
+          FTP_PUBLIC_DIR: /
           FTP_PORT: ${{ vars.FTP_PORT || '21' }}

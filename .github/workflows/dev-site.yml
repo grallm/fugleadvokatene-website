@@ -1,7 +1,7 @@
 name: Deploy Astro dev site
 on:
   push:
-    branches: [codex/replace-with-downloaded-project]
+    branches-ignore: [main]
   workflow_dispatch:
 permissions:
   contents: read
@@ -45,7 +45,7 @@ jobs:
           retention-days: 14
   deploy:
     needs: build
-    if: github.ref == 'refs/heads/codex/replace-with-downloaded-project' && vars.DEV_DEPLOY_ENABLED == 'true'
+    if: github.ref_type == 'branch' && github.ref != 'refs/heads/main'
     environment:
       name: development
       url: https://dev.fugleadvokatene.no
@@ -68,4 +68,4 @@ jobs:
           FTP_USER: ${{ secrets.DEV_FTP_USER }}
           FTP_PASSWORD: ${{ secrets.DEV_FTP_PASSWORD }}
           FTP_PUBLIC_DIR: /
-          FTP_PORT: '21'
+          FTP_PORT: ${{ vars.DEV_FTP_PORT || '21' }}

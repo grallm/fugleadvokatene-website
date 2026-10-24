@@ -27,7 +27,7 @@ if (process.argv.includes('--dry-run')) {
   for (const name of ['FTP_HOST', 'FTP_USER', 'FTP_PASSWORD']) {
     if (!process.env[name]) throw new Error('Missing ' + name);
   }
-  // The FTP account MUST be jailed to public_html/dev; "/" is its virtual root.
+  // The FTP account MUST be jailed to the target site directory; "/" is its virtual root.
   if (process.env.FTP_PUBLIC_DIR !== '/') throw new Error('Expected jailed FTP root /');
   const { Client } = await import('basic-ftp');
   const client = new Client(30000);
