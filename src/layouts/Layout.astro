@@ -9,7 +9,7 @@ import { href, type Language } from '../i18n/routes';
 import { metadata } from '../data/seo';
 import { languageLinks } from '../i18n/content';
 interface Props { title: string; description?: string; image?: string; noindex?: boolean; language?: Language }
-const { title, image = '/images/photos/baby-bird.webp', noindex = false, language = 'nb' } = Astro.props;
+const { title, image = '/images/photos/volunteer-pigeon.webp', noindex = false, language = 'nb' } = Astro.props;
 const text = t(language);
 const seo = metadata[Astro.url.pathname];
 const seoTitle = seo?.title ?? title;
