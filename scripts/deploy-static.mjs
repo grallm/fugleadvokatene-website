@@ -9,6 +9,7 @@ const allowed = /\.(?:html|css|js|mjs|json|xml|txt|svg|png|jpe?g|gif|webp|avif|i
 async function collect(relative = '') {
   const result = [];
   for (const entry of await readdir(path.join(localRoot, relative), { withFileTypes: true })) {
+    if (relative === '' && entry.name === '.htaccess' && entry.isFile()) { result.push('.htaccess'); continue; }
     if (entry.name.startsWith('.') || ['api', 'admin', 'uploads'].includes(entry.name)) continue;
     const file = path.posix.join(relative, entry.name);
     if (entry.isDirectory()) result.push(...await collect(file));

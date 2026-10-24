@@ -1,5 +1,6 @@
 // Only paths owned by the static deployment may be removed.
 export function safePath(file) {
+  if (file === '.htaccess') return true;
   return typeof file === 'string' && !file.includes('\\') && !file.startsWith('/') &&
     file.split('/').every(part => part && part !== '..' && !part.startsWith('.') && !['api', 'admin', 'uploads'].includes(part));
 }

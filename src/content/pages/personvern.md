@@ -11,7 +11,7 @@ Nettstedet har ingen kontaktskjemaer, brukerkontoer eller betaling i selve netts
 
 ## Språkvalg
 
-Når du velger språk, lagres valget i nettleseren din slik at nettstedet husker det neste gang. Språkvalget sendes ikke til oss. Du kan fjerne det ved å slette nettstedets lagrede data i nettleseren.
+Du velger norsk eller engelsk via språklenkene. Språkvalget lagres ikke i nettleseren.
 
 ## Eksterne tjenester
 

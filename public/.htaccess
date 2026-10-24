@@ -2,6 +2,8 @@ Options -Indexes
 DirectoryIndex index.html index.php
 ErrorDocument 404 /404.html
 <IfModule mod_headers.c>
+  # Preview shares the production files: never put this restriction in shared HTML.
+  Header always set X-Robots-Tag "noindex, follow" "expr=%{HTTP_HOST} =~ m#^(preview|dev)\.fugleadvokatene\.no(?::[0-9]+)?$#i"
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "DENY"
@@ -11,6 +13,9 @@ ErrorDocument 404 /404.html
   RewriteEngine On
   RewriteRule ^about/?$ /om-oss/ [R=301,L]
   RewriteRule ^article/?$ /veiledning/ [R=301,L]
+  # The old English blog was a bird-help directory, not a news archive.
+  RewriteRule ^blog/?$ /en/bird-help/ [R=301,L]
+  RewriteRule ^copy-of-article/?$ /en/bird-help/ [R=301,L]
 </IfModule>
 <FilesMatch "(^\.|\.(?:env|log|md|json|ini|bak|sql)$)">
   Require all denied

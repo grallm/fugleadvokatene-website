@@ -13,6 +13,8 @@ export function getSiteRoutes(): Promise<SiteRoute[]> {
 async function buildRoutes(): Promise<SiteRoute[]> {
   const result: SiteRoute[] = [];
   for (const language of languages) {
+    const publishedPosts = await getCollection(language === "en" ? "postsEn" : "posts", ({ data }) => !data.draft);
+    const products = await getCollection(language === "en" ? "productsEn" : "products", ({ data }) => !data.draft);
     for (const key of [
       "home",
       "contact",
@@ -29,7 +31,7 @@ async function buildRoutes(): Promise<SiteRoute[]> {
         key,
         language,
         path: routes[key][language],
-        indexable: key !== "thanks" && key !== "notFound",
+        indexable: key !== "thanks" && key !== "notFound" && (key !== "news" || publishedPosts.length > 0) && (key !== "shop" || products.length > 0),
       });
     }
     const pages = await getCollection(language === "en" ? "pagesEn" : "pages");
