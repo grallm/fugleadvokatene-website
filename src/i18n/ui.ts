@@ -1,122 +1,308 @@
-export const defaultLang = "no" as const;
-
-export const ui = {
-  no: {
-    "site.title": "FugleAdvokatene",
-    "nav.contact": "Kontakt",
-    "nav.store": "Butikk",
-    "nav.blog": "Blogg",
-    "nav.guides": "Guider",
-    "nav.about": "Hvem vi er",
-
-    "welcome.title": "Velkommen til FugleAdvokatene.",
-    "welcome.body":
-      "Vi er en frivillig organisasjon som redder og rehabiliterer byfuglene i Oslo og Bergen.",
-
-    "welcome.card1.title": "Hvem kan hjelpe i nærheten?",
-    "welcome.card1.body": "En liste over tilgjengelige rehabiliteringssteder",
-    "welcome.card2.title": "Vil du støtte oss?",
-    "welcome.card2.body": "Slik kan du donere.",
-
-    "found.title": "Har du funnet en fugl?",
-    "found.body":
-      "Her er noen smarte guider for å hjelpe deg å håndtere situasjonen",
-
-    "guide.injured.title": "Er den skadet?",
-    "guide.injured.body": "Slik håndterer du det",
-    "guide.handling.title": "Håndtering av ville fugler",
-    "guide.handling.body": "For deres sikkerhet – og din",
-    "guide.hygiene.title": "Tenk alltid på hygiene",
-    "guide.hygiene.body": "For både din og fuglenes skyld",
-    "guide.species.title": "Hva slags fugl er det?",
-    "guide.species.body": "En oversikt over kjente byfuglarter",
-
-    "blog.title": "Blogg",
-    "blog.post1.title": "Kjente fuglearter i byen",
-    "blog.post1.caption": "Se her for å finne ut hvilken fugl du har funnet",
-    "blog.post2.title": "Lover og regler rundt hjelp til fugler",
-    "blog.post2.caption": "Hva du må huske på",
-
-    "regulars.title": "Møt våre faste",
-    "regulars.caption":
-      "Disse fuglene trenger ikke vår hjelp, men det er fint om du holder et øye med dem.",
-    "regulars.areas.title": "Kjente reirplasser og andre sårbare områder",
-    "regulars.areas.caption": "Vær litt mer oppmerksom rundt disse områdene",
-
-    "store.title": "Nettbutikk",
-    "store.popular": "Populære produkter",
-    "product.pin.name": "Pin",
-    "product.card.name": "Kort",
-    "product.bag.name": "Bærenett",
-    "product.price": "Pris",
-    "product.description": "Produktbeskrivelse",
-
-    "footer.mail": "mail:",
-    "footer.phone": "tlf:",
-    "footer.social": "Sosiale medier",
-  },
-  en: {
-    "site.title": "FugleAdvokatene",
-    "nav.contact": "Contact",
-    "nav.store": "Store",
-    "nav.blog": "Blog",
-    "nav.guides": "Guides",
-    "nav.about": "Who we are",
-
-    "welcome.title": "Welcome to FugleAdvokatene.",
-    "welcome.body":
-      "We are a voluntary organisation who rescue and rehabilitate the citybirds of Oslo and Bergen.",
-
-    "welcome.card1.title": "Who can help near me?",
-    "welcome.card1.body": "A list of available recovery homes",
-    "welcome.card2.title": "Do you want to support us?",
-    "welcome.card2.body": "This is how you can donate.",
-
-    "found.title": "Did you find a bird?",
-    "found.body":
-      "Here are some smart guides to best help you take care of the situation",
-
-    "guide.injured.title": "Is it injured?",
-    "guide.injured.body": "This is how you handle it",
-    "guide.handling.title": "Handling of wild birds",
-    "guide.handling.body": "For their safety – and yours",
-    "guide.hygiene.title": "Always think about hygiene",
-    "guide.hygiene.body": "For both your sake and the birds",
-    "guide.species.title": "What kind of bird is it?",
-    "guide.species.body": "An overview of known city bird species",
-
-    "blog.title": "Blog",
-    "blog.post1.title": "Known bird species in the city",
-    "blog.post1.caption": "Look here to know what bird you have found",
-    "blog.post2.title": "Laws and rules around helping birds",
-    "blog.post2.caption": "What you have to keep in mind",
-
-    "regulars.title": "Meet our regulars",
-    "regulars.caption":
-      "These birds don't need our help, but it is nice of you to keep an eye out.",
-    "regulars.areas.title": "Known nesting places and other vulnerable areas",
-    "regulars.areas.caption": "Please be a bit more aware around these areas",
-
-    "store.title": "Online store",
-    "store.popular": "Popular products",
-    "product.pin.name": "Pin",
-    "product.card.name": "Card",
-    "product.bag.name": "Tote bag",
-    "product.price": "Price",
-    "product.description": "Product description",
-
-    "footer.mail": "mail:",
-    "footer.phone": "tel:",
-    "footer.social": "Social media",
-  },
-} as const;
-
-export type Lang = keyof typeof ui;
-export type UIKey = keyof (typeof ui)[typeof defaultLang];
-
-export function useTranslations(lang: Lang | string | undefined) {
-  const safe: Lang = lang === "en" ? "en" : "no";
-  return function t(key: UIKey): string {
-    return ui[safe][key];
-  };
+import type { Language } from "./routes";
+const nb = {
+  defaultDescription:
+    "Redning og rehabilitering av byfugler i Oslo og Bergen. Finn hjelp, bli frivillig eller støtt FugleAdvokatene.",
+  skip: "Hopp til innhold",
+  homeLabel: "FugleAdvokatene, forsiden",
+  openMenu: "Åpne meny",
+  closeMenu: "Lukk meny",
+  mainNav: "Hovedmeny",
+  footerNav: "Bunnmeny",
+  languageNav: "Velg språk",
+  contact: "Kontakt",
+  volunteer: "Bli frivillig",
+  shop: "Nettbutikk",
+  news: "Siste nytt",
+  help: "Veiledning",
+  about: "Om oss",
+  support: "Støtt oss",
+  faq: "Ofte stilte spørsmål",
+  email: "E-post",
+  organisation: "Org. nr",
+  privacy: "Personvern",
+  copyright: "Alle rettigheter reservert.",
+  homeTitle: "Hvert fugleliv er verdt å redde",
+  welcome: "Velkommen til FugleAdvokatene",
+  intro:
+    "FugleAdvokatene er en frivillig forening som driver med redning og rehabilitering av byfugler. En av våre hjertesaker er å endre den utbredte praksisen hvor skadede og syke byfugler avlives uten gyldig medisinsk grunn.",
+  introMore:
+    "FugleAdvokatene er en ideell organisasjon drevet av frivillige ildsjeler som rehabiliterer fugler ved siden av en vanlig fulltidsjobb. Vi har derfor ikke mulighet til å være tilgjengelige på telefon, e-post e.l., men svarer så fort vi kan i «FugleAdvokatenes hjelpegruppe» på Facebook. Har dere en fugl som trenger hjelp, legg ut en post der – gjerne med et bilde og annen relevant informasjon – og vent på vårt svar.",
+  helpNearby: "Hvem kan hjelpe nær meg?",
+  helpNearbyCta: "Finn veiledning og hjelp",
+  supportQuestion: "Ønsker du å støtte oss?",
+  supportCta: "Her er hvordan du kan hjelpe",
+  meetVolunteers: "Møt våre frivillige",
+  volunteers: "Våre frivillige",
+  allVolunteers: "Møt våre frivillige →",
+  joinTeam: "Vil du bli en del av laget?",
+  allNews: "Se alle nyheter →",
+  injuredBird: "Funnet en skadet fugl?",
+  clickHere: "Klikk her",
+  readMore: "Les mer",
+  volunteerQuestion: "Ønsker du å bli frivillig?",
+  heroSupportTitle: "Støtt oss!",
+  heroSupportText:
+    "FugleAdvokatene er en organisasjon drevet av frivillige, og vi er avhengige av donasjoner fra publikum for å kunne operere. Klikk videre for å se hvordan du kan støtte oss.",
+  heroVolunteerText:
+    "Vi trenger stadig nye rehabiliteringshjem for skadede eller syke fugler. Her kan du lese hva som må til for å bli rehabiliteringshjem.",
+  heroSteps: [
+    "Ta bilder eller video av fuglen",
+    "Ta kontakt på vår hjelpegruppe på Facebook",
+    "Si hvor den skadde fuglen befinner seg",
+    "Sikre fuglen, eller bli hos den til du får veiledning",
+  ],
+  birdAlt: "Fugleunge som ligger i en hånd",
+  pigeonAlt: "Nærbilde av en due som holdes forsiktig",
+  volunteerAlt: "En kvinne som holder en due",
+  carousel: "karusell",
+  slide: "lysbilde",
+  heroLabel: "Hjelp fuglene",
+  previousSlide: "Forrige lysbilde",
+  nextSlide: "Neste lysbilde",
+  of: "av",
+  contactHeading: "Kontakt oss",
+  contactLead: "Har du spørsmål eller ønsker å komme i kontakt med oss?",
+  urgentHeading: "Fugl i nød?",
+  urgentText:
+    "Akutte henvendelser skal til hjelpegruppen på Facebook. Vi bemanner ikke et telefonnummer, og e-post er ikke en akuttkanal.",
+  helpGroup: "Til hjelpegruppen",
+  volunteerLead: "Vi trenger flere som vil bidra til å hjelpe byens fugler.",
+  volunteerIntro:
+    "Fortell oss hvor du bor og hva du kan bidra med. Vi tar kontakt for å snakke om muligheter, opplæring og hva som passer for deg.",
+  volunteerAsideTitle: "En liten innsats kan bety mye",
+  volunteerAside:
+    "Rehabilitering, transport, informasjonsarbeid eller praktisk hjelp – det finnes flere måter å bidra på.",
+  supportHeading: "Gi fuglene en ny sjanse",
+  supportLead:
+    "Arbeidet vårt er drevet av frivillige. Din støtte hjelper oss å fortsette.",
+  vippsNumber: "Vippsnummer",
+  monthly: "Bli månedsgiver",
+  paypalText: "Du kan gi et bidrag gjennom PayPal.",
+  donate: "Gi et bidrag",
+  bank: "Bank",
+  account: "Kontonummer",
+  grassroots: "Grasrotandelen",
+  timeInstead: "Vil du heller bidra med tid? Bli frivillig →",
+  helpTitle: "Hjelp en fugl i nød",
+  helpLead:
+    "Ta kontakt med FugleAdvokatenes hjelpegruppe på Facebook for veiledning.",
+  helpSteps: [
+    "Ta bilder eller video av fuglen.",
+    "Beskriv hva du ser og hvor fuglen befinner seg.",
+    "Be om veiledning i hjelpegruppen. Ikke utsett deg selv eller fuglen for fare.",
+  ],
+  openHelpGroup: "Åpne hjelpegruppen",
+  nearbyHeading: "Hjelp nær deg",
+  nearbyText:
+    "Vi arbeider i Oslo og Bergen. Hjelpegruppen kan veilede deg om hvem du kan kontakte der du er.",
+  vetsText:
+    "En liste over veterinærer publiseres først når kontaktinformasjon og tilbud er kontrollert.",
+  faqPhone: "Kan jeg ringe dere?",
+  faqPhoneAnswer:
+    "Vi bemanner ikke et telefonnummer. Bruk hjelpegruppen på Facebook.",
+  faqEmail: "Kan jeg sende en e-post om en akutt situasjon?",
+  faqEmailAnswer:
+    "E-post er ikke en akuttkanal. Henvend deg i hjelpegruppen, der frivillige svarer så snart de kan.",
+  faqContribute: "Hvordan kan jeg bidra?",
+  contributePrefix: "Du kan",
+  contributeVolunteer: "melde interesse som frivillig",
+  or: "eller",
+  contributeSupport: "støtte arbeidet økonomisk",
+  shopLead: "Støtt arbeidet vårt gjennom et kjøp.",
+  buy: "Kjøp nå",
+  unavailable: "Ikke tilgjengelig akkurat nå",
+  shopSoon: "Butikken åpner snart",
+  meanwhile: "I mellomtiden kan du",
+  supportHere: "støtte oss her",
+  paymentInfo:
+    "Betaling skjer hos betalingsleverandøren. Se frakt og endelig beløp før du betaler.",
+  thanksTitle: "Takk",
+  thanksHeading: "Takk for at du støtter fuglene",
+  thanksText:
+    "Hvis du nettopp har betalt, finner du betalingsbekreftelsen hos betalingsleverandøren eller i kvitteringen på e-post.",
+  backHome: "Til forsiden",
+  notFoundTitle: "Siden finnes ikke",
+  notFoundHeading: "Her var det tomt",
+  notFoundText: "Siden er flyttet eller finnes ikke.",
+  newsHeading: "Fra FugleAdvokatene",
+  draft: "Utkast",
+  noNews: "Det er ingen publiserte artikler ennå.",
+  postDraft: "Redaksjonelt utkast – vises ikke i produksjon.",
+  volunteerDraft: "Forhåndsvisning av et utkast fra Figma.",
+  follow: "Følg hverdagen vår på",
+  and: "og",
+  name: "Navn",
+  city: "Hvor bor du?",
+  message: "Hva gjelder henvendelsen?",
+  volunteerMessage: "Fortell litt om deg selv og hvordan du ønsker å bidra",
+  website: "Nettside",
+  consentPrefix: "Jeg har lest",
+  privacyStatement: "personvernerklæringen",
+  consentSuffix:
+    "og godtar at dere bruker opplysningene til å svare på henvendelsen.",
+  sendInterest: "Send interesse",
+  sendMessage: "Send melding",
+  noscript:
+    "Skjemaet trenger JavaScript. Send en e-post til kontakt@fugleadvokatene.no.",
+  sending: "Sender …",
+  formUnavailable:
+    "Skjemaet er ikke tilgjengelig. Prøv igjen senere eller send oss en e-post.",
+  sendFailed: "Meldingen kunne ikke sendes.",
+  sent: "Takk! Meldingen er mottatt. Vi svarer så snart vi kan.",
+  unexpectedError: "Noe gikk galt.",
+};
+const en: typeof nb = {
+  defaultDescription:
+    "Rescuing and rehabilitating urban birds in Oslo and Bergen. Find help, volunteer or support FugleAdvokatene.",
+  skip: "Skip to content",
+  homeLabel: "FugleAdvokatene, home",
+  openMenu: "Open menu",
+  closeMenu: "Close menu",
+  mainNav: "Main navigation",
+  footerNav: "Footer navigation",
+  languageNav: "Choose language",
+  contact: "Contact",
+  volunteer: "Volunteer",
+  shop: "Shop",
+  news: "News",
+  help: "Bird help",
+  about: "About us",
+  support: "Support us",
+  faq: "Frequently asked questions",
+  email: "Email",
+  organisation: "Organisation no.",
+  privacy: "Privacy",
+  copyright: "All rights reserved.",
+  homeTitle: "Every bird deserves a chance",
+  welcome: "Welcome to FugleAdvokatene",
+  intro:
+    "FugleAdvokatene is a volunteer organisation that rescues and rehabilitates urban birds. One of our priorities is to challenge the widespread practice of euthanising injured and sick urban birds without a valid medical reason.",
+  introMore:
+    "FugleAdvokatene is a non-profit organisation run by dedicated volunteers who rehabilitate birds alongside their full-time jobs. We cannot offer continuous support by phone or email, but we reply as soon as we can in our Facebook help group, “FugleAdvokatenes hjelpegruppe”. If a bird needs help, post there with a photo and relevant information, then wait for our reply.",
+  helpNearby: "Who can help near me?",
+  helpNearbyCta: "Find guidance and help",
+  supportQuestion: "Would you like to support us?",
+  supportCta: "Here is how you can help",
+  meetVolunteers: "Meet our volunteers",
+  volunteers: "Our volunteers",
+  allVolunteers: "Meet our volunteers →",
+  joinTeam: "Would you like to join the team?",
+  allNews: "See all news →",
+  injuredBird: "Found an injured bird?",
+  clickHere: "Get help",
+  readMore: "Read more",
+  volunteerQuestion: "Would you like to volunteer?",
+  heroSupportTitle: "Support us!",
+  heroSupportText:
+    "FugleAdvokatene is run by volunteers. We rely on donations from the public to continue our work. Find out how you can support us.",
+  heroVolunteerText:
+    "We are always looking for new rehabilitation homes for injured or sick birds. Find out what it takes to become a rehabilitation home.",
+  heroSteps: [
+    "Take photos or a video of the bird",
+    "Contact our Facebook help group",
+    "Tell us where the injured bird is",
+    "Keep the bird safe, or stay nearby until you receive guidance",
+  ],
+  birdAlt: "A baby bird resting in a hand",
+  pigeonAlt: "Close-up of a pigeon being gently held",
+  volunteerAlt: "A woman holding a pigeon",
+  carousel: "carousel",
+  slide: "slide",
+  heroLabel: "Help the birds",
+  previousSlide: "Previous slide",
+  nextSlide: "Next slide",
+  of: "of",
+  contactHeading: "Contact us",
+  contactLead: "Have a question or want to get in touch?",
+  urgentHeading: "A bird in distress?",
+  urgentText:
+    "For urgent enquiries, use our Facebook help group. We do not staff a phone line, and email is not an emergency contact channel.",
+  helpGroup: "Go to the help group",
+  volunteerLead: "We need more people to help the city’s birds.",
+  volunteerIntro:
+    "Tell us where you live and how you would like to help. We will get in touch to discuss opportunities, training and what works for you.",
+  volunteerAsideTitle: "A little help can make a big difference",
+  volunteerAside:
+    "Rehabilitation, transport, sharing information or practical help — there are many ways to contribute.",
+  supportHeading: "Give birds another chance",
+  supportLead:
+    "Our work is powered by volunteers. Your support helps us keep going.",
+  vippsNumber: "Vipps number",
+  monthly: "Become a monthly donor",
+  paypalText: "You can make a donation through PayPal.",
+  donate: "Make a donation",
+  bank: "Bank transfer",
+  account: "Account number",
+  grassroots: "Grasrotandelen (Norsk Tipping donations)",
+  timeInstead: "Prefer to give your time? Volunteer →",
+  helpTitle: "Help a bird in distress",
+  helpLead: "Contact the FugleAdvokatene Facebook help group for guidance.",
+  helpSteps: [
+    "Take photos or a video of the bird.",
+    "Describe what you see and where the bird is.",
+    "Ask for guidance in the help group. Do not put yourself or the bird in danger.",
+  ],
+  openHelpGroup: "Open the help group",
+  nearbyHeading: "Help near you",
+  nearbyText:
+    "We work in Oslo and Bergen. The help group can advise you on who to contact in your area.",
+  vetsText:
+    "We will publish a list of vets once their contact details and services have been verified.",
+  faqPhone: "Can I call you?",
+  faqPhoneAnswer:
+    "We do not staff a phone line. Please use our Facebook help group.",
+  faqEmail: "Can I email you about an emergency?",
+  faqEmailAnswer:
+    "Email is not an emergency contact channel. Use the help group, where volunteers reply as soon as they can.",
+  faqContribute: "How can I help?",
+  contributePrefix: "You can",
+  contributeVolunteer: "register your interest in volunteering",
+  or: "or",
+  contributeSupport: "support our work with a donation",
+  shopLead: "Support our work by making a purchase.",
+  buy: "Buy now",
+  unavailable: "Currently unavailable",
+  shopSoon: "Our shop is opening soon",
+  meanwhile: "In the meantime, you can",
+  supportHere: "support us here",
+  paymentInfo:
+    "Payment takes place with the payment provider. Check shipping and the final total before paying.",
+  thanksTitle: "Thank you",
+  thanksHeading: "Thank you for supporting the birds",
+  thanksText:
+    "If you have just made a payment, check the payment provider’s confirmation or your email receipt.",
+  backHome: "Back to home",
+  notFoundTitle: "Page not found",
+  notFoundHeading: "Nothing here",
+  notFoundText: "This page has moved or does not exist.",
+  newsHeading: "From FugleAdvokatene",
+  draft: "Draft",
+  noNews: "No articles have been published yet.",
+  postDraft: "Editorial draft — not shown in production.",
+  volunteerDraft: "Preview of a draft from the Figma design.",
+  follow: "Follow our day-to-day work on",
+  and: "and",
+  name: "Name",
+  city: "Where do you live?",
+  message: "What would you like to contact us about?",
+  volunteerMessage: "Tell us about yourself and how you would like to help",
+  website: "Website",
+  consentPrefix: "I have read the",
+  privacyStatement: "privacy statement",
+  consentSuffix:
+    "and agree that you may use my information to respond to my enquiry.",
+  sendInterest: "Send enquiry",
+  sendMessage: "Send message",
+  noscript:
+    "This form requires JavaScript. Email kontakt@fugleadvokatene.no instead.",
+  sending: "Sending …",
+  formUnavailable:
+    "This form is unavailable. Please try again later or email us.",
+  sendFailed: "Your message could not be sent.",
+  sent: "Thank you! Your message has been received. We will reply as soon as we can.",
+  unexpectedError: "Something went wrong.",
+};
+export const ui = { nb, en };
+export function t(language: Language) {
+  return ui[language];
 }

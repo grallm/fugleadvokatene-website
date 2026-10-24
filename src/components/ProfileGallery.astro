@@ -1,0 +1,58 @@
+---
+import type { Language } from '../i18n/routes';
+interface Props { images: string[]; name: string; language: Language }
+const { images, name, language } = Astro.props;
+const en = language === 'en';
+---
+<div class="profile-gallery" data-gallery>
+  <a class="main-photo" href={images[0]} aria-label={en ? 'Open full-size photo' : 'Åpne bildet i full størrelse'}><img src={images[0]} alt={name} loading="eager" /><span aria-hidden="true">⤢</span></a>
+  {images.length > 1 && <div class="thumbnails" aria-label={en ? 'Choose a photo' : 'Velg et bilde'}>{images.map((src, index) => <button type="button" data-index={index} aria-pressed={index === 0} aria-label={`${en ? 'Photo' : 'Bilde'} ${index + 1} – ${name}`}><img src={src} alt="" loading="lazy" /></button>)}</div>}
+  <p class="photo-count" aria-live="polite">1 / {images.length}</p>
+  <dialog aria-label={`${en ? 'Photos of' : 'Bilder av'} ${name}`}>
+    <button class="close" type="button" aria-label={en ? 'Close' : 'Lukk'}>×</button>
+    <img class="full-photo" src={images[0]} alt={name} />
+    {images.length > 1 && <div class="lightbox-controls"><button type="button" data-step="-1" aria-label={en ? 'Previous photo' : 'Forrige bilde'}>‹</button><span class="dialog-count" aria-live="polite">1 / {images.length}</span><button type="button" data-step="1" aria-label={en ? 'Next photo' : 'Neste bilde'}>›</button></div>}
+  </dialog>
+</div>
+<style>
+.profile-gallery{min-width:0;align-self:start}.main-photo{display:block;position:relative;background:#dce8e6;border-radius:12px;overflow:hidden;touch-action:pan-y pinch-zoom}.main-photo>img{width:100%;height:clamp(280px,38vw,520px);object-fit:contain}.main-photo>span{position:absolute;right:12px;bottom:12px;display:grid;place-items:center;width:36px;height:36px;background:#044240dc;color:white;border-radius:50%;font-size:24px}.thumbnails{display:flex;gap:10px;padding:12px 3px 4px;overflow-x:auto}.thumbnails button{padding:3px;background:transparent;border:2px solid transparent;border-radius:8px;flex:0 0 76px}.thumbnails button[aria-pressed=true]{border-color:var(--ink)}.thumbnails img{width:66px;height:66px;object-fit:cover;border-radius:4px}.photo-count{font-size:13px;color:#526c66;margin:8px 0 0}dialog{width:min(1100px,96vw);max-width:96vw;max-height:94dvh;padding:48px 16px 12px;border:0;border-radius:12px;background:#102321;color:white}dialog::backdrop{background:#000c}.full-photo{width:100%;height:calc(90dvh - 130px);object-fit:contain;touch-action:pan-y pinch-zoom}.close{position:absolute;right:10px;top:6px;font-size:32px}.close,.lightbox-controls button{min-width:44px;min-height:44px;border:0;background:transparent;color:white}.lightbox-controls{display:flex;justify-content:center;align-items:center;gap:24px}.lightbox-controls button{font-size:32px}@media(max-width:1000px){.main-photo>img{height:min(65vh,460px)}}
+</style>
+<script>
+for (const root of document.querySelectorAll<HTMLElement>('[data-gallery]')) {
+  const main = root.querySelector<HTMLAnchorElement>('.main-photo')!;
+  const mainImage = main.querySelector('img')!;
+  const thumbs = [...root.querySelectorAll<HTMLButtonElement>('[data-index]')];
+  const sources = thumbs.length ? thumbs.map(button => button.querySelector('img')!.getAttribute('src')!) : [mainImage.getAttribute('src')!];
+  const dialog = root.querySelector('dialog')!;
+  const full = dialog.querySelector<HTMLImageElement>('.full-photo')!;
+  let current = 0;
+  let suppressClickUntil = 0;
+  let oldOverflow = '';
+  function show(index: number) {
+    current = (index + sources.length) % sources.length;
+    mainImage.src = full.src = sources[current];
+    main.href = sources[current];
+    thumbs.forEach((button, i) => button.setAttribute('aria-pressed', String(i === current)));
+    root.querySelectorAll('.photo-count,.dialog-count').forEach(counter => counter.textContent = `${current + 1} / ${sources.length}`);
+  }
+  thumbs.forEach((button, i) => button.addEventListener('click', () => show(i)));
+  main.addEventListener('click', event => {
+    event.preventDefault();
+    if (Date.now() < suppressClickUntil) return;
+    oldOverflow = document.body.style.overflow;
+    dialog.showModal();
+    document.body.style.overflow = 'hidden';
+  });
+  dialog.querySelector('.close')!.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('close', () => { document.body.style.overflow = oldOverflow; main.focus({preventScroll:true}); });
+  dialog.addEventListener('click', event => { if (event.target === dialog) { const box = dialog.getBoundingClientRect(); if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) dialog.close(); } });
+  dialog.querySelectorAll<HTMLButtonElement>('[data-step]').forEach(button => button.addEventListener('click', () => show(current + Number(button.dataset.step))));
+  root.addEventListener('keydown', event => { if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); show(current + (event.key === 'ArrowRight' ? 1 : -1)); } });
+  for (const surface of [main, full] as HTMLElement[]) {
+    let start: {x:number;y:number} | null = null;
+    surface.addEventListener('touchstart', event => { start = event.touches.length === 1 ? {x:event.touches[0].clientX,y:event.touches[0].clientY} : null; }, {passive:true});
+    surface.addEventListener('touchend', event => { if (!start) return; const touch = event.changedTouches[0]; const dx = touch.clientX-start.x, dy = touch.clientY-start.y; start=null; if (Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)*1.5) { show(current+(dx<0?1:-1)); suppressClickUntil=Date.now()+500; } }, {passive:true});
+    surface.addEventListener('touchcancel', () => {start=null;});
+  }
+}
+</script>

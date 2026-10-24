@@ -1,5 +1,9 @@
 {
-  "editor.codeActionsOnSave": {
-    "source.fixAll.tailwindcss": "explicit"
-  }
+  "[php]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "prettier.documentSelectors": [
+    "**/*.php"
+  ]
 }

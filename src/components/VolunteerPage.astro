@@ -1,0 +1,14 @@
+---
+import ProfileGallery from './ProfileGallery.astro';
+import { render, type CollectionEntry } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import { t } from '../i18n/ui';
+import { href, type Language } from '../i18n/routes';
+interface Props { person: CollectionEntry<'volunteers' | 'volunteersEn'>; language?: Language }
+const { person, language = 'nb' } = Astro.props;
+const text = t(language);
+const { Content } = await render(person);
+---
+<Layout title={person.data.title} description={person.data.description} noindex={person.data.draft} language={language}><article class="container page"><p><a href={href(language, 'volunteers')}>{text.meetVolunteers}</a></p><h1>{person.data.title}</h1><div class="two-columns"><ProfileGallery images={[person.data.image, ...person.data.gallery]} name={person.data.title} language={language} /><div class="prose">{person.data.city && <p>{person.data.city}</p>}{person.data.draft && <p class="notice">{text.volunteerDraft}</p>}<Content />{person.data.sourceDate && <p class="profile-source">{language === 'en' ? 'Based on a volunteer introduction published on' : 'Basert på en frivilligpresentasjon publisert'} {new Intl.DateTimeFormat(language === 'en' ? 'en-GB' : 'nb-NO', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(person.data.sourceDate))}. {person.data.sourceUrl && <a href={person.data.sourceUrl}>{language === 'en' ? 'Original post' : 'Originalinnlegg'}</a>}</p>}</div></div></article></Layout>
+
+<style>.prose .profile-source{font-size:14px;color:#526c66;border-top:1px solid #a9c1bb;margin-top:32px;padding-top:18px}.two-columns{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);align-items:start}@media(max-width:1000px){.two-columns{grid-template-columns:1fr}}</style>

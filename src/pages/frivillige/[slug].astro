@@ -1,0 +1,10 @@
+---
+import { getCollection } from 'astro:content';
+import VolunteerPage from '../../components/VolunteerPage.astro';
+import { isPreview } from '../../data/site';
+export async function getStaticPaths() {
+  return (await getCollection('volunteers', ({ data }) => !data.draft || isPreview)).map(person => ({ params: { slug: person.id }, props: { person } }));
+}
+const { person } = Astro.props;
+---
+<VolunteerPage person={person} />

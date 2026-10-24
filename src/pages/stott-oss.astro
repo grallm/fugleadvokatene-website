@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { t } from '../i18n/ui';
+import { href, type Language } from '../i18n/routes';
+interface Props { language?: Language }
+const { language = 'nb' } = Astro.props;
+const text = t(language);
+import { site } from '../data/site';
+---
+<Layout title={text.support} language={language}>
+  <div class="container page">
+    <h1>{text.supportHeading}</h1><p class="lead">{text.supportLead}</p>
+    <div class="grid donation-options">
+      <section class="empty">
+        <h2>Vipps</h2>
+        <p>{text.vippsNumber}: <strong>{site.vipps}</strong></p>
+        <a class="button" href={site.monthly}>{text.monthly} {language === 'en' ? 'with' : 'via'} Vipps</a>
+        <p class="qr-label">{language === 'en' ? 'Or scan to become a monthly donor:' : 'Eller skann for å bli månedsgiver:'}</p>
+        <a class="qr-link" href={site.monthly} aria-label={language === 'en' ? 'Become a monthly donor with Vipps' : 'Bli månedsgiver via Vipps'}><img class="vipps-qr" src="/images/donations/vipps-monthly.png" width="382" height="492" alt={language === 'en' ? 'Vipps QR code for Fugleadvokatene, merchant number 986287' : 'Vipps QR-kode for Fugleadvokatene, brukerstednummer 986287'} /></a>
+      </section>
+      <section class="empty">
+        <h2>PayPal</h2><p>{text.paypalText}</p>
+        <a class="button" href={site.paypal}>{text.donate}</a>
+        <h3 class="monthly-heading">{text.monthly} {language === 'en' ? 'with' : 'via'} PayPal</h3>
+        <form action="https://www.paypal.com/donate" method="post" target="_top">
+          <input type="hidden" name="hosted_button_id" value={site.paypalHostedButton} />
+          <button class="button paypal-donate" type="submit">{text.monthly} {language === 'en' ? 'with' : 'via'} PayPal</button>
+        </form>
+      </section>
+      <section class="empty"><h2>{text.bank}</h2><p>{text.account}<br /><strong>{site.bank}</strong></p><p>{text.grassroots}<br />{text.organisation} {site.organisation}</p></section>
+    </div>
+    <p class="section"><a href={href(language, 'volunteer')}>{text.timeInstead}</a></p>
+  </div>
+</Layout>
+<style>
+.donation-options{align-items:start}.donation-options .button{width:100%;text-align:center;white-space:normal;padding:12px 16px}.qr-label{font-size:16px;margin:24px 0 12px}.qr-link{display:block;width:100%;max-width:240px;margin-inline:auto;border-radius:12px;overflow:hidden}.vipps-qr{width:100%;height:auto}.monthly-heading{font-size:22px;margin:32px 0 16px}.paypal-donate{background:#ffc439;color:#173b65}
+@media(min-width:1001px) and (max-width:1200px){.donation-options{gap:20px}.donation-options .empty{padding:22px}}
+</style>

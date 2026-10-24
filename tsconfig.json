@@ -1,9 +1,1 @@
-{
-  "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"],
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "jsxImportSource": "react"
-  }
-}
+{ "extends": "astro/tsconfigs/strict", "include": [".astro/types.d.ts", "**/*"], "exclude": ["dist", "build", "node_modules"], "compilerOptions": {"paths":{"@toast-ui/editor":["./node_modules/@toast-ui/editor/types/index.d.ts"]}} }

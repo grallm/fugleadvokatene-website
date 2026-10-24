@@ -1,0 +1,21 @@
+---
+import type { Language } from '../i18n/routes';
+interface Props { language: Language }
+const { language } = Astro.props;
+const clinics = [
+  { city: 'Oslo', name: 'Gamlebyen Dyreklinikk', vet: 'Laurence Barton', url: 'https://gamlebyendyreklinikk.no/', address: 'Schweigaards gate 96, 0656 Oslo', email: 'post@gbdk.no', phone: '24 04 50 10' },
+  { city: 'Oslo', name: 'AniCura Dyreklinikk Lilleaker', vet: 'Michaela Modig', url: 'https://www.anicura.no/klinikker/dyreklinikk-lilleaker/', address: 'Mustads vei 1, 0283 Oslo', email: 'lilleaker@anicura.no', phone: '22 51 58 00' },
+  { city: 'Bergen', name: 'Salhus Dyreklinikk', vet: 'Ron Lwow', url: 'https://www.salhusdk.no/', address: 'Salhusvegen 259A, 5107 Salhus, Norge', email: 'post@salhusdk.no', phone: '92 92 96 96' },
+];
+---
+<section class="vet-contacts">
+  <h3>{language === 'en' ? 'Clinics with veterinarians experienced in treating birds' : 'Dyreklinikker med fuglekyndige veterinærer'}</h3>
+  {['Oslo', 'Bergen'].map(city => <div class="vet-city">
+    <h4>{city}</h4>
+    {clinics.filter(clinic => clinic.city === city).map(clinic => <article class="clinic">
+      <h5>{clinic.vet} {language === 'en' ? 'at' : 'hos'} <a href={clinic.url}>{clinic.name}</a></h5>
+      <address>{clinic.address}<br /><a href={`mailto:${clinic.email}`}>{clinic.email}</a><br /><a href={`tel:+47${clinic.phone.replaceAll(' ', '')}`}>{clinic.phone}</a></address>
+    </article>)}
+  </div>)}
+</section>
+<style>.vet-contacts{margin:28px 0 40px}.vet-city h4{font-size:22px;margin:28px 0 12px}.clinic{padding:16px 0;border-bottom:1px solid #a9c1bb}.clinic h5{font-size:18px;line-height:1.4;margin:0 0 10px}.clinic address{font-style:normal;font-size:17px;line-height:1.7;overflow-wrap:anywhere}</style>

@@ -1,0 +1,45 @@
+---
+import { t } from '../i18n/ui';
+import { href, type Language } from '../i18n/routes';
+interface Props { volunteer?: boolean; language?: Language }
+const { volunteer = false, language = 'nb' } = Astro.props;
+const text = t(language);
+---
+<form class="form" data-contact-form data-language={language} data-sending={text.sending} data-unavailable={text.formUnavailable} data-failed={text.sendFailed} data-sent={text.sent} data-error={text.unexpectedError}>
+  <input type="hidden" name="kind" value={volunteer ? 'volunteer' : 'contact'} />
+  <label>{text.name}<input name="name" required maxlength="100" autocomplete="name" /></label>
+  <label>{text.email}<input name="email" type="email" required maxlength="254" autocomplete="email" /></label>
+  {volunteer && <label>{text.city}<input name="city" required maxlength="100" autocomplete="address-level2" /></label>}
+  <label>{volunteer ? text.volunteerMessage : text.message}<textarea name="message" required minlength="10" maxlength="5000"></textarea></label>
+  <div class="honeypot" aria-hidden="true"><label>{text.website}<input name="website" tabindex="-1" autocomplete="off" /></label></div>
+  <label class="checkbox"><input type="checkbox" name="consent" required /><span>{text.consentPrefix} <a href={href(language, 'privacy')}>{text.privacyStatement}</a> {text.consentSuffix}</span></label>
+  <button class="button" type="submit">{volunteer ? text.sendInterest : text.sendMessage}</button>
+  <p class="form-status" role="status" aria-live="polite"></p>
+  <noscript>{text.noscript}</noscript>
+</form>
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach(form => {
+    const status = form.querySelector<HTMLElement>('.form-status')!;
+    const button = form.querySelector<HTMLButtonElement>('button')!;
+    const headers = { 'X-Site-Language': form.dataset.language ?? 'nb' };
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      button.disabled = true;
+      status.textContent = form.dataset.sending ?? '';
+      try {
+        const session = await fetch('/api/index.php?action=session', { credentials: 'same-origin', headers });
+        if (!session.ok) throw Error(form.dataset.unavailable);
+        const { csrf } = await session.json();
+        const response = await fetch('/api/index.php?action=contact', { method: 'POST', headers: { ...headers, 'Content-Type': 'application/json', 'X-CSRF-Token': csrf }, body: JSON.stringify(Object.fromEntries(new FormData(form))) });
+        const result = await response.json();
+        if (!response.ok) throw Error(result.error || form.dataset.failed);
+        form.reset();
+        status.textContent = form.dataset.sent ?? '';
+      } catch (error) {
+        status.textContent = error instanceof Error ? error.message : form.dataset.error ?? '';
+      } finally {
+        button.disabled = false;
+      }
+    });
+  });
+</script>

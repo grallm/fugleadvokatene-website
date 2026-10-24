@@ -1,0 +1,42 @@
+[
+  {
+    "file": "e8f31.png",
+    "node": "312:678",
+    "purpose": "Hero: injured bird",
+    "optimized": "baby-bird"
+  },
+  {
+    "file": "7bcf9.png",
+    "node": "312:236",
+    "purpose": "Hero: donation",
+    "optimized": "pigeon-closeup"
+  },
+  {
+    "file": "2ae5f.png",
+    "node": "494:4715",
+    "purpose": "Volunteer photo and third hero",
+    "optimized": "volunteer-pigeon"
+  },
+  {
+    "file": "eb9b4.png",
+    "node": "729:1467",
+    "purpose": "News card image",
+    "optimized": "flying-pigeon"
+  },
+  {
+    "path": "public/images/brand/logo-notext.webp",
+    "purpose": "Official emblem from main"
+  },
+  {
+    "path": "public/images/brand/logo.webp",
+    "purpose": "Official stacked logo from main"
+  },
+  {
+    "path": "public/favicon.svg",
+    "purpose": "Favicon derived from official emblem"
+  },
+  {
+    "path": "src/components/Icon.astro",
+    "purpose": "Font Awesome icons approved as replacements"
+  }
+]

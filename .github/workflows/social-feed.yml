@@ -1,0 +1,24 @@
+name: Refresh social feed
+on:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+permissions: {}
+concurrency:
+  group: social-feed
+  cancel-in-progress: false
+jobs:
+  refresh:
+    if: vars.SOCIAL_FEED_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Refresh server cache
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+          CRON_TOKEN: ${{ secrets.CRON_TOKEN }}
+        run: |
+          test -n "$SITE_URL" && test -n "$CRON_TOKEN"
+          curl --fail --silent --show-error --max-time 180 \
+            --request POST \
+            --header "Authorization: Bearer $CRON_TOKEN" \
+            "$SITE_URL/api/index.php?action=refresh-feed"

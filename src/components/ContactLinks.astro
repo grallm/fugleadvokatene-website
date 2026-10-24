@@ -1,0 +1,18 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+import type { Language } from '../i18n/routes';
+interface Props { language?: Language }
+const { language = 'nb' } = Astro.props;
+---
+<div class="contact-links">
+  <p>{language === 'en' ? 'Contact us by email or through our social networks.' : 'Kontakt oss på e-post eller via våre sosiale medier.'}</p>
+  <a class="email" href={`mailto:${site.email}`}>{site.email}</a>
+  <div class="networks">
+    <a href={site.facebook}><Icon name="facebook" /> Facebook</a>
+    <a href={site.instagram}><Icon name="instagram" /> Instagram</a>
+  </div>
+</div>
+<style>
+.contact-links{margin-block:24px}.email{display:inline-block;font-size:clamp(18px,2vw,24px);font-weight:700;color:var(--ink);overflow-wrap:anywhere}.networks{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:20px}.networks a{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:var(--ink);font-weight:700}.networks :global(.icon){width:24px;height:24px}
+</style>

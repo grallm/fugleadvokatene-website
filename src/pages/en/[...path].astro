@@ -1,0 +1,39 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Home from '../index.astro';
+import Contact from '../kontakt.astro';
+import Volunteer from '../bli-frivillig.astro';
+import Volunteers from '../frivillige/index.astro';
+import Support from '../stott-oss.astro';
+import Help from '../veiledning.astro';
+import Shop from '../nettbutikk.astro';
+import News from '../nyheter/index.astro';
+import Thanks from '../takk.astro';
+import NotFound from '../404.astro';
+import ContentPage from '../../components/ContentPage.astro';
+import PostPage from '../../components/PostPage.astro';
+import VolunteerPage from '../../components/VolunteerPage.astro';
+import { isPreview } from '../../data/site';
+import { routes, contentHref } from '../../i18n/routes';
+export async function getStaticPaths() {
+  const staticKeys = ['home', 'contact', 'volunteer', 'volunteers', 'support', 'help', 'shop', 'news', 'thanks', 'notFound'] as const;
+  const result: { params: { path: string | undefined }; props: { kind: string; entry?: CollectionEntry<'pagesEn' | 'postsEn' | 'volunteersEn'> } }[] = staticKeys.map(kind => ({ params: { path: routes[kind].en.slice(4).replace(/\/$/, '') || undefined }, props: { kind } }));
+  for (const entry of await getCollection('pagesEn', ({ data }) => !data.draft)) {
+    result.push({ params: { path: contentHref('en', 'page', entry.id).slice(4).replace(/\/$/, '') }, props: { kind: 'page', entry } });
+  }
+  for (const entry of await getCollection('postsEn', ({ data }) => !data.draft || isPreview)) {
+    result.push({ params: { path: `news/${entry.id}` }, props: { kind: 'post', entry } });
+  }
+  for (const entry of await getCollection('volunteersEn', ({ data }) => !data.draft || isPreview)) {
+    result.push({ params: { path: `volunteers/${entry.id}` }, props: { kind: 'person', entry } });
+  }
+  return result;
+}
+const { kind, entry } = Astro.props;
+const components = { home: Home, contact: Contact, volunteer: Volunteer, volunteers: Volunteers, support: Support, help: Help, shop: Shop, news: News, thanks: Thanks, notFound: NotFound };
+const Page = components[kind as keyof typeof components];
+---
+{Page && <Page language="en" />}
+{kind === 'page' && entry && <ContentPage page={entry as CollectionEntry<'pagesEn'>} language="en" />}
+{kind === 'post' && entry && <PostPage post={entry as CollectionEntry<'postsEn'>} language="en" />}
+{kind === 'person' && entry && <VolunteerPage person={entry as CollectionEntry<'volunteersEn'>} language="en" />}
