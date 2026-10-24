@@ -1,4 +1,5 @@
 ---
+import Photo from '../components/Photo.astro';
 import Icon from '../components/Icon.astro';
 import '@fontsource-variable/gabarito';
 import '@fontsource/lato/700.css';
@@ -49,7 +50,7 @@ const navigation = ['contact', 'volunteer', 'shop', 'news', 'help'] as const;
     <a class="skip" href="#main">{text.skip}</a>
     <header class="header">
       <a href={href(language, 'home')} aria-label={text.homeLabel} class="brand">
-        <img class="brand-logo" src="/images/brand/logo-horizontal.webp" width="960" height="279" alt="Fugleadvokatene" />
+        <Photo loading="eager" sizes="(max-width: 1000px) 260px, 320px" class="brand-logo" src="/images/brand/logo-horizontal.webp" alt="Fugleadvokatene" />
       </a>
       <button class="menu-toggle" aria-controls="navigation" aria-expanded="false" aria-label={text.openMenu} data-open-label={text.openMenu} data-close-label={text.closeMenu}><span></span><span></span><span></span></button>
       <nav id="navigation" aria-label={text.mainNav}>
@@ -72,7 +73,7 @@ const navigation = ['contact', 'volunteer', 'shop', 'news', 'help'] as const;
     <main id="main"><slot /></main>
     <footer class="footer">
       <div class="container">
-        <div class="footer-top"><a class="footer-brand" href={href(language, 'home')}><img src="/images/brand/logo-horizontal-white.png" width="2000" height="696" alt="Fugleadvokatene" loading="lazy" /></a><a class="button" href={href(language, 'support')}>{text.support}</a></div>
+        <div class="footer-top"><a class="footer-brand" href={href(language, 'home')}><Photo sizes="(max-width: 600px) 210px, 320px" src="/images/brand/logo-horizontal-white.png" alt="Fugleadvokatene" loading="lazy" /></a><a class="button" href={href(language, 'support')}>{text.support}</a></div>
         <div class="footer-columns">
           <nav aria-label={text.footerNav}>
             {(['about', 'volunteer', 'shop', 'help', 'contact'] as const).map(key => <a href={href(language, key)}>{key === 'help' ? text.faq : text[key]}</a>)}

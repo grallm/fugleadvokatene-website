@@ -1,6 +1,8 @@
 import { defineConfig } from 'astro/config';
 import rehypeSanitize from 'rehype-sanitize';
 import { unified } from '@astrojs/markdown-remark';
+import { optimizeImages } from './scripts/optimize-images.mjs';
+await optimizeImages();
 export default defineConfig({
   site: process.env.SITE_URL || 'https://www.fugleadvokatene.no',
   output: 'static', trailingSlash: 'always',
