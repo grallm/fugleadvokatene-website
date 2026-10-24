@@ -13,9 +13,15 @@ test('first deployment, interrupted deployment and forced repair upload all file
   }
 });
 test('rejects malformed or unsafe manifests before remote modifications', () => {
-  for (const file of ['../index.html', '/index.html', 'api/index.html', '.htaccess', 'a/../../x.html', 'a\\x.html']) {
+  for (const file of ['../index.html', '/index.html', 'api/index.html', 'nested/.htaccess', '.env', 'a/../../x.html', 'a\\x.html']) {
     assert.throws(() => parseManifest(JSON.stringify({ version: 1, complete: true, files: { [file]: a } })));
   }
   assert.throws(() => parseManifest('{}'));
   assert.equal(parseManifest(JSON.stringify({ version: 1, complete: true, files: { 'index.html': a } })).complete, true);
+});
+
+test('root Apache configuration can be tracked but is never retired as a page', () => {
+  const previous = parseManifest(JSON.stringify({ version: 1, complete: true, files: { '.htaccess': a } }));
+  assert.deepEqual(planDeployment({ '.htaccess': b }, previous).changed, ['.htaccess']);
+  assert.deepEqual(planDeployment({}, previous).removed, []);
 });

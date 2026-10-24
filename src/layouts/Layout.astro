@@ -6,11 +6,21 @@ import '../styles/global.css';
 import { site, isPreview } from '../data/site';
 import { t } from '../i18n/ui';
 import { href, type Language } from '../i18n/routes';
+import { metadata } from '../data/seo';
 import { languageLinks } from '../i18n/content';
 interface Props { title: string; description?: string; image?: string; noindex?: boolean; language?: Language }
 const { title, image = '/images/photos/baby-bird.webp', noindex = false, language = 'nb' } = Astro.props;
 const text = t(language);
-const description = Astro.props.description ?? text.defaultDescription;
+const seo = metadata[Astro.url.pathname];
+const seoTitle = seo?.title ?? title;
+const description = Astro.props.description ?? seo?.description ?? text.defaultDescription;
+const organization = {
+  '@context': 'https://schema.org', '@type': 'Organization',
+  '@id': 'https://www.fugleadvokatene.no/#organization',
+  name: 'Fugleadvokatene', url: 'https://www.fugleadvokatene.no/',
+  logo: 'https://www.fugleadvokatene.no/images/brand/logo-horizontal.webp',
+  email: site.email, sameAs: [site.facebook, site.instagram],
+};
 const canonical = new URL(['/404', '/404/', '/404.html'].includes(Astro.url.pathname) ? '/404.html' : Astro.url.pathname, Astro.site);
 const alternates = await languageLinks(Astro.url.pathname);
 const navigation = ['contact', 'volunteer', 'shop', 'news', 'help'] as const;
@@ -20,19 +30,19 @@ const navigation = ['contact', 'volunteer', 'shop', 'news', 'help'] as const;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script is:inline src="/scripts/site-language.js"></script>
-    <title>{title} · {site.name}</title>
+    <script type="application/ld+json" set:html={JSON.stringify(organization).replaceAll('<', '\\u003c')} />
+    <title>{seoTitle} · {site.name}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {Object.entries(alternates).map(([lang, path]) => <link rel="alternate" hreflang={lang} href={new URL(path!, Astro.site)} />)}
     {alternates.nb && <link rel="alternate" hreflang="x-default" href={new URL(alternates.nb, Astro.site)} />}
-    <meta property="og:title" content={`${title} · ${site.name}`} />
+    <meta property="og:title" content={`${seoTitle} · ${site.name}`} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={language === 'en' ? 'en_GB' : 'nb_NO'} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={new URL(image, Astro.site)} />
-    {(isPreview || noindex) && <meta name="robots" content="noindex, nofollow" />}
+    {(isPreview || noindex) && <meta name="robots" content="noindex, follow" />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
   </head>
   <body>

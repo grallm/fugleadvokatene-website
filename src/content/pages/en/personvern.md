@@ -9,9 +9,9 @@
 
 This website has no contact forms, user accounts or on-site payments. We have not added analytics or marketing tools.
 
-## Language preference
+## Language choice
 
-When you choose a language, your browser stores your preference so the website can remember it next time. The preference is not sent to us. You can remove it by clearing this website’s stored data in your browser.
+Choose Norwegian or English using the language links. Your language choice is not stored in your browser.
 
 ## External services
 
