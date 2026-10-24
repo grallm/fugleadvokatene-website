@@ -15,7 +15,6 @@ import { site } from '../data/site';
         <h2>Vipps</h2>
         <p>{text.vippsNumber}: <strong>{site.vipps}</strong></p>
         <a class="button" href={site.monthly}>{text.monthly} {language === 'en' ? 'with' : 'via'} Vipps</a>
-        <p class="monthly-terms">{language === 'en' ? 'There is no minimum commitment period for recurring donations. If you wish to cancel, you can email us at ' : 'Det er ingen bindingstid på fastgiveravtalen. Dersom du ønsker å avslutte avtalen kan du kontakte oss på epost '}<a href="mailto:kontakt@fugleadvokatene.no">kontakt@fugleadvokatene.no</a>{language === 'en' ? ' or cancel your agreement in the Vipps app.' : ' eller kansellere avtalen inne i Vipps-appen.'}</p>
         <p class="qr-label">{language === 'en' ? 'Or scan to become a monthly donor:' : 'Eller skann for å bli månedsgiver:'}</p>
         <a class="qr-link" href={site.monthly} aria-label={language === 'en' ? 'Become a monthly donor with Vipps' : 'Bli månedsgiver via Vipps'}><img class="vipps-qr" src="/images/donations/vipps-monthly.png" width="382" height="492" alt={language === 'en' ? 'Vipps QR code for Fugleadvokatene, merchant number 986287' : 'Vipps QR-kode for Fugleadvokatene, brukerstednummer 986287'} /></a>
       </section>
@@ -30,10 +29,14 @@ import { site } from '../data/site';
       </section>
       <section class="empty"><h2>{text.bank}</h2><p>{text.account}<br /><strong>{site.bank}</strong></p><p>{text.grassroots}<br />{text.organisation} {site.organisation}</p></section>
     </div>
+    <section class="monthly-agreement" aria-labelledby="monthly-agreement-heading">
+      <h2 id="monthly-agreement-heading">{language === 'en' ? 'Recurring donations via Vipps' : 'Fastgiveravtale via Vipps'}</h2>
+      <p class="monthly-terms">{language === 'en' ? 'There is no minimum commitment period for recurring donations. If you wish to cancel, you can email us at ' : 'Det er ingen bindingstid på fastgiveravtalen. Dersom du ønsker å avslutte avtalen kan du kontakte oss på epost '}<a href="mailto:kontakt@fugleadvokatene.no">kontakt@fugleadvokatene.no</a>{language === 'en' ? ' or cancel your agreement in the Vipps app.' : ' eller kansellere avtalen inne i Vipps-appen.'}</p>
+    </section>
     <p class="section"><a href={href(language, 'volunteer')}>{text.timeInstead}</a></p>
   </div>
 </Layout>
 <style>
-.donation-options{align-items:start}.donation-options .button{width:100%;text-align:center;white-space:normal;padding:12px 16px}.monthly-terms{font-size:16px;margin:16px 0 0}.qr-label{font-size:16px;margin:24px 0 12px}.qr-link{display:block;width:100%;max-width:240px;margin-inline:auto;border-radius:12px;overflow:hidden}.vipps-qr{width:100%;height:auto}.monthly-heading{font-size:22px;margin:32px 0 16px}.paypal-donate{background:#ffc439;color:#173b65}
+.donation-options{align-items:start}.donation-options .button{width:100%;text-align:center;white-space:normal;padding:12px 16px}.monthly-agreement{max-width:850px;margin-top:40px}.monthly-agreement h2{font-size:22px;margin-bottom:12px}.monthly-terms{font-size:16px;margin:0}.monthly-terms a{overflow-wrap:anywhere}.qr-label{font-size:16px;margin:24px 0 12px}.qr-link{display:block;width:100%;max-width:240px;margin-inline:auto;border-radius:12px;overflow:hidden}.vipps-qr{width:100%;height:auto}.monthly-heading{font-size:22px;margin:32px 0 16px}.paypal-donate{background:#ffc439;color:#173b65}
 @media(min-width:1001px) and (max-width:1200px){.donation-options{gap:20px}.donation-options .empty{padding:22px}}
 </style>
