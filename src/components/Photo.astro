@@ -1,4 +1,6 @@
 ---
+import generatedImages from '../data/generated-images.json';
+interface OptimizedImage { width: number; height: number; variants: { width: number; src: string }[] }
 interface Props {
   src: string;
   alt: string;
@@ -8,12 +10,13 @@ interface Props {
   fetchpriority?: 'high' | 'low' | 'auto';
 }
 const { src, alt, class: className, sizes = '(max-width: 1000px) 100vw, 50vw', loading = 'lazy', fetchpriority = 'auto' } = Astro.props;
+const optimized = (generatedImages as Record<string, OptimizedImage>)[src];
 const photos: Record<string, number> = { 'baby-bird': 2433 / 2620, 'pigeon-closeup': 924 / 1728, 'volunteer-pigeon': 1080 / 1920, 'flying-pigeon': 2777 / 3722 };
 const name = src.split('/').pop()?.replace(/\.webp$/, '') ?? '';
 const ratio = src.startsWith('/images/photos/') ? photos[name] : undefined;
 const srcset = (format: string) => [480, 960, 1600].map(width => `/images/photos/${name}-${width}.${format} ${width}w`).join(', ');
 ---
-{ratio ? <picture class="photo">
+{optimized ? <img src={optimized.variants[Math.min(1, optimized.variants.length - 1)].src} srcset={optimized.variants.map(item => `${item.src} ${item.width}w`).join(', ')} sizes={sizes} width={optimized.width} height={optimized.height} class={className} alt={alt} loading={loading} fetchpriority={fetchpriority} decoding="async" /> : ratio ? <picture class="photo">
   <source type="image/avif" srcset={srcset('avif')} sizes={sizes} />
   <img src={src} srcset={srcset('webp')} sizes={sizes} width={1600} height={Math.round(1600 * ratio)} class={className} alt={alt} loading={loading} fetchpriority={fetchpriority} decoding="async" />
 </picture> : <img src={src} class={className} alt={alt} loading={loading} fetchpriority={fetchpriority} decoding="async" />}

@@ -8,3 +8,6 @@ build/
 backend/config.php
 .local/
 test-results/
+
+public/images/optimized/
+src/data/generated-images.json
