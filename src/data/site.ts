@@ -1,6 +1,8 @@
 export const site = {
   name:'FugleAdvokatene', email:'kontakt@fugleadvokatene.no', organisation:'921 243 383',
   bank:'3208 26 28869', vipps:'534731',
+  vippsDonation:'https://qr.vipps.no/donations/986287?reference=',
+  vippsOneTime:'https://qr.vipps.no/vp/GskHpK0jM',
   monthly:'https://qr.vipps.no/mr/?m=986287&e=Fastgiver',
   paypal:'https://paypal.me/fugleadvokatene',
   paypalHostedButton:'RC7XAPP7VXLXG',

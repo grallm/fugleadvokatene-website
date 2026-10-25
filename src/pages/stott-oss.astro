@@ -14,9 +14,12 @@ import { site } from '../data/site';
       <section class="empty">
         <h2>Vipps</h2>
         <p>{text.vippsNumber}: <strong>{site.vipps}</strong></p>
+        <div class="vipps-actions">
+          <a class="button" href={site.vippsOneTime}>{language === 'en' ? 'Make a one-time donation with Vipps' : 'Gi en engangsgave via Vipps'}</a>
         <a class="button" href={site.monthly}>{text.monthly} {language === 'en' ? 'with' : 'via'} Vipps</a>
-        <p class="qr-label">{language === 'en' ? 'Or scan to become a monthly donor:' : 'Eller skann for å bli månedsgiver:'}</p>
-        <a class="qr-link" href={site.monthly} aria-label={language === 'en' ? 'Become a monthly donor with Vipps' : 'Bli månedsgiver via Vipps'}><img class="vipps-qr" src="/images/donations/vipps-monthly.png" width="382" height="492" alt={language === 'en' ? 'Vipps QR code for Fugleadvokatene, merchant number 986287' : 'Vipps QR-kode for Fugleadvokatene, brukerstednummer 986287'} /></a>
+        </div>
+        <p class="qr-label">{language === 'en' ? 'Or scan to donate with Vipps:' : 'Eller skann for å gi en gave via Vipps:'}</p>
+        <a class="qr-link" href={site.vippsDonation} aria-label={language === 'en' ? 'Donate with Vipps' : 'Gi en gave via Vipps'}><img class="vipps-qr" src="/images/donations/vipps-donation.png" width="800" height="800" alt={language === 'en' ? 'Vipps QR code for Fugleadvokatene' : 'Vipps QR-kode for Fugleadvokatene'} /></a>
       </section>
       <section class="empty">
         <h2>PayPal</h2><p>{text.paypalText}</p>
@@ -37,6 +40,6 @@ import { site } from '../data/site';
   </div>
 </Layout>
 <style>
-.donation-options{align-items:start}.donation-options .button{width:100%;text-align:center;white-space:normal;padding:12px 16px}.monthly-agreement{max-width:850px;margin-top:40px}.monthly-agreement h2{font-size:22px;margin-bottom:12px}.monthly-terms{font-size:16px;margin:0}.monthly-terms a{overflow-wrap:anywhere}.qr-label{font-size:16px;margin:24px 0 12px}.qr-link{display:block;width:100%;max-width:240px;margin-inline:auto;border-radius:12px;overflow:hidden}.vipps-qr{width:100%;height:auto}.monthly-heading{font-size:22px;margin:32px 0 16px}.paypal-donate{background:#ffc439;color:#173b65}
+.vipps-actions{display:grid;gap:12px}.donation-options{align-items:start}.donation-options .button{width:100%;text-align:center;white-space:normal;padding:12px 16px}.monthly-agreement{max-width:850px;margin-top:40px}.monthly-agreement h2{font-size:22px;margin-bottom:12px}.monthly-terms{font-size:16px;margin:0}.monthly-terms a{overflow-wrap:anywhere}.qr-label{font-size:16px;margin:24px 0 12px}.qr-link{display:block;width:100%;max-width:240px;margin-inline:auto;border-radius:12px;overflow:hidden}.vipps-qr{width:100%;height:auto}.monthly-heading{font-size:22px;margin:32px 0 16px}.paypal-donate{background:#ffc439;color:#173b65}
 @media(min-width:1001px) and (max-width:1200px){.donation-options{gap:20px}.donation-options .empty{padding:22px}}
 </style>
