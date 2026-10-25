@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFile, readdir, access } from "node:fs/promises";
 import path from "node:path";
 const root = path.resolve("dist");
-const preview = (await readFile(path.join(root, "robots.txt"), "utf8")).includes("Disallow: /\n");
+const preview = (await readFile(path.join(root, "index.html"), "utf8")).includes('content="noindex, follow"');
 async function exists(file) {
   try {
     await access(file);
