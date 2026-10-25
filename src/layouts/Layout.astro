@@ -48,6 +48,7 @@ const navigation = ['contact', 'volunteer', 'shop', 'news', 'help'] as const;
   </head>
   <body>
     <a class="skip" href="#main">{text.skip}</a>
+    <div class="calendar-banner"><span>{language === 'en' ? 'Buy Fugleadvokatene’s 2027 calendar' : 'Kjøp Fugleadvokatenes kalender for 2027'}</span><a class="button" href="https://kalendar.fugleadvokatene.no/">{language === 'en' ? 'Buy the calendar' : 'Kjøp kalenderen'}</a></div>
     <header class="header">
       <a href={href(language, 'home')} aria-label={text.homeLabel} class="brand">
         <Photo loading="eager" sizes="(max-width: 1000px) 260px, 320px" class="brand-logo" src="/images/brand/logo-horizontal.webp" alt="Fugleadvokatene" />

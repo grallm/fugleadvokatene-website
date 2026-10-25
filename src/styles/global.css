@@ -44,3 +44,5 @@
 
 /* Comfortable footer targets on both desktop and touch screens. */
 .footer-columns nav{gap:4px}.footer-columns nav a,.footer-columns>div>a{display:flex;align-items:center;min-height:32px;padding-block:6px}.footer-columns>div>a{justify-content:flex-end}.footer-bottom>a{display:inline-flex;align-items:center;min-height:32px;padding:6px 4px}
+
+.calendar-banner{display:flex;align-items:center;justify-content:center;gap:12px 28px;padding:12px 24px;background:var(--teal);color:white;text-align:center;font-size:16px;line-height:1.4}.calendar-banner .button{white-space:nowrap}@media(max-width:600px){.calendar-banner{flex-wrap:wrap;gap:8px;padding:10px 16px;font-size:14px}}
