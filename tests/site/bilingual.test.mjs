@@ -40,7 +40,7 @@ function attributes(tag) {
 test("English pages contain translated navigation, contact links and document metadata", async () => {
   const home = await readFile(path.join(root, "en/index.html"), "utf8");
   assert.match(home, /<html lang="en"/);
-  assert.match(home, /Welcome to FugleAdvokatene/);
+  assert.match(home, /Welcome to Fugleadvokatene/);
   assert.match(home, /href="\/en\/contact\/"/);
   assert.match(home, /href="\/en\/support\/"/);
   const contact = await readFile(

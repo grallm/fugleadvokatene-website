@@ -1,5 +1,5 @@
 export const site = {
-  name:'FugleAdvokatene', email:'kontakt@fugleadvokatene.no', organisation:'921 243 383',
+  name:'Fugleadvokatene', email:'kontakt@fugleadvokatene.no', organisation:'921 243 383',
   bank:'3208 26 28869', vipps:'534731',
   vippsDonation:'https://qr.vipps.no/donations/986287?reference=',
   vippsOneTime:'https://qr.vipps.no/vp/GskHpK0jM',

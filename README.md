@@ -1,4 +1,4 @@
-# FugleAdvokatene
+# Fugleadvokatene
 
 Astro static website + PHP admin/API + GitHub Actions + hosted checkout links. Designed for the existing Domene.no PHP webhotel, without a Node server or database in production.
 

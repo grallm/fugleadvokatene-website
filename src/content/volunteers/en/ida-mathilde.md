@@ -18,7 +18,7 @@
 
 Hello!
 
-My name is Ida Mathilde, and I have been part of FugleAdvokatene since April 2026. Growing up, I always loved animals and found comfort in them during a vulnerable time.
+My name is Ida Mathilde, and I have been part of Fugleadvokatene since April 2026. Growing up, I always loved animals and found comfort in them during a vulnerable time.
 
 In mid-2025, I found a pigeon lying on Olav Kyrres gate. Sadly, it did not survive its injuries, but since then I have felt a need to look after and stand up for the birds that spend their days in the city centre.
 

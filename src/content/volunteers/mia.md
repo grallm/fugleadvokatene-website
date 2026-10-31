@@ -13,13 +13,13 @@
 }
 ---
 
-Hei! Jeg heter Mia, og jeg har vært rehabhjem for FugleAdvokatene siden mai 2025. 🥳
+Hei! Jeg heter Mia, og jeg har vært rehabhjem for Fugleadvokatene siden mai 2025. 🥳
 
-For noen år siden støtte jeg på en ringduebaby som hadde falt ut av redet og ble angrepet av en skjære. Jeg hadde hørt om FugleAdvokatene og la fort ut en post på Hjelpegruppen på Facebook. Jeg ble veiledet til å sikre dueungen og levere den til dem. Dette ga mersmak. ❤️‍🔥
+For noen år siden støtte jeg på en ringduebaby som hadde falt ut av redet og ble angrepet av en skjære. Jeg hadde hørt om Fugleadvokatene og la fort ut en post på Hjelpegruppen på Facebook. Jeg ble veiledet til å sikre dueungen og levere den til dem. Dette ga mersmak. ❤️‍🔥
 
-Jeg begynte å mate en fast dueflokk, hjelpe til med transport og sikre forsvarsløse fugler. Etter hvert bestemte jeg meg for å joine FugleAdvokatenes rehabteam. Jeg fikk god opplæring og har alltid noen å spørre når jeg er usikker. 🤲
+Jeg begynte å mate en fast dueflokk, hjelpe til med transport og sikre forsvarsløse fugler. Etter hvert bestemte jeg meg for å joine Fugleadvokatenes rehabteam. Jeg fikk god opplæring og har alltid noen å spørre når jeg er usikker. 🤲
 
-Det er så givende og lærerikt å hjelpe fugler i nød! FugleAdvokatene er en flott organisasjon som har gjort at jeg møter likesinnede dyreelskere, og som også møtes til hyggelige sosiale sammenkomster.
+Det er så givende og lærerikt å hjelpe fugler i nød! Fugleadvokatene er en flott organisasjon som har gjort at jeg møter likesinnede dyreelskere, og som også møtes til hyggelige sosiale sammenkomster.
 
 Kanskje akkurat du har lyst til å redde fugleliv sammen med oss? Ta i så fall kontakt! 🙋‍♀️🙋‍♂️
 

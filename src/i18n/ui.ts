@@ -1,9 +1,9 @@
 import type { Language } from "./routes";
 const nb = {
   defaultDescription:
-    "Redning og rehabilitering av byfugler i Oslo og Bergen. Finn hjelp, bli frivillig eller støtt FugleAdvokatene.",
+    "Redning og rehabilitering av byfugler i Oslo og Bergen. Finn hjelp, bli frivillig eller støtt Fugleadvokatene.",
   skip: "Hopp til innhold",
-  homeLabel: "FugleAdvokatene, forsiden",
+  homeLabel: "Fugleadvokatene, forsiden",
   openMenu: "Åpne meny",
   closeMenu: "Lukk meny",
   mainNav: "Hovedmeny",
@@ -22,11 +22,11 @@ const nb = {
   privacy: "Personvern",
   copyright: "Alle rettigheter reservert.",
   homeTitle: "Hvert fugleliv er verdt å redde",
-  welcome: "Velkommen til FugleAdvokatene",
+  welcome: "Velkommen til Fugleadvokatene",
   intro:
-    "FugleAdvokatene er en frivillig forening som driver med redning og rehabilitering av byfugler. En av våre hjertesaker er å endre den utbredte praksisen hvor skadede og syke byfugler avlives uten gyldig medisinsk grunn.",
+    "Fugleadvokatene er en frivillig forening som driver med redning og rehabilitering av byfugler. En av våre hjertesaker er å endre den utbredte praksisen hvor skadede og syke byfugler avlives uten gyldig medisinsk grunn.",
   introMore:
-    "FugleAdvokatene er en ideell organisasjon drevet av frivillige ildsjeler som rehabiliterer fugler ved siden av en vanlig fulltidsjobb. Vi har derfor ikke mulighet til å være tilgjengelige på telefon, e-post e.l., men svarer så fort vi kan i «FugleAdvokatenes hjelpegruppe» på Facebook. Har dere en fugl som trenger hjelp, legg ut en post der – gjerne med et bilde og annen relevant informasjon – og vent på vårt svar.",
+    "Fugleadvokatene er en ideell organisasjon drevet av frivillige ildsjeler som rehabiliterer fugler ved siden av en vanlig fulltidsjobb. Vi har derfor ikke mulighet til å være tilgjengelige på telefon, e-post e.l., men svarer så fort vi kan i «Fugleadvokatenes hjelpegruppe» på Facebook. Har dere en fugl som trenger hjelp, legg ut en post der – gjerne med et bilde og annen relevant informasjon – og vent på vårt svar.",
   helpNearby: "Hvem kan hjelpe nær meg?",
   helpNearbyCta: "Finn veiledning og hjelp",
   supportQuestion: "Ønsker du å støtte oss?",
@@ -42,7 +42,7 @@ const nb = {
   volunteerQuestion: "Ønsker du å bli frivillig?",
   heroSupportTitle: "Støtt oss!",
   heroSupportText:
-    "FugleAdvokatene er en organisasjon drevet av frivillige, og vi er avhengige av donasjoner fra publikum for å kunne operere. Klikk videre for å se hvordan du kan støtte oss.",
+    "Fugleadvokatene er en organisasjon drevet av frivillige, og vi er avhengige av donasjoner fra publikum for å kunne operere. Klikk videre for å se hvordan du kan støtte oss.",
   heroVolunteerText:
     "Vi trenger stadig nye rehabiliteringshjem for skadede eller syke fugler. Her kan du lese hva som må til for å bli rehabiliteringshjem.",
   heroSteps: [
@@ -85,7 +85,7 @@ const nb = {
   timeInstead: "Vil du heller bidra med tid? Bli frivillig →",
   helpTitle: "Hjelp en fugl i nød",
   helpLead:
-    "Ta kontakt med FugleAdvokatenes hjelpegruppe på Facebook for veiledning.",
+    "Ta kontakt med Fugleadvokatenes hjelpegruppe på Facebook for veiledning.",
   helpSteps: [
     "Ta bilder eller video av fuglen.",
     "Beskriv hva du ser og hvor fuglen befinner seg.",
@@ -124,7 +124,7 @@ const nb = {
   notFoundTitle: "Siden finnes ikke",
   notFoundHeading: "Her var det tomt",
   notFoundText: "Siden er flyttet eller finnes ikke.",
-  newsHeading: "Fra FugleAdvokatene",
+  newsHeading: "Fra Fugleadvokatene",
   draft: "Utkast",
   noNews: "Det er ingen publiserte artikler ennå.",
   postDraft: "Redaksjonelt utkast – vises ikke i produksjon.",
@@ -153,9 +153,9 @@ const nb = {
 };
 const en: typeof nb = {
   defaultDescription:
-    "Rescuing and rehabilitating urban birds in Oslo and Bergen. Find help, volunteer or support FugleAdvokatene.",
+    "Rescuing and rehabilitating urban birds in Oslo and Bergen. Find help, volunteer or support Fugleadvokatene.",
   skip: "Skip to content",
-  homeLabel: "FugleAdvokatene, home",
+  homeLabel: "Fugleadvokatene, home",
   openMenu: "Open menu",
   closeMenu: "Close menu",
   mainNav: "Main navigation",
@@ -174,11 +174,11 @@ const en: typeof nb = {
   privacy: "Privacy",
   copyright: "All rights reserved.",
   homeTitle: "Every bird deserves a chance",
-  welcome: "Welcome to FugleAdvokatene",
+  welcome: "Welcome to Fugleadvokatene",
   intro:
-    "FugleAdvokatene is a volunteer organisation that rescues and rehabilitates urban birds. One of our priorities is to challenge the widespread practice of euthanising injured and sick urban birds without a valid medical reason.",
+    "Fugleadvokatene is a volunteer organisation that rescues and rehabilitates urban birds. One of our priorities is to challenge the widespread practice of euthanising injured and sick urban birds without a valid medical reason.",
   introMore:
-    "FugleAdvokatene is a non-profit organisation run by dedicated volunteers who rehabilitate birds alongside their full-time jobs. We cannot offer continuous support by phone or email, but we reply as soon as we can in our Facebook help group, “FugleAdvokatenes hjelpegruppe”. If a bird needs help, post there with a photo and relevant information, then wait for our reply.",
+    "Fugleadvokatene is a non-profit organisation run by dedicated volunteers who rehabilitate birds alongside their full-time jobs. We cannot offer continuous support by phone or email, but we reply as soon as we can in our Facebook help group, “Fugleadvokatenes hjelpegruppe”. If a bird needs help, post there with a photo and relevant information, then wait for our reply.",
   helpNearby: "Who can help near me?",
   helpNearbyCta: "Find guidance and help",
   supportQuestion: "Would you like to support us?",
@@ -194,7 +194,7 @@ const en: typeof nb = {
   volunteerQuestion: "Would you like to volunteer?",
   heroSupportTitle: "Support us!",
   heroSupportText:
-    "FugleAdvokatene is run by volunteers. We rely on donations from the public to continue our work. Find out how you can support us.",
+    "Fugleadvokatene is run by volunteers. We rely on donations from the public to continue our work. Find out how you can support us.",
   heroVolunteerText:
     "We are always looking for new rehabilitation homes for injured or sick birds. Find out what it takes to become a rehabilitation home.",
   heroSteps: [
@@ -236,7 +236,7 @@ const en: typeof nb = {
   grassroots: "Grasrotandelen (Norsk Tipping donations)",
   timeInstead: "Prefer to give your time? Volunteer →",
   helpTitle: "Help a bird in distress",
-  helpLead: "Contact the FugleAdvokatene Facebook help group for guidance.",
+  helpLead: "Contact the Fugleadvokatene Facebook help group for guidance.",
   helpSteps: [
     "Take photos or a video of the bird.",
     "Describe what you see and where the bird is.",
@@ -275,7 +275,7 @@ const en: typeof nb = {
   notFoundTitle: "Page not found",
   notFoundHeading: "Nothing here",
   notFoundText: "This page has moved or does not exist.",
-  newsHeading: "From FugleAdvokatene",
+  newsHeading: "From Fugleadvokatene",
   draft: "Draft",
   noNews: "No articles have been published yet.",
   postDraft: "Editorial draft — not shown in production.",

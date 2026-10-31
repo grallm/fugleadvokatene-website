@@ -13,7 +13,7 @@ Create a private repository unless the organisation wants the source public. Fro
 ```sh
 git init -b main
 git add .
-git commit -m "Create FugleAdvokatene Astro and PHP website"
+git commit -m "Create Fugleadvokatene Astro and PHP website"
 git remote add origin git@github.com:YOUR-ORG/YOUR-REPO.git
 git push -u origin main
 ```
